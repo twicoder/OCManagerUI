@@ -100,7 +100,7 @@ angular.module('basic', [
         //    statego($rootScope.users);
         //  }
         //}
-        console.log(Cookie.get('token'));
+        //console.log(Cookie.get('token'));
         //if (toState.name && toState.name !== "home.login") {
         //  if (Cookie.get('token')) {
         //    //user.query(function (data)

@@ -31,9 +31,9 @@ angular.module('basic.services', ['ngResource'])
       };
       return {
         request: function (config) {
-          //if (/^\/login/.test(config.url)) {
-          //  return config;
-          //}
+          if (/^\/login/.test(config.url)) {
+            return config;
+          }
           //if (/^\/signin/.test(config.url)) {
           //  return config;
           //}
@@ -73,7 +73,10 @@ angular.module('basic.services', ['ngResource'])
             config.headers["http_x_proxy_cas_loginname"] = "like";
             config.headers["http_x_proxy_cas_username"] = "like";
           }
-          // if (config.headers) {
+           if (config.headers) {
+            config.headers["token"] = Cookie.get('token');
+          }
+          //if (config.headers) {
           //  config.headers["Authorization"] = "Bearer " + token;
           //}
           //

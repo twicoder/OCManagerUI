@@ -1,19 +1,21 @@
 <div class="login">
+  <form name="frm">
     <div class="login-wrop">
       <div class="login-title">账户登录</div>
       <div class="login-con mgt">
         <div class="row prompt mgt">
           <div class="col-md-6 text-l">用户名</div>
-          <div class="col-md-6 text-r err-text"><img src="../images/tip.png" alt="" class="err-img">用户名不能为空</div>
+          <div class="col-md-6 text-r err-text" ng-if="frm.username.$dirty && frm.username.$invalid"><img src="../images/tip.png" alt="" class="err-img">用户名不能为空</div>
         </div>
-        <div><input ng-model="usermessage.username" type="text" class="login-input mgt"></div>
+        <div><input ng-model="usermessage.username" name="username" type="text" class="login-input mgt" required></div>
         <div class="row prompt mgt">
           <div class="col-md-6 text-l">密码</div>
-          <div class="col-md-6 text-r err-text"><img src="../images/tip.png" alt="" class="err-img">密码不能为空</div>
+          <div class="col-md-6 text-r err-text" ng-if="frm.password.$dirty && frm.password.$invalid" ><img src="../images/tip.png" alt="" class="err-img">密码不能为空</div>
         </div>
-        <div><input ng-model="usermessage.password" type="password" class="login-input mgt"></div>
-        <div class="mgt"><input type="checkbox" style="margin-right: 15px;">记住我</div>
-        <div class="login-btn mgt">登录</div>
+        <div><input ng-model="usermessage.password" name="password" type="password" class="login-input mgt" required></div>
+        <div class="mgt"><input type="checkbox" style="margin-right: 15px;">记住用户名</div>
+        <button class="login-btn mgt" ng-click="frm.$valid && gologin()">登录</button>
       </div>
     </div>
+    </form>
 </div>
