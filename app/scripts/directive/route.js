@@ -14,13 +14,12 @@ angular.module('basic.router', ['ui.router'])
         controller: 'ConsoleCtrl',
         abstract: true,
         resolve:{
-
           absi: ['allbsi', function(allbsi){
             return allbsi.query().$promise;
           }],
-          colsso: ['sso', function(sso){
-            return sso.get().$promise;
-          }],
+          //colsso: ['sso', function(sso){
+          //  return sso.get().$promise;
+          //}],
           tree: ['tenantname','Cookie', function(tenantname,Cookie){
             return tenantname.query({name:Cookie.get('username')}).$promise;
           }],
@@ -33,12 +32,12 @@ angular.module('basic.router', ['ui.router'])
         controller: 'HomeCtrl',
         abstract: true,
         resolve:{
-          homesso: ['sso', function(sso){
-            return sso.get().$promise;
-          }]
+          //homesso: ['sso', function(sso){
+          //  return sso.get().$promise;
+          //}]
         }
       })
-      .state('login', {
+      .state('home.login', {
         url: '/login',
         templateUrl: 'views/login.html',
         controller: 'loginCtrl',

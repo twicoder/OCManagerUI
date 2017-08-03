@@ -89,30 +89,31 @@ angular.module('basic', [
       $rootScope.$on('$stateChangeStart', function (event, toState) {
         console.log('toState', toState.name);
         $rootScope.tab = toState.name;
-        if (toState.name && toState.name !== "home.platform"&&toState.name !== "home.permission") {
-          if (!$rootScope.users) {
-            user.query(function (data) {
-              $rootScope.users = data;
-              statego($rootScope.users);
-            });
-
-          } else {
-            statego($rootScope.users);
-          }
-        }
-        if (toState.name && toState.name !== "login"&&toState.name !== "register") {
-          if (Cookie.get('token')) {
-            //user.query(function (data)
-            // {
-            //  $rootScope.users = data;
-            //  statego($rootScope.users);
-            //});
-
-          } else {
-
-            $state.go('login');
-          }
-        }
+        //if (toState.name &&toState.name !== "home.permission") {
+        //  if (!$rootScope.users) {
+        //    user.query(function (data) {
+        //      $rootScope.users = data;
+        //      statego($rootScope.users);
+        //    });
+        //
+        //  } else {
+        //    statego($rootScope.users);
+        //  }
+        //}
+        console.log(Cookie.get('token'));
+        //if (toState.name && toState.name !== "home.login") {
+        //  if (Cookie.get('token')) {
+        //    //user.query(function (data)
+        //    // {
+        //    //  $rootScope.users = data;
+        //    //  statego($rootScope.users);
+        //    //});
+        //
+        //  } else {
+        //
+        //    $state.go('home.login');
+        //  }
+        //}
 
         //console.log('$rootScope.tab', $rootScope.tab);
       });
