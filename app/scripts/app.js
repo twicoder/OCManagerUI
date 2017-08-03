@@ -102,7 +102,8 @@ angular.module('basic', [
         }
         if (toState.name && toState.name !== "login"&&toState.name !== "register") {
           if (Cookie.get('token')) {
-            //user.query(function (data) {
+            //user.query(function (data)
+            // {
             //  $rootScope.users = data;
             //  statego($rootScope.users);
             //});
