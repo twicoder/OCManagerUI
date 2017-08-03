@@ -100,6 +100,18 @@ angular.module('basic', [
             statego($rootScope.users);
           }
         }
+        if (toState.name && toState.name !== "login"&&toState.name !== "register") {
+          if (Cookie.get('token')) {
+            //user.query(function (data) {
+            //  $rootScope.users = data;
+            //  statego($rootScope.users);
+            //});
+
+          } else {
+
+            $state.go('login');
+          }
+        }
 
         //console.log('$rootScope.tab', $rootScope.tab);
       });
