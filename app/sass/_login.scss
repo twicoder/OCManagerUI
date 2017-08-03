@@ -1,0 +1,19 @@
+.login{
+  width: 100%;
+  overflow: hidden;
+  .login-wrop{
+    width: 500px;
+    overflow: hidden;
+    margin:70px auto 0px;
+    .login-title{
+      font-size:20px;
+      text-align: center;
+    }
+    .login-con{
+      width: 100%;
+      border:1px solid #eaeaea;
+      background: #fff;
+      padding:10px 40px 40px;
+    }
+  }
+}
