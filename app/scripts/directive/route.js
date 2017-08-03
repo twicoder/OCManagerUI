@@ -5,7 +5,7 @@
 
 angular.module('basic.router', ['ui.router'])
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/home/platform");
+    $urlRouterProvider.otherwise("/console/tenant");
     $stateProvider
     //home
       .state('console', {
@@ -36,6 +36,20 @@ angular.module('basic.router', ['ui.router'])
           homesso: ['sso', function(sso){
             return sso.get().$promise;
           }]
+        }
+      })
+      .state('login', {
+        url: '/login',
+        templateUrl: 'views/login.html',
+        controller: 'loginCtrl',
+        resolve:{
+        }
+      })
+      .state('register', {
+        url: '/register',
+        templateUrl: 'views/register.html',
+        controller: 'registerCtrl',
+        resolve:{
         }
       })
       .state('home.platform', {
