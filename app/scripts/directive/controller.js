@@ -16,7 +16,7 @@ angular.module('basic.controller', [])
       //$rootScope.region = '';
       //$rootScope.user = '';
       //$rootScope.namespace = "";
-      //$state.go('home.index');
+      $state.go('home.login');
     });
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
       $log.info(AUTH_EVENTS.loginSuccess);
@@ -29,6 +29,6 @@ angular.module('basic.controller', [])
       //$rootScope.region = '';
       //$rootScope.user = '';
       //$rootScope.namespace = "";
-      //$state.go('home.index');
+      $state.go('home.login');
     });
   }]);
