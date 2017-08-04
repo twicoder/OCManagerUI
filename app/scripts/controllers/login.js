@@ -8,9 +8,13 @@ angular.module('basic')
       username:'',
       password:''
     }
+    $scope.mark= function () {
+
+    }
     $scope.gologin= function () {
       login.post($scope.usermessage, function (data) {
         //console.log('data', data);
+        Cookie.set('username',$scope.usermessage.username ,  24 * 3600 * 1000);
         Cookie.set('token', data.token, 24 * 3600 * 1000);
         $state.go('console.tenant');
       })
