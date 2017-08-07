@@ -4,9 +4,8 @@
  * Main Controller
  */
 angular.module('basic')
-  .controller('UserCtrl', ['$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm', 'colsso','newUser',
-    function ($rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm, colsso,newUser) {
-      $rootScope.isadmin = colsso.admin;
+  .controller('UserCtrl', ['$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm','newUser',
+    function ($rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm,newUser) {
       var refresh = function (page) {
         $(document.body).animate({
           scrollTop: 0
