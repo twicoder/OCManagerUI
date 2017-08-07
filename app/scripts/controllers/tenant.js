@@ -241,7 +241,7 @@ angular.module('basic')
           }
         });
 
-        console.log('$scope.newServeArr', $scope.newServeArr);
+        //console.log('$scope.newServeArr', $scope.newServeArr);
         //console.log('$scope.servesArr', $scope.servesList);
       };
       /// 获取租户下的服务
@@ -618,6 +618,7 @@ angular.module('basic')
 
       ////添加子租户
       $scope.addTenant = function(){
-        addTenant.open();
+        console.log('$scope.nodeId', $scope.nodeId);
+        addTenant.open($scope.nodeId);
       }
     }]);

@@ -118,11 +118,19 @@ angular.module('basic.resource', ['ngResource'])
     });
     return userinfo;
   }])
+  .factory('addtenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var addtenant = $resource(GLOBAL.host + '/tenant', {}, {
+      post: {method: "POST"}
+    });
+    return addtenant;
+  }])
+
   .factory('serveinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var serveinfo = $resource(GLOBAL.host + '/tenant/:tenantId/service/instance/:serviceInstanceName/access/info', {tenantId:'@tenantId',serviceInstanceName:'@serviceInstanceName'}, {
     });
     return serveinfo;
   }]);
+
 
 
 
