@@ -1,12 +1,15 @@
-$btnbg:#ff304a !default;//添加用户、添加服务背景按钮
-$smbg:#c256fc!default;
+$btnbg:#f39c12 !default;//添加用户、添加服务背景按钮
+$smbg:#f39c12!default;
 
 /*****************统一管控平台******************/
 .home_page .role_mange_list li{cursor:pointer;}
 /**************角色管理、服务管理**************/
 .set_mange{padding-left:16px;padding-right:16px;background:#fafafa;height:auto;overflow:hidden;}
 .set_ser_btn p{background:$btnbg;display:inline-block;color:#fff;font-size:20px;width:200px;height:50px;line-height:50px;
-  -webkit-border-radius:24px;-moz-border-radius:24px;border-radius:24px;text-align:center;margin-bottom:42px;cursor:pointer;margin-left:14px;}
+text-align:center;margin-bottom:42px;cursor:pointer;margin-left:14px;}
+.set_ser_btn p:hover{
+  background: #f5b041;
+}
 ul,li{list-style:none;}
 .role_mange_list{margin:0px;padding:0px;}
 .role_mange_list li{width:23%;height:340px;background:#fff;position:relative;margin:0 13px;
@@ -27,9 +30,12 @@ ul,li{list-style:none;}
 .service_one p{text-align:center;font-size:14px;}
 .service_one .serv_tit{color:#999;}
 .service_one .serv_detail{color:#333;}
-.service_two{margin-top:40px;margin-bottom:50px;}
-.servie_change{background:$smbg;width:90px;height:30px;-webkit-border-radius:20px;-moz-border-radius:20px;border-radius:20px;
+.service_two{margin-top:40px;margin-bottom:50px  ;}
+.servie_change{background:$smbg;width:90px;height:30px;
   font-size:14px;text-align:center;line-height:30px;margin:0 auto;color:#fff;cursor:pointer;}
+.servie_change:hover{
+  background: #f5b041;
+}
 .role_block_detail{margin-top:65px;color:#fff;font-size:14px;text-align:justify;}
 .h_set{height:130px;clear:both;overflow:hidden;}
 @media (min-width: 1800px) {
@@ -42,5 +48,7 @@ ul,li{list-style:none;}
 .power_detail p{text-align:center;}
 .power_detail .tit_one{font-size:16px;color:#333;margin-top:120px;}
 .power_detail .tit_two{font-size:14px;color:#999;margin-top:20px;margin-bottom:30px;}
-.power_btn{display:block;width:94px;height:30px;line-height:30px;background:$smbg;-webkit-border-radius:23px;-moz-border-radius:23px;
-  border-radius:23px;text-align:center;margin:0 auto;color:#fff;cursor:pointer;}
+.power_btn{display:block;width:94px;height:30px;line-height:30px;background:$smbg;text-align:center;margin:0 auto;color:#fff;cursor:pointer;}
+.power_btn:hover{
+  background:#f5b041;
+}

@@ -74,8 +74,7 @@ $smbg: #c256fc !default;
       div.tree-selected {
         background: #fff;
         font-weight: normal;
-        color: #ce1515;
-        border-left: 4px solid #ce1515;
+        border-left: 4px solid #f39c12;
       }
       padding: 0;
       line-height: 50px;
@@ -155,7 +154,7 @@ $smbg: #c256fc !default;
       }
     }
     li.active {
-      border-bottom: 2px solid #ce1515;
+      border-bottom: 2px solid #f39c12;
     }
 
   }
@@ -176,11 +175,13 @@ $smbg: #c256fc !default;
           line-height: 30px;
           color: #fff;
           text-align: center;
-          background: $smbg;
+          background: #f39c12;
           display: inline-block;
-          border-radius: 24px;
           font-size: 14px;
           cursor: pointer;
+        }
+        span:hover{
+          background: #f5b041;
         }
       }
       .tenant-serve-list {
@@ -213,11 +214,11 @@ $smbg: #c256fc !default;
           }
           a {
             padding: 5px 15px;
-            border-radius: 14px;
-            color: $smbg;
+
+            color: #f39c12;
           }
           a:hover {
-            background: $smbg;
+            background: #f5b041;
             color: #fff;
           }
           label {
