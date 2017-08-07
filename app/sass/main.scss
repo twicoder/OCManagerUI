@@ -614,7 +614,6 @@ table a{
   .con-wrop{
     width: 100%;
     margin-top:15px;
-    overflow: hidden;
   .select-title{
     width: 100%;
     display: inline-block;font-size:14px;color:$titcolor;padding-left:9px;background:#fff;
@@ -673,6 +672,12 @@ table a{
 }
 .ta-zy{
   background:url("../images/images_08.png") no-repeat;
+}
+.yes-me{
+  background:url("../images/images_19.png") no-repeat;
+}
+.no-me{
+  background:url("../images/images_18.png") no-repeat;
 }
 /*错误提示*/
 .error_block_tit{display:inline-block;text-align:left;background:#ff304a;text-align:center;color:#fff;font-size:12px;-webkit-transition:all .3s;
