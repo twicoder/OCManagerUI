@@ -8,8 +8,13 @@ angular.module('basic')
       username:'',
       password:''
     }
-    $scope.mark= function () {
-
+    $scope.me = false
+    $scope.mark= function (res) {
+        if(res == 1){
+          $scope.me = false
+        }else{
+          $scope.me = true
+        }
     }
     $scope.gologin= function () {
       login.post($scope.usermessage, function (data) {

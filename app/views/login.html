@@ -13,7 +13,11 @@
           <div class="col-md-6 text-r err-text" ng-if="frm.password.$dirty && frm.password.$invalid" ><img src="../images/tip.png" alt="" class="err-img">密码不能为空</div>
         </div>
         <div><input ng-model="usermessage.password" name="password" type="password" class="login-input mgt" required></div>
-        <div class="mgt"><input type="checkbox" style="margin-right: 15px;" ng-click="mark()">记住用户名</div>
+        <div class="mgt rem-me">
+          <span ng-if="!me" class="ta-cd no-me " ng-click="mark(2)"></span>
+          <span ng-if="me" class="ta-cd yes-me" ng-click="mark(1)"></span>
+          记住用户名
+        </div>
         <button class="login-btn mgt" ng-click="frm.$valid && gologin()">登录</button>
       </div>
     </div>

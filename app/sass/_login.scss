@@ -4,6 +4,12 @@
   .mgt{
     margin-top:30px;
   }
+  .rem-me{
+    span{
+      float: left;
+      margin-top:3px;
+    }
+  }
   .err-text{
     color: #f5b041;
   }
@@ -65,5 +71,6 @@
         background: #f5b041;
       }
     }
+
   }
 }
