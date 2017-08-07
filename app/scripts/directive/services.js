@@ -73,7 +73,7 @@ angular.module('basic.services', ['ngResource'])
             config.headers["http_x_proxy_cas_loginname"] = "like";
             config.headers["http_x_proxy_cas_username"] = "like";
           }
-           if (config.headers) {
+          if (config.headers) {
             config.headers["token"] = Cookie.get('token');
           }
           //if (config.headers) {
@@ -122,7 +122,7 @@ angular.module('basic.services', ['ngResource'])
           function ($scope, $uibModalInstance, cGtenantuser) {
             $scope.userList = userList;
             $scope.roleList = roleList;
-            $scope.newUser={}
+            $scope.newUser = {}
             //console.log(userList, roleList, nameobj);
             $scope.newUser.name = nameobj.oldUser;
             $scope.newRole = nameobj.oldRole;
@@ -607,7 +607,7 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
-  .service('addTenant', ['$uibModal','addtenantapi', function ($uibModal,addtenantapi) {
+  .service('addTenant', ['$uibModal', 'addtenantapi','Cookie', function ($uibModal, addtenantapi,Cookie) {
     this.open = function (id) {
       return $uibModal.open({
         backdrop: 'static',
@@ -616,11 +616,16 @@ angular.module('basic.services', ['ngResource'])
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
           var timestamp = Date.parse(new Date());
           timestamp = timestamp / 1000;
+          var newid = id;
+          var username = Cookie.get("username")
+          if (id.indexOf(username)) {
+            newid=newid.split(username)[0]
+          }
           $scope.message = {
-            id:id+'-'+timestamp,
-            name:'',
-            description:'',
-            parentId:id
+            id: newid + username + timestamp,
+            name: '',
+            description: '',
+            parentId: id
           }
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
