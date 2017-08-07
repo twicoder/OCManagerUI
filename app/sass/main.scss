@@ -659,6 +659,21 @@ table a{
   }
 
 }
+.ta-cd{
+  width: 14px;
+  height: 14px;
+  margin:0;
+  padding:0;
+  display:inline-block;
+  margin-right:8px;
+  cursor: pointer;
+}
+.ta-zg{
+  background:url("../images/images_06.png") no-repeat;
+}
+.ta-zy{
+  background:url("../images/images_08.png") no-repeat;
+}
 /*错误提示*/
 .error_block_tit{display:inline-block;text-align:left;background:#ff304a;text-align:center;color:#fff;font-size:12px;-webkit-transition:all .3s;
   -moz-transition:all .3s;transition:all .3s;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;position:relative;padding:6px 12px 6px;margin-left:10px;
