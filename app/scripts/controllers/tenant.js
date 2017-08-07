@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addTenant','$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
-    function (addTenant,$rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
+  .controller('TenantCtrl', ['addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
+    function (addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
       //if (!Cookie.get('token')) {
       //  //user.query(function (data)
       //  // {
@@ -14,6 +14,42 @@ angular.module('basic')
       //  //});
       //  $state.go('login');
       //}
+      tree = [{
+        "dacpTeamCode": 0,
+        "description": "zhaoyimLevel1",
+        "id": "51cadf67-7b37-11e7-aa10-fa163ed7d0ae",
+        "level": 2,
+        "name": "zhaoyimLevel1",
+        "parentId": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae"
+      }, {
+        "dacpTeamCode": 0,
+        "description": "root tenant",
+        "id": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae",
+        "level": 1,
+        "name": "root.tenant"
+      }, {
+        dacpTeamCode: 0,
+        description: "",
+        id: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae-1502090717-1502091093",
+        level: 4,
+        name: "jiangtong",
+        parentId: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae-1502090717"
+      },
+        {
+          dacpTeamCode: 0,
+          description: "asdasd",
+          id: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae-1502090717",
+          level: 3,
+          name: "asdsad",
+          parentId: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae"
+        }, {
+          "dacpTeamCode": 0,
+          "description": "aaa",
+          "id": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae-1502086896",
+          "level": 2,
+          "name": "zaaa",
+          "parentId": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae"
+        }]
       //左边导航自动变化
       var left_by_block = function () {
         var thisheight = $(window).height() - 80;
@@ -128,7 +164,7 @@ angular.module('basic')
         }
       });
       $scope.selected = $scope.dataForTheTree[0];
-      //console.log('$scope.dataForTheTree', $scope.dataForTheTree);
+      console.log('$scope.dataForTheTree', $scope.dataForTheTree);
       var cinf = function (father) {
         angular.forEach(father.children, function (child) {
           cinf(child);
@@ -340,16 +376,16 @@ angular.module('basic')
               newconfirm.open(res.spec.provisioning.credentials, res.status.phase);
             } else {
               if (res.spec.binding) {
-                if ($scope.isroleId&&res.spec.binding.length>0) {
-                  if ($scope.isroleId === 'a13dd087-524a-11e7-9dbb-fa163ed7d0ae'||$scope.isroleId === 'a12a84d0-524a-11e7-9dbb-fa163ed7d0ae') {
-                    angular.forEach(res.spec.binding, function (item,i) {
+                if ($scope.isroleId && res.spec.binding.length > 0) {
+                  if ($scope.isroleId === 'a13dd087-524a-11e7-9dbb-fa163ed7d0ae' || $scope.isroleId === 'a12a84d0-524a-11e7-9dbb-fa163ed7d0ae') {
+                    angular.forEach(res.spec.binding, function (item, i) {
                       console.log(item.bind_hadoop_user);
                       if (item.bind_hadoop_user === Cookie.get("username")) {
                         newconfirm.open(res.spec.binding[i].credentials, res.status.phase);
                       }
 
                     })
-                  }else if($scope.isroleId === 'a1149421-524a-11e7-9dbb-fa163ed7d0ae'||$scope.isroleId === 'a10170cb-524a-11e7-9dbb-fa163ed7d0ae') {
+                  } else if ($scope.isroleId === 'a1149421-524a-11e7-9dbb-fa163ed7d0ae' || $scope.isroleId === 'a10170cb-524a-11e7-9dbb-fa163ed7d0ae') {
                     newconfirm.open(res.spec.binding[0].credentials, res.status.phase);
                   }
 
@@ -428,7 +464,7 @@ angular.module('basic')
               gettenantuser($scope.nodeId)
             }
           );
-        }else {
+        } else {
           Alert.open('所有用户已授权！');
         }
 
@@ -566,7 +602,7 @@ angular.module('basic')
       // 左侧导航切换
 
       $scope.showSelected = function (node) {
-        ischengyuan(node.id, node.level);
+        ischengyuan(node.id);
         //console.log(node.level, $scope.userroleid);
 
         Cookie.set('tenantId', node.id, 24 * 3600 * 1000);
@@ -575,14 +611,14 @@ angular.module('basic')
         $scope.nodeId = node.id;
         $scope.newServeArr = [];
         getUserInfo(node.id, node);
-        if (node.level === 2) {
+        if (node.parentId) {//lev2
           $scope.grid.showCompany = false;
           $scope.grid.showProject = true;
           $scope.grid.showChildnode = false;
           $('.right-nav>li').eq(1).addClass('active').siblings().removeClass('active');
           $('.right-content>li').eq(1).show().siblings().hide();
           $scope.roleDemoList = roleDemoList.slice(1, 2);
-        } else if (node.level === 1) {
+        } else if (!node.parentId) {//lev1
           $scope.grid.treeId = 2;
           $scope.roleDemoList = roleDemoList.slice(0, 1);
           $scope.grid.showCompany = true;
@@ -617,7 +653,7 @@ angular.module('basic')
       /////获取租户信息
 
       ////添加子租户
-      $scope.addTenant = function(){
+      $scope.addTenant = function () {
         console.log('$scope.nodeId', $scope.nodeId);
         addTenant.open($scope.nodeId);
       }
