@@ -607,18 +607,28 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
-  .service('addTenant', ['$uibModal', function ($uibModal) {
-    this.open = function () {
+  .service('addTenant', ['$uibModal','addtenantapi', function ($uibModal,addtenantapi) {
+    this.open = function (id) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/addTenant.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-
+          var timestamp = Date.parse(new Date());
+          timestamp = timestamp / 1000;
+          $scope.message = {
+            id:id+'-'+timestamp,
+            name:'',
+            description:'',
+            parentId:id
+          }
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
+            addtenantapi.post($scope.message, function (data) {
+              console.log('data', data);
+            })
             $uibModalInstance.close(true);
           };
         }]
