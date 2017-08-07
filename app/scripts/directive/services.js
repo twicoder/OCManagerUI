@@ -606,4 +606,22 @@ angular.module('basic.services', ['ngResource'])
         }]
       }).result;
     };
-  }]);
+  }])
+  .service('addTenant', ['$uibModal', function ($uibModal) {
+    this.open = function () {
+      return $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'views/tpl/addTenant.html',
+        size: 'default',
+        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+          };
+          $scope.ok = function () {
+            $uibModalInstance.close(true);
+          };
+        }]
+      }).result;
+    };
+  }])
