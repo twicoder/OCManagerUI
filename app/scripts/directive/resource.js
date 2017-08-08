@@ -124,6 +124,14 @@ angular.module('basic.resource', ['ngResource'])
     });
     return addtenant;
   }])
+  .factory('deletetenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var deletetenantapi = $resource(GLOBAL.host + '/tenant/:id', {
+      id:'@id'
+    }, {
+      delete: {method: "DELETE"}
+    });
+    return deletetenantapi;
+  }])
 
   .factory('serveinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var serveinfo = $resource(GLOBAL.host + '/tenant/:tenantId/service/instance/:serviceInstanceName/access/info', {tenantId:'@tenantId',serviceInstanceName:'@serviceInstanceName'}, {
