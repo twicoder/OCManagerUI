@@ -133,7 +133,7 @@ angular.module('basic.services', ['ngResource'])
             console.log('id', id);
             deletetenantapi.delete({id: id}, function () {
               $scope.con = '删除成功';
-              window.setTimeout(closeConf, 1500);
+              //window.setTimeout(closeConf, 1500);
             }, function (res) {
               // console.log('111',res);
               if (res.data.resCodel == 4001) {
@@ -143,7 +143,7 @@ angular.module('basic.services', ['ngResource'])
               } else {
                 $scope.con = '删除失败!';
               }
-              window.setTimeout(closeConf, 2000);
+              //window.setTimeout(closeConf, 2000);
             });
 
           };
@@ -672,8 +672,10 @@ angular.module('basic.services', ['ngResource'])
           $scope.ok = function () {
             addtenantapi.post($scope.message, function (data) {
               console.log('data', data);
+
+              $uibModalInstance.close(true);
             })
-            $uibModalInstance.close(true);
+
           };
         }]
       }).result;

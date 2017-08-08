@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['tenant_del_Confirm','addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
-    function (tenant_del_Confirm,addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
+  .controller('TenantCtrl', ['tenantname','tenant_del_Confirm','addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
+    function (tenantname,tenant_del_Confirm,addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
 
       //左边导航自动变化
       var left_by_block = function () {
@@ -17,9 +17,15 @@ angular.module('basic')
       $scope.deltenan= function (e,node) {
         e.stopPropagation();
         tenant_del_Confirm.open(node.name, node.id).then(function () {
-
+          gettree()
         });
-        console.log('node', node);
+        //console.log('node', node);
+      }
+      function gettree(){
+        tenantname.query({name:Cookie.get('username')}, function (tree) {
+
+          creattree(tree)
+        })
       }
       $scope.looklog = function (name) {
         userinfo.query({name: name, id: Cookie.get('tenantId')}, function (res) {
@@ -59,8 +65,7 @@ angular.module('basic')
         }
       };
       // $scope.selected = tree[0];
-      $scope.dataForTheTree = [];
-      $scope.treemap = {};
+
       $scope.ismember = true;
       var allbsi = [];
       angular.forEach(absi, function (bsi) {
@@ -79,6 +84,7 @@ angular.module('basic')
           }
         });
       });
+
 //console.log('absi', absi);
       angular.forEach(absi, function (bsi) {
         //console.log('bsi', bsi);
@@ -108,40 +114,10 @@ angular.module('basic')
       })
 
       //console.log('absi1212121', absi);
-      angular.forEach(tree, function (item) {
-        $scope.treemap[item.id] = item;
-        $scope.treemap[item.id].children = [];
-      });
 
 
-      angular.forEach(tree, function (item) {
-        if (item.parentId) {
-          //console.log('$scope.treemap[item.parentId]', $scope.treemap[item.parentId]);
-          if ($scope.treemap[item.parentId]) {
-            $scope.treemap[item.parentId].children.push(item);
-          } else {
-            delete $scope.treemap[item.id].parentId;
-            $scope.dataForTheTree.push($scope.treemap[item.id]);
-          }
-        } else {
-          $scope.dataForTheTree.push($scope.treemap[item.id]);
-        }
-      });
-      $scope.selected = $scope.dataForTheTree[0];
-      console.log('$scope.dataForTheTree', $scope.dataForTheTree);
-      var cinf = function (father) {
-        angular.forEach(father.children, function (child) {
-          cinf(child);
-          angular.forEach(child.bsis, function (bsi) {
-            father.bsis.push(bsi);
-          });
-        });
+      //console.log('$scope.dataForTheTree', $scope.dataForTheTree);
 
-      };
-
-      angular.forEach($scope.dataForTheTree, function (tree) {
-        cinf(tree);
-      });
 
       //console.log('$scope.dataForTheTree', $scope.dataForTheTree);
       var refresh = function (page) {
@@ -262,9 +238,12 @@ angular.module('basic')
         //}else {
         //alert(1)
         $scope.bsis = node.bsis;
-        $scope.grid.bsitotal = $scope.bsis.length;
-        checkServe($scope.servesArr, $scope.bsis);
-        refresh(1);
+        if ($scope.bsis) {
+          $scope.grid.bsitotal = $scope.bsis.length;
+          checkServe($scope.servesArr, $scope.bsis);
+          refresh(1);
+                  }
+
         //console.log('bsi', bsis);
         //}
 
@@ -567,14 +546,25 @@ angular.module('basic')
 
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
+        console.log('node', node);
         //console.log(node.level, $scope.userroleid);
-
         Cookie.set('tenantId', node.id, 24 * 3600 * 1000);
         $scope.grid.roleTitle = node.name;
         $scope.nodeIf = node;
         $scope.nodeId = node.id;
         $scope.newServeArr = [];
         getUserInfo(node.id, node);
+        tenantbsi.query({id: node.id}, function (bsis) {
+          console.log('bsis', bsis);
+          //$scope.bsis = bsis;
+              //$scope.grid.bsitotal = $scope.bsis.length;
+              //checkServe($scope.servesArr, $scope.bsis);
+              //refresh(1);
+              //console.log('bsi', bsis);
+            }, function (err) {
+
+            })
+
         if (node.parentId) {//lev2
           $scope.grid.showCompany = false;
           $scope.grid.showProject = true;
@@ -601,24 +591,65 @@ angular.module('basic')
           $('.right-content>li').eq(2).show().siblings().hide();
         }
       };
-      ///页面初次加载;
-      var fristLoad = function (id, node) {
-        Cookie.set('tenantId', id, 24 * 3600 * 1000);
-        $scope.showSelected(node);
-        gettenantuser(id);
-        loadserve(id, node);
-        gerTenantChild(id);
-      };
-      if ($scope.dataForTheTree[0] && $scope.dataForTheTree[0].id) {
-        fristLoad($scope.dataForTheTree[0].id, $scope.dataForTheTree[0]);
-      }
+
 
 
       /////获取租户信息
 
       ////添加子租户
+      function creattree(trees){
+        $scope.dataForTheTree = [];
+        $scope.treemap = {};
+        angular.forEach(trees, function (item) {
+          $scope.treemap[item.id] = item;
+          $scope.treemap[item.id].children = [];
+        });
+
+
+        angular.forEach(trees, function (item) {
+          if (item.parentId) {
+            //console.log('$scope.treemap[item.parentId]', $scope.treemap[item.parentId]);
+            if ($scope.treemap[item.parentId]) {
+              $scope.treemap[item.parentId].children.push(item);
+            } else {
+              delete $scope.treemap[item.id].parentId;
+              $scope.dataForTheTree.push($scope.treemap[item.id]);
+            }
+          } else {
+            $scope.dataForTheTree.push($scope.treemap[item.id]);
+          }
+        });
+        var cinf = function (father) {
+          angular.forEach(father.children, function (child) {
+            cinf(child);
+            angular.forEach(child.bsis, function (bsi) {
+              father.bsis.push(bsi);
+            });
+          });
+
+        };
+
+        angular.forEach($scope.dataForTheTree, function (tree) {
+          cinf(tree);
+        });
+        $scope.selected = $scope.dataForTheTree[0];
+        ///页面初次加载;
+        var fristLoad = function (id, node) {
+          Cookie.set('tenantId', id, 24 * 3600 * 1000);
+          $scope.showSelected(node);
+          gettenantuser(id);
+          loadserve(id, node);
+          gerTenantChild(id);
+        };
+        if ($scope.dataForTheTree[0] && $scope.dataForTheTree[0].id) {
+          fristLoad($scope.dataForTheTree[0].id, $scope.dataForTheTree[0]);
+        }
+      }
+      creattree(tree)
       $scope.addTenant = function () {
         console.log('$scope.nodeId', $scope.nodeId);
-        addTenant.open($scope.nodeId);
+        addTenant.open($scope.nodeId).then(function () {
+          gettree()
+        });;
       }
     }]);
