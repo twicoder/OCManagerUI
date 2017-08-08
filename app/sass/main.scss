@@ -679,6 +679,18 @@ table a{
 .no-me{
   background:url("../images/images_18.png") no-repeat;
 }
+.del-ten{
+  width: 16px;
+  height: 16px;
+  float: right;
+  margin-top:18px;
+  background:url("../images/images_10.png") no-repeat;
+  display: none;
+}
+.del-ten:hover{
+  background:url("../images/images_12.png") no-repeat;
+
+}
 /*错误提示*/
 .error_block_tit{display:inline-block;text-align:left;background:#ff304a;text-align:center;color:#fff;font-size:12px;-webkit-transition:all .3s;
   -moz-transition:all .3s;transition:all .3s;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;position:relative;padding:6px 12px 6px;margin-left:10px;
