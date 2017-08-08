@@ -4,52 +4,9 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
-    function (addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
-      //if (!Cookie.get('token')) {
-      //  //user.query(function (data)
-      //  // {
-      //  //  $rootScope.users = data;
-      //  //  statego($rootScope.users);
-      //  //});
-      //  $state.go('login');
-      //}
-      tree = [{
-        "dacpTeamCode": 0,
-        "description": "zhaoyimLevel1",
-        "id": "51cadf67-7b37-11e7-aa10-fa163ed7d0ae",
-        "level": 2,
-        "name": "zhaoyimLevel1",
-        "parentId": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae"
-      }, {
-        "dacpTeamCode": 0,
-        "description": "root tenant",
-        "id": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae",
-        "level": 1,
-        "name": "root.tenant"
-      }, {
-        dacpTeamCode: 0,
-        description: "",
-        id: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae-1502090717-1502091093",
-        level: 4,
-        name: "jiangtong",
-        parentId: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae-1502090717"
-      },
-        {
-          dacpTeamCode: 0,
-          description: "asdasd",
-          id: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae-1502090717",
-          level: 3,
-          name: "asdsad",
-          parentId: "51cadf67-7b37-11e7-aa10-fa163ed7d0ae"
-        }, {
-          "dacpTeamCode": 0,
-          "description": "aaa",
-          "id": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae-1502086896",
-          "level": 2,
-          "name": "zaaa",
-          "parentId": "ae783b6d-655a-11e7-aa10-fa163ed7d0ae"
-        }]
+  .controller('TenantCtrl', ['tenant_del_Confirm','addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
+    function (tenant_del_Confirm,addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
+
       //左边导航自动变化
       var left_by_block = function () {
         var thisheight = $(window).height() - 80;
@@ -57,6 +14,13 @@ angular.module('basic')
         //$('.tree-classic').css('overflow-y','auto');
         $('.tree-classic').css('min-height', thisheight);
       };
+      $scope.deltenan= function (e,node) {
+        e.stopPropagation();
+        tenant_del_Confirm.open(node.name, node.id).then(function () {
+
+        });
+        console.log('node', node);
+      }
       $scope.looklog = function (name) {
         userinfo.query({name: name, id: Cookie.get('tenantId')}, function (res) {
           console.log('resinfo', res);

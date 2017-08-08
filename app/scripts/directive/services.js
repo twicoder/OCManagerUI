@@ -113,6 +113,45 @@ angular.module('basic.services', ['ngResource'])
         }
       };
     }])
+  .service('tenant_del_Confirm', ['$uibModal', function ($uibModal) {
+    this.open = function (name, id) {
+      return $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'views/tpl/tenant_del_Confirm.html',
+        size: 'default',
+        controller: ['$scope', '$uibModalInstance', 'deletetenantapi', function ($scope, $uibModalInstance, deletetenantapi) {
+
+
+          $scope.con = '确认删除' + name;
+          var closeConf = function () {
+            $uibModalInstance.close()
+          }
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+          };
+          $scope.ok = function () {
+            console.log('id', id);
+            deletetenantapi.delete({id: id}, function () {
+              $scope.con = '删除成功';
+              window.setTimeout(closeConf, 1500);
+            }, function (res) {
+              // console.log('111',res);
+              if (res.data.resCodel == 4001) {
+                $scope.con = '该用户并非由您创建，您无权删除该用户!';
+              } else if (res.data.resCodel == 4002) {
+                $scope.con = '该用户已被绑定角色，请解绑后再进行删除!';
+              } else {
+                $scope.con = '删除失败!';
+              }
+              window.setTimeout(closeConf, 2000);
+            });
+
+          };
+        }]
+      }).result;
+    };
+  }])
+
   .service('Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (userList, roleList, nameobj) {
       return $uibModal.open({
@@ -616,13 +655,13 @@ angular.module('basic.services', ['ngResource'])
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
           var timestamp = Date.parse(new Date());
           timestamp = timestamp / 1000;
-          var newid = id;
+          //var newid = id;
           var username = Cookie.get("username")
-          if (id.indexOf(username)) {
-            newid=newid.split(username)[0]
-          }
+          //if (id.indexOf(username)) {
+          //  newid=newid.split(username)[0]
+          //}
           $scope.message = {
-            id: newid + username + timestamp,
+            id: username+'-'+timestamp,
             name: '',
             description: '',
             parentId: id
