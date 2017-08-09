@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['tenantname','tenant_del_Confirm','addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
-    function (tenantname,tenant_del_Confirm,addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
+  .controller('TenantCtrl', ['addserve_Confirm','tenantname','tenant_del_Confirm','addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
+    function (addserve_Confirm,tenantname,tenant_del_Confirm,addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
 
       //左边导航自动变化
       var left_by_block = function () {
@@ -650,6 +650,47 @@ angular.module('basic')
         console.log('$scope.nodeId', $scope.nodeId);
         addTenant.open($scope.nodeId).then(function () {
           gettree()
-        });;
+        });
+      }
+      $scope.testtoggleServe = function (idx) {
+        if ($scope.testServeArr[idx].isshow) {
+          $scope.testServeArr[idx].isshow = false;
+        } else {
+          $scope.testServeArr[idx].isshow = true;
+        }
+      };
+      $scope.testtoggleServeList = function (pIdx, idx, serveObj) {
+        //console.log('$scope.newServeArr', $scope.newServeArr);
+        if ($scope.testServeArr[pIdx].servesList[idx].isshow) {
+          $scope.testServeArr[pIdx].servesList[idx].isshow = false;
+        } else {
+          bsidata.get({id: serveObj.tenantId, name: serveObj.instanceName}, function (sdata) {
+            //bsidata.get({id: 'san', name: 'n4j'}, function (sdata) {
+
+            $scope.testServeArr[pIdx].servesList[idx].charsArr = [];
+
+            $scope.testServeArr[pIdx].servesList[idx].showused = sdata.items;
+
+            //console.log('sdata', sdata);
+            for (var i = 0; i < sdata.items.length; i++) {
+              chartsFun(sdata.items[i], pIdx, idx);
+            }
+          }, function (err) {
+            //console.log('sbsierr', err);
+          });
+
+
+          $scope.testServeArr[pIdx].servesList[idx].isshow = true;
+        }
+      };
+      $scope.testServeArr = [
+        {serviceTypeName:'serviceTypeName',isshow:false,servesList:[{isshow:false,instanceName:'instanceName',showused:[{used:1},{name:'name'}]}]}
+      ]
+      //添加服务
+      $scope.addServe = function(){
+        service.query(function (data) {
+          addserve_Confirm.open(data);
+        });
+
       }
     }]);

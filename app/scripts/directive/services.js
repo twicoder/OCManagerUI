@@ -674,8 +674,33 @@ angular.module('basic.services', ['ngResource'])
               console.log('data', data);
 
               $uibModalInstance.close(true);
-            })
+            });
 
+          };
+        }]
+      }).result;
+    };
+  }])
+  //添加服务
+  .service('addserve_Confirm', ['$uibModal', function ($uibModal) {
+    this.open = function (data) {
+      return $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'views/tpl/addserve.html',
+        size: 'default',
+        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+          $scope.data = data;
+          $scope.svName = ''
+          $scope.checkSv = function(val,idx){
+            $scope.svName = val;
+            $scope.svActive = idx;
+
+          }
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+          };
+          $scope.ok = function () {
+            $uibModalInstance.close(true);
           };
         }]
       }).result;

@@ -1,0 +1,19 @@
+<div class="modal-header" style="padding:14px 14px;background: #f2f2f1;border-bottom:0;">
+  <h5 class="modal-title">
+
+    <span class="modal_name">添加服务</span>
+    <a ng-click="cancel()" href="javascript:;" class="modal-close" style="margin-top: 4px;">
+    </a>
+  </h5>
+</div>
+<div class="modal-body" >
+    <ul class="sv-wrop">
+          <li class="sv-list"  ng-class="{'svActive':svActive == $index}" ng-repeat="item in data" ng-click="checkSv(item.servicename,$index)">
+            <img src="./images/serviceList/{{item.servicename | lowerCase}}.png">
+            <div class="sv-name">{{item.servicename}}</div>
+          </li>
+    </ul>
+</div>
+<div class="modal-footer"   style="text-align: right">
+  <span class="btn-newst" ng-click="ok()">确认</span>
+</div>
