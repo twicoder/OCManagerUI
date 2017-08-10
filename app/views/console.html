@@ -18,14 +18,14 @@
 
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-          <form class="navbar-form navbar-right" ng-if="username !== null">
-            <!--<button class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"-->
-                    <!--aria-expanded="false">-->
-              <!--admin-->
-            <!--</button>-->
-            <div class="console_name">
-              <p class="set_text_ellipsis" title={{loginname}}>{{loginname||''}}</p>
-            </div>
+          <form style="margin-bottom: 0;padding-bottom: 0;padding-top: 18px;" class="navbar-form navbar-right">
+            <button  style="color: #0a0a0a;box-shadow:none;outline: none" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    aria-expanded="false">
+              <span>{{loginname}}</span>
+            </button>
+            <!--<div class="console_name">-->
+              <!--<p class="set_text_ellipsis" title={{loginname}}>{{loginname||''}}</p>-->
+            <!--</div>-->
             <ul class="dropdown-menu">
               <li><a href="" ng-click="logout()">登出</a></li>
             </ul>

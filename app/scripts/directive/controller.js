@@ -3,16 +3,16 @@
  */
 "use strict";
 angular.module('basic.controller', [])
-  .controller('AppCtrl', ['$rootScope', '$state', '$log', 'AUTH_EVENTS',
-    function ($rootScope, $state, $log, AUTH_EVENTS) {
+  .controller('AppCtrl', ['$rootScope', '$state', '$log', 'AUTH_EVENTS','Cookie',
+    function ($rootScope, $state, $log, AUTH_EVENTS,Cookie) {
     //console相关全局变量
     $rootScope.console = {};
 
     $rootScope.$on(AUTH_EVENTS.loginNeeded, function () {
       $log.info(AUTH_EVENTS.loginNeeded);
-      //Cookie.clear('namespace');
-      //Cookie.clear('df_access_token');
-      //Cookie.clear('region');
+      Cookie.clear('username');
+      Cookie.clear('tenantId');
+      Cookie.clear('token');
       //$rootScope.region = '';
       //$rootScope.user = '';
       //$rootScope.namespace = "";
@@ -23,9 +23,9 @@ angular.module('basic.controller', [])
     });
     $rootScope.$on(AUTH_EVENTS.httpForbidden, function () {
       $log.info(AUTH_EVENTS.httpForbidden);
-      //Cookie.clear('namespace');
-      //Cookie.clear('df_access_token');
-      //Cookie.clear('region');
+      Cookie.clear('username');
+      Cookie.clear('tenantId');
+      Cookie.clear('token');
       //$rootScope.region = '';
       //$rootScope.user = '';
       //$rootScope.namespace = "";
