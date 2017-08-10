@@ -560,7 +560,31 @@ angular.module('basic')
 
 
       // 左侧导航切换
+      function classify (bsis){
+        $scope.testServeArr = []
+        var servicenames = [];
+        angular.forEach(bsis, function (bsi, i) {
+          servicenames.push(bsi.serviceTypeName);
+          bsi.isshow=false
+        })
+        servicenames = servicenames.unique()
 
+        angular.forEach(servicenames, function (servicename, k) {
+          $scope.testServeArr.push({
+            serviceTypeName: servicename,
+            isshow: false,
+            servesList: []
+          })
+        })
+        angular.forEach(bsis, function (bsi, i) {
+          angular.forEach($scope.testServeArr, function (serve, k) {
+            if (serve.serviceTypeName === bsi.serviceTypeName) {
+              serve.servesList.push(bsi) ;
+            }
+          })
+        })
+
+      }
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
         //console.log('node', node);
@@ -635,43 +659,11 @@ angular.module('basic')
               "tenantId": "zhaoyim"
             },
           ]
-          $scope.testServeArr = [
-            //{
-            //  serviceTypeName: 'serviceTypeName',
-            //  isshow: false,
-            //  servesList: [
-            //    {
-            //      isshow: false,
-            //      instanceName: 'instanceName',
-            //      showused: [
-            //        {used: 1},
-            //        {name: 'name'}
-            //      ]
-            //    }]
-            //}
-          ]
-          var servicenames = [];
-          angular.forEach(bsis, function (bsi, i) {
-            servicenames.push(bsi.serviceTypeName);
-            bsi.isshow=false
-          })
-          servicenames = servicenames.unique()
+          classify (bsis)
 
-          angular.forEach(servicenames, function (servicename, k) {
-            $scope.testServeArr.push({
-              serviceTypeName: servicename,
-              isshow: false,
-              servesList: []
-            })
-          })
-          angular.forEach(bsis, function (bsi, i) {
-            angular.forEach($scope.testServeArr, function (serve, k) {
-              if (serve.serviceTypeName === bsi.serviceTypeName) {
-                serve.servesList.push(bsi) ;
-              }
-            })
-          })
-          console.log('servicenames', servicenames);
+
+
+          //console.log('servicenames', servicenames);
           if (bsis.length > 0) {
             $scope.roleDemoList = roleDemoList.slice(2);
             //console.log('bbbbb');
