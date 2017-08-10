@@ -8,9 +8,9 @@
 </div>
 <div class="modal-body" >
     <ul class="sv-wrop">
-          <li class="sv-list"  ng-class="{'svActive':svActive == $index}" ng-repeat="item in data" ng-click="checkSv(item.servicename,$index)">
-            <img src="./images/serviceList/{{item.servicename | lowerCase}}.png">
-            <div class="sv-name">{{item.servicename}}</div>
+          <li class="sv-list"  ng-class="{'svActive':svActive == $index}" ng-repeat="item in data" ng-click="checkSv(item.metadata.name,$index)">
+            <img src="./images/serviceList/{{item.metadata.name | lowerCase}}.png">
+            <div class="sv-name">{{item.metadata.name}}</div>
           </li>
     </ul>
 </div>

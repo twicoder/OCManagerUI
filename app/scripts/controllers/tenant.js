@@ -4,9 +4,24 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addserve_Confirm','tenantname','tenant_del_Confirm','addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm',
-    function (addserve_Confirm,tenantname,tenant_del_Confirm,addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm) {
-
+  .controller('TenantCtrl', ['addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+      Array.prototype.unique = function () {
+        var res = [this[0]];
+        for (var i = 1; i < this.length; i++) {
+          var repeat = false;
+          for (var j = 0; j < res.length; j++) {
+            if (this[i] == res[j]) {
+              repeat = true;
+              break;
+            }
+          }
+          if (!repeat) {
+            res.push(this[i]);
+          }
+        }
+        return res;
+      }
       //左边导航自动变化
       var left_by_block = function () {
         var thisheight = $(window).height() - 80;
@@ -14,19 +29,20 @@ angular.module('basic')
         //$('.tree-classic').css('overflow-y','auto');
         $('.tree-classic').css('min-height', thisheight);
       };
-      $scope.deltenan= function (e,node) {
+      $scope.deltenan = function (e, node) {
         e.stopPropagation();
         tenant_del_Confirm.open(node.name, node.id).then(function () {
           gettree()
         });
         //console.log('node', node);
       }
-      function gettree(){
-        tenantname.query({name:Cookie.get('username')}, function (tree) {
+      function gettree() {
+        tenantname.query({name: Cookie.get('username')}, function (tree) {
 
           creattree(tree)
         })
       }
+
       $scope.looklog = function (name) {
         userinfo.query({name: name, id: Cookie.get('tenantId')}, function (res) {
           console.log('resinfo', res);
@@ -242,7 +258,7 @@ angular.module('basic')
           $scope.grid.bsitotal = $scope.bsis.length;
           checkServe($scope.servesArr, $scope.bsis);
           refresh(1);
-                  }
+        }
 
         //console.log('bsi', bsis);
         //}
@@ -280,6 +296,7 @@ angular.module('basic')
         showCompany: true,//展示子公司列表
         showProject: false,//展示子项目列表
         showChildnode: false,//展示子项目列表
+        showbsi: false,
         roleTitle: tree[0] ? tree[0].name : '',
         treeId: ''
       };
@@ -543,10 +560,34 @@ angular.module('basic')
 
 
       // 左侧导航切换
+      function classify (bsis){
+        $scope.testServeArr = []
+        var servicenames = [];
+        angular.forEach(bsis, function (bsi, i) {
+          servicenames.push(bsi.serviceTypeName);
+          bsi.isshow=false
+        })
+        servicenames = servicenames.unique()
 
+        angular.forEach(servicenames, function (servicename, k) {
+          $scope.testServeArr.push({
+            serviceTypeName: servicename,
+            isshow: false,
+            servesList: []
+          })
+        })
+        angular.forEach(bsis, function (bsi, i) {
+          angular.forEach($scope.testServeArr, function (serve, k) {
+            if (serve.serviceTypeName === bsi.serviceTypeName) {
+              serve.servesList.push(bsi) ;
+            }
+          })
+        })
+
+      }
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
-        console.log('node', node);
+        //console.log('node', node);
         //console.log(node.level, $scope.userroleid);
         Cookie.set('tenantId', node.id, 24 * 3600 * 1000);
         $scope.grid.roleTitle = node.name;
@@ -555,49 +596,119 @@ angular.module('basic')
         $scope.newServeArr = [];
         getUserInfo(node.id, node);
         tenantbsi.query({id: node.id}, function (bsis) {
-          console.log('bsis', bsis);
+          //console.log('bsis', bsis);
+
           //$scope.bsis = bsis;
-              //$scope.grid.bsitotal = $scope.bsis.length;
-              //checkServe($scope.servesArr, $scope.bsis);
-              //refresh(1);
-              //console.log('bsi', bsis);
-            }, function (err) {
+          //$scope.grid.bsitotal = $scope.bsis.length;
+          //checkServe($scope.servesArr, $scope.bsis);
+          //refresh(1);
+          bsis = [
+            {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "ETCD",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "HDFS",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "HBase",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "MapReduce",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "Spark",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "Kafka",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "Spark",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "ETCD",
+              "tenantId": "zhaoyim"
+            }, {
+              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+              "instanceName": "ETCD-instance017",
+              "serviceTypeId": "",
+              "serviceTypeName": "ETCD",
+              "tenantId": "zhaoyim"
+            },
+          ]
+          classify (bsis)
 
-            })
 
-        if (node.parentId) {//lev2
-          $scope.grid.showCompany = false;
-          $scope.grid.showProject = true;
-          $scope.grid.showChildnode = false;
-          $('.right-nav>li').eq(1).addClass('active').siblings().removeClass('active');
-          $('.right-content>li').eq(1).show().siblings().hide();
-          $scope.roleDemoList = roleDemoList.slice(1, 2);
-        } else if (!node.parentId) {//lev1
-          $scope.grid.treeId = 2;
-          $scope.roleDemoList = roleDemoList.slice(0, 1);
-          $scope.grid.showCompany = true;
-          $scope.grid.showProject = false;
-          $scope.grid.showChildnode = false;
-          $('.right-nav>li').eq(0).addClass('active').siblings().removeClass('active');
-          $('.right-content>li').eq(0).show().siblings().hide();
 
+          //console.log('servicenames', servicenames);
+          if (bsis.length > 0) {
+            $scope.roleDemoList = roleDemoList.slice(2);
+            //console.log('bbbbb');
+            $scope.grid.showCompany = false;
+            $scope.grid.showProject = false;
+            $scope.grid.showChildnode = true;
+
+            $('.right-nav>li').eq(2).addClass('active').siblings().removeClass('active');
+            $('.right-content>li').eq(2).show().siblings().hide();
+          } else {
+            if (node.parentId) {//lev2
+              $scope.grid.showCompany = false;
+              $scope.grid.showProject = true;
+              $scope.grid.showChildnode = false;
+              $('.right-nav>li').eq(1).addClass('active').siblings().removeClass('active');
+              $('.right-content>li').eq(1).show().siblings().hide();
+              $scope.roleDemoList = roleDemoList.slice(1, 2);
+            } else if (!node.parentId) {//lev1
+              $scope.grid.treeId = 2;
+              $scope.roleDemoList = roleDemoList.slice(0, 1);
+              $scope.grid.showCompany = true;
+              $scope.grid.showProject = false;
+              $scope.grid.showChildnode = false;
+              $('.right-nav>li').eq(0).addClass('active').siblings().removeClass('active');
+              $('.right-content>li').eq(0).show().siblings().hide();
+
+            }
+          }
+        }, function (err) {
+
+        })
+        if (node.children.length > 0) {
+          $scope.grid.showbsi = false;
         } else {
-          $scope.roleDemoList = roleDemoList.slice(2);
-          //console.log('bbbbb');
-          $scope.grid.showCompany = false;
-          $scope.grid.showProject = false;
-          $scope.grid.showChildnode = true;
-          $('.right-nav>li').eq(2).addClass('active').siblings().removeClass('active');
-          $('.right-content>li').eq(2).show().siblings().hide();
+          $scope.grid.showbsi = true;
         }
-      };
 
+
+      };
 
 
       /////获取租户信息
 
       ////添加子租户
-      function creattree(trees){
+      function creattree(trees) {
         $scope.dataForTheTree = [];
         $scope.treemap = {};
         angular.forEach(trees, function (item) {
@@ -645,6 +756,7 @@ angular.module('basic')
           fristLoad($scope.dataForTheTree[0].id, $scope.dataForTheTree[0]);
         }
       }
+
       creattree(tree)
       $scope.addTenant = function () {
         console.log('$scope.nodeId', $scope.nodeId);
@@ -683,13 +795,12 @@ angular.module('basic')
           $scope.testServeArr[pIdx].servesList[idx].isshow = true;
         }
       };
-      $scope.testServeArr = [
-        {serviceTypeName:'serviceTypeName',isshow:false,servesList:[{isshow:false,instanceName:'instanceName',showused:[{used:1},{name:'name'}]}]}
-      ]
+
       //添加服务
-      $scope.addServe = function(){
-        service.query(function (data) {
-          addserve_Confirm.open(data);
+      $scope.addServe = function () {
+        getdfbs.get(function (data) {
+          console.log('data', data);
+          addserve_Confirm.open(data.items, $scope.nodeId);
         });
 
       }

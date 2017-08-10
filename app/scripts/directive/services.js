@@ -646,7 +646,7 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
-  .service('addTenant', ['$uibModal', 'addtenantapi','Cookie', function ($uibModal, addtenantapi,Cookie) {
+  .service('addTenant', ['$uibModal', 'addtenantapi', 'Cookie', function ($uibModal, addtenantapi, Cookie) {
     this.open = function (id) {
       return $uibModal.open({
         backdrop: 'static',
@@ -661,7 +661,7 @@ angular.module('basic.services', ['ngResource'])
           //  newid=newid.split(username)[0]
           //}
           $scope.message = {
-            id: username+'-'+timestamp,
+            id: username + '-' + timestamp,
             name: '',
             description: '',
             parentId: id
@@ -683,15 +683,15 @@ angular.module('basic.services', ['ngResource'])
   }])
   //添加服务
   .service('addserve_Confirm', ['$uibModal', function ($uibModal) {
-    this.open = function (data) {
+    this.open = function (data,id) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+        controller: ['$scope', '$uibModalInstance', 'creatbsi','Cookie', function ($scope, $uibModalInstance, creatbsi,Cookie) {
           $scope.data = data;
           $scope.svName = ''
-          $scope.checkSv = function(val,idx){
+          $scope.checkSv = function (val, idx) {
             $scope.svName = val;
             $scope.svActive = idx;
 
@@ -700,7 +700,41 @@ angular.module('basic.services', ['ngResource'])
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
-            $uibModalInstance.close(true);
+            console.log('bsid', data[$scope.svActive].spec.plans[0].id);
+            //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
+            //var obj = {}
+            //if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
+            //  for (var k in data[$scope.svActive].spec.plans[0].metadata.customize) {
+            //    console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+            //    obj[k]=data[$scope.svActive].spec.plans[0].metadata.customize[k].default
+            //  }
+            //}
+            var timestamp = Date.parse(new Date());
+            timestamp = timestamp / 1000;
+            //var newid = id;
+            var username = Cookie.get("username")
+            var bsiobj={
+              "kind":"BackingServiceInstance",
+              "apiVersion":"v1",
+              "metadata":
+              {
+                "name":data[$scope.svActive].metadata.name+'-'+username +'-' + timestamp,
+              },
+              "spec":
+              {
+                "provisioning":
+                {
+                  "backingservice_name":data[$scope.svActive].metadata.name,
+                  "backingservice_plan_guid":data[$scope.svActive].spec.plans[0].id,
+                }
+              }
+            }
+
+            creatbsi.post({id:id},bsiobj, function (data) {
+              console.log('data', data);
+              $uibModalInstance.close(true);
+            })
+
           };
         }]
       }).result;

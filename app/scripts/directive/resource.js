@@ -118,6 +118,19 @@ angular.module('basic.resource', ['ngResource'])
     });
     return userinfo;
   }])
+  .factory('getdfbs', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var getdfbs = $resource(GLOBAL.host + '/service/df', {}, {
+    });
+    return getdfbs;
+  }])
+  .factory('creatbsi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var creatbsi = $resource(GLOBAL.host + '/tenant/:id/service/instance', {
+      id:'@id'
+    }, {
+      post: {method: "POST"}
+    });
+    return creatbsi;
+  }])
   .factory('addtenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var addtenant = $resource(GLOBAL.host + '/tenant', {}, {
       post: {method: "POST"}
