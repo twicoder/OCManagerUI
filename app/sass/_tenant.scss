@@ -392,7 +392,18 @@ $smbg: #c256fc !default;
 .meunu-wrop ul{
   width: 417px;
 }
-
+.delbsi{
+  float:right;color:#f39c12;cursor: pointer;
+}
+.editSv{
+  float:right;color:#f39c12;cursor: pointer;margin-right: 15px;
+}
+.delbsi:hover{
+  text-decoration: underline;
+}
+.editSv:hover{
+  text-decoration: underline;
+}
 .add-myserve{
   height: 30px;
   line-height:30px;
@@ -422,6 +433,9 @@ $smbg: #c256fc !default;
       border-left:1px solid #ebebe9;
       display: inline-block;
       text-align:center;
+    }
+    input[disabled]{
+      background: #ebebe9;
     }
   }
 }
