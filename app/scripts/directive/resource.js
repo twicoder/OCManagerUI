@@ -118,6 +118,22 @@ angular.module('basic.resource', ['ngResource'])
     });
     return userinfo;
   }])
+  .factory('deletebsi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var deletebsi = $resource(GLOBAL.host + '/tenant/:id/service/instance/:name', {
+      name:'@name',
+      id:'@id'
+    }, {
+      delete: {method: "DELETE"}
+    });
+    return deletebsi;
+  }])
+  .factory('getplan', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var getplan = $resource(GLOBAL.host + 'service/:name/plan', {
+      name:'@name'
+    }, {
+    });
+    return getplan;
+  }])
   .factory('getdfbs', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var getdfbs = $resource(GLOBAL.host + '/service/df', {}, {
     });
