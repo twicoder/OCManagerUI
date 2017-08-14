@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['updateinstance','addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (updateinstance,addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['deletebsi','creatbsi','getplan','updateinstance','addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (deletebsi,creatbsi,getplan,updateinstance,addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         var res = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -561,31 +561,132 @@ angular.module('basic')
 
       // 左侧导航切换
       function classify (bsis){
-        $scope.svArr = []
-        var servicenames = [];
-        angular.forEach(bsis, function (bsi, i) {
-          servicenames.push(bsi.serviceTypeName);
-          bsi.isshow=false
-        })
-        servicenames = servicenames.unique()
+        if (bsis.length > 0) {
+          $scope.svArr = []
+          var servicenames = [];
+          angular.forEach(bsis, function (bsi, i) {
+            servicenames.push(bsi.serviceTypeName);
+            bsi.isshow=false
+          })
+          servicenames = servicenames.unique()
 
-        angular.forEach(servicenames, function (servicename, k) {
-          $scope.svArr.push({
-            serviceTypeName: servicename,
-            isshow: false,
-            servesList: []
+          angular.forEach(servicenames, function (servicename, k) {
+            $scope.svArr.push({
+              serviceTypeName: servicename,
+              isshow: false,
+              servesList: []
+            })
           })
-        })
-        angular.forEach(bsis, function (bsi, i) {
-          angular.forEach($scope.svArr, function (serve, k) {
-            if (serve.serviceTypeName === bsi.serviceTypeName) {
-              serve.servesList.push(bsi) ;
-            }
+          angular.forEach(bsis, function (bsi, i) {
+            angular.forEach($scope.svArr, function (serve, k) {
+              if (serve.serviceTypeName === bsi.serviceTypeName) {
+                serve.servesList.push(bsi) ;
+              }
+            })
           })
-        })
+          angular.forEach($scope.svArr, function (items,i) {
+
+            angular.forEach(items.servesList, function (item,k) {
+              item.ziyuan=[]
+              if (item.quota) {
+                var obj = JSON.parse(item.quota)
+                angular.forEach(obj, function (quota,j) {
+                  console.log(quota,j);
+                  if (j !== "instance_id") {
+                    item.ziyuan.push({key:j,value:quota})
+                  }
+
+
+                })
+              }
+
+            })
+          })
+          //var obj = JSON.parse(str)
+          console.log('$scope.svArr', $scope.svArr);
+        }else {
+          $scope.svArr = []
+          return
+        }
 
         // $scope.mybsis=$scope.svArr
       }
+      $scope.addser= function (name) {
+        getdfbs.get(function (data) {
+          //data.items
+          angular.forEach(data.items, function (bs,i) {
+            if (bs.metadata.name === name) {
+              var obj = {}
+
+              if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
+                for (var k in bs.spec.plans[0].metadata.customize) {
+                  // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+                  obj[k]=bs.spec.plans[0].metadata.customize[k].default.toString()
+                }
+              }
+              var timestamp = Date.parse(new Date());
+              timestamp = timestamp / 1000;
+              //var newid = id;
+              var username = Cookie.get("username")
+              var bsiobj={
+                "kind":"BackingServiceInstance",
+                "apiVersion":"v1",
+                "metadata":
+                {
+                  "name":bs.metadata.name+'-'+username +'-' + timestamp,
+                },
+                "spec":
+                {
+                  "provisioning":
+                  {
+                    "backingservice_name":bs.metadata.name,
+                    "backingservice_plan_guid":bs.spec.plans[0].id,
+                    "parameters":obj
+                  }
+                }
+              }
+
+              creatbsi.post({id:$scope.nodeId},bsiobj, function (data) {
+                console.log('data', data);
+                tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+                  var bsitems = []
+                  angular.forEach(bsis, function (bsi,i) {
+                    if (bsi.status == "Failure") {
+
+                    }else {
+                      bsitems.push(bsi)
+                    }
+                  })
+                  bsis=angular.copy(bsitems)
+                  classify (bsis)
+                })
+              })
+            }
+          })
+        })
+      }
+
+
+
+      $scope.delbsied= function (name) {
+        deletebsi.delete({id:$scope.nodeId,name:name}, function (datq) {
+          tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+            var bsitems = []
+            angular.forEach(bsis, function (bsi,i) {
+              if (bsi.status == "Failure") {
+
+              }else {
+                bsitems.push(bsi)
+              }
+            })
+            bsis=angular.copy(bsitems)
+            console.log('delete', bsis);
+
+            classify (bsis)
+          })
+        })
+      }
+
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
         //console.log('node', node);
@@ -595,6 +696,7 @@ angular.module('basic')
         $scope.nodeIf = node;
         $scope.nodeId = node.id;
         $scope.newServeArr = [];
+        $scope.svArr = []
         getUserInfo(node.id, node);
         tenantbsi.query({id: node.id}, function (bsis) {
           //console.log('bsis', bsis);
@@ -604,80 +706,87 @@ angular.module('basic')
           //checkServe($scope.servesArr, $scope.bsis);
           //refresh(1);
 
+          var bsitems = []
+          angular.forEach(bsis, function (bsi,i) {
+            if (bsi.status == "Failure") {
 
-
+            }else {
+              bsitems.push(bsi)
+            }
+          })
+          bsis=angular.copy(bsitems)
 
           //console.log('servicenames', servicenames);
           if (bsis.length > 0) {
-            // $scope.mybsis =[];
 
-            bsis = [
-              {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "ETCD",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "HDFS",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "HBase",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "MapReduce",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "Spark",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "Kafka",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "Spark",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "ETCD",
-                "tenantId": "zhaoyim"
-              }, {
-                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-                "instanceName": "ETCD-instance017",
-                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-                "serviceTypeId": "",
-                "serviceTypeName": "ETCD",
-                "tenantId": "zhaoyim"
-              },
-            ]
-            classify (bsis)
+            // $scope.mybsis =[];
+            //bsis = [
+            //  {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "ETCD",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "HDFS",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "HBase",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "MapReduce",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "Spark",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "Kafka",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "Spark",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "ETCD",
+            //    "tenantId": "zhaoyim"
+            //  }, {
+            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+            //    "instanceName": "ETCD-instance017",
+            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+            //    "serviceTypeId": "",
+            //    "serviceTypeName": "ETCD",
+            //    "tenantId": "zhaoyim"
+            //  },
+            //]
+            classify (bsitems)
             $scope.roleDemoList = roleDemoList.slice(2);
             //console.log('bbbbb');
             $scope.grid.showCompany = false;
@@ -789,20 +898,20 @@ angular.module('basic')
         if ($scope.svArr[pIdx].servesList[idx].isshow) {
           $scope.svArr[pIdx].servesList[idx].isshow = false;
         } else {
-          bsidata.get({id: serveObj.tenantId, name: serveObj.instanceName}, function (sdata) {
-            //bsidata.get({id: 'san', name: 'n4j'}, function (sdata) {
-
-            $scope.svArr[pIdx].servesList[idx].charsArr = [];
-
-            $scope.svArr[pIdx].servesList[idx].showused = sdata.items;
-
-            //console.log('sdata', sdata);
-            for (var i = 0; i < sdata.items.length; i++) {
-              chartsFun(sdata.items[i], pIdx, idx);
-            }
-          }, function (err) {
-            //console.log('sbsierr', err);
-          });
+          //bsidata.get({id: serveObj.tenantId, name: serveObj.instanceName}, function (sdata) {
+          //  //bsidata.get({id: 'san', name: 'n4j'}, function (sdata) {
+          //
+          //  $scope.svArr[pIdx].servesList[idx].charsArr = [];
+          //
+          //  $scope.svArr[pIdx].servesList[idx].showused = sdata.items;
+          //
+          //  //console.log('sdata', sdata);
+          //  for (var i = 0; i < sdata.items.length; i++) {
+          //    chartsFun(sdata.items[i], pIdx, idx);
+          //  }
+          //}, function (err) {
+          //  //console.log('sbsierr', err);
+          //});
 
 
           $scope.svArr[pIdx].servesList[idx].isshow = true;
@@ -812,8 +921,30 @@ angular.module('basic')
       //添加服务
       $scope.addServe = function () {
         getdfbs.get(function (data) {
-          console.log('data', data);
-          addserve_Confirm.open(data.items, $scope.nodeId);
+          //console.log('data', data);
+          addserve_Confirm.open(data.items, $scope.nodeId).then(function () {
+            //$scope.showSelected($scope.nodeIf)
+            tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+              var bsitems = []
+              angular.forEach(bsis, function (bsi,i) {
+                if (bsi.status == "Failure") {
+
+                }else {
+                  bsitems.push(bsi)
+                }
+              })
+              bsis=angular.copy(bsitems)
+              classify (bsis)
+            })
+              //console.log('bsis', bsis);
+
+              //$scope.bsis = bsis;
+              //$scope.grid.bsitotal = $scope.bsis.length;
+              //checkServe($scope.servesArr, $scope.bsis);
+              //refresh(1);
+
+
+          });
         });
 
       };
@@ -822,13 +953,29 @@ angular.module('basic')
         console.log($scope.svArr);
       };
       $scope.saveSv = function(pidx,idx,bsi){
-        console.log('bsis', $scope.svArr[pidx].servesList[idx]);
+        console.log('bsis', bsi.ziyuan);
         // $scope.svArr[pidx].servesList[idx]
         var putobj ={
           parameters:{}
         };
-        putobj.parameters=bsi.quota
+        angular.forEach(bsi.ziyuan, function (item,i) {
+          putobj.parameters[item.key]=item.value
+        })
+        //putobj.parameters=bsi.quota
         updateinstance.put({id:$scope.nodeId,instanceName:bsi.instanceName},putobj,function (data) {
+          //$scope.showSelected($scope.nodeIf)
+          tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+            var bsitems = []
+            angular.forEach(bsis, function (bsi,i) {
+              if (bsi.status == "Failure") {
+
+              }else {
+                bsitems.push(bsi)
+              }
+            })
+            bsis=angular.copy(bsitems)
+            classify (bsis)
+          })
 
         })
         $scope.svArr[pidx].servesList[idx]['isde'] = false;

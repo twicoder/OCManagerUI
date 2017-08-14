@@ -702,13 +702,14 @@ angular.module('basic.services', ['ngResource'])
           $scope.ok = function () {
             console.log('bsid', data[$scope.svActive].spec.plans[0].id);
             //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
-            //var obj = {}
-            //if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
-            //  for (var k in data[$scope.svActive].spec.plans[0].metadata.customize) {
-            //    console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
-            //    obj[k]=data[$scope.svActive].spec.plans[0].metadata.customize[k].default
-            //  }
-            //}
+            var obj = {}
+
+            if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
+              for (var k in data[$scope.svActive].spec.plans[0].metadata.customize) {
+               // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+                obj[k]=data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString()
+              }
+            }
             var timestamp = Date.parse(new Date());
             timestamp = timestamp / 1000;
             //var newid = id;
@@ -726,6 +727,7 @@ angular.module('basic.services', ['ngResource'])
                 {
                   "backingservice_name":data[$scope.svActive].metadata.name,
                   "backingservice_plan_guid":data[$scope.svActive].spec.plans[0].id,
+                  "parameters":obj
                 }
               }
             }

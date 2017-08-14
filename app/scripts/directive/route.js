@@ -51,12 +51,12 @@ angular.module('basic.router', ['ui.router'])
         resolve:{
         }
       })
-      .state('home.platform', {
-        url: '/platform',
-        templateUrl: 'views/platform.html',
-        controller: 'PlatformCtrl',
-
-      })
+      //.state('home.platform', {
+      //  url: '/platform',
+      //  templateUrl: 'views/platform.html',
+      //  controller: 'PlatformCtrl',
+      //
+      //})
       .state('home.permission', {
         url: '/permission',
         templateUrl: 'views/permission.html',

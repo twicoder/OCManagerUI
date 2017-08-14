@@ -130,18 +130,18 @@
                           {{arr.instanceName}}
                         </div>
                         <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                          <sapn style="" class="delbsi" ng-click="">删除</sapn>
+                          <sapn style="" class="delbsi" ng-click="delbsied(arr.instanceName)">删除</sapn>
                           <sapn ng-if="!arr.isde" style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</sapn>
                           <sapn ng-if="arr.isde" class="editSv" ng-click="saveSv(timeIndex,$index,arr)">保存</sapn>
 
                         </div>
                       </div>
                       <div class="list-con" ng-show="arr.isshow">
-                          <div class="row add-myserve" ng-repeat="(Indexs,quotas) in arr.quota" >
-                              <div class="col-md-2">{{Indexs}}</div>
+                          <div class="row add-myserve" ng-repeat="ziyuan in arr.ziyuan" >
+                              <div class="col-md-2">{{ziyuan.key}}</div>
                               <div class="col-md-10">
                                 <div class="use-num-wrop">
-                                  <input class="no-monetary" ng-model="quotas" type="text" ng-disabled="!arr.isde">
+                                  <input class="no-monetary" ng-model="ziyuan.value" type="text" ng-disabled="!arr.isde">
                                 </div>
                               </div>
                           </div>
@@ -165,7 +165,8 @@
                     </div>
                   </div>
                 </div>
-                <div style="margin:20px 0px;"> <botton class="add-instance">添加实例</botton></div>
+                <div style="margin:20px 0px;">
+                  <botton class="add-instance" ng-click="addser(item.serviceTypeName)">添加实例</botton></div>
               </div>
 
               <!--资源管理资源管理资源管理-->
