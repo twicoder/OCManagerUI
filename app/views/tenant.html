@@ -131,7 +131,8 @@
                         </div>
                         <div class="col-md-2" style="text-align: right;font-size: 16px;">
                           <sapn style="" class="delbsi" ng-click="">删除</sapn>
-                          <sapn style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</sapn>
+                          <sapn ng-if="!arr.isde" style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</sapn>
+                          <sapn ng-if="arr.isde" class="editSv" ng-click="saveSv(timeIndex,$index,arr)">保存</sapn>
 
                         </div>
                       </div>

@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['updateinstance','addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (updateinstance,addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         var res = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -584,6 +584,7 @@ angular.module('basic')
           })
         })
 
+        // $scope.mybsis=$scope.svArr
       }
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
@@ -608,6 +609,8 @@ angular.module('basic')
 
           //console.log('servicenames', servicenames);
           if (bsis.length > 0) {
+            // $scope.mybsis =[];
+
             bsis = [
               {
                 "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
@@ -817,5 +820,17 @@ angular.module('basic')
       $scope.editSv = function(pidx,idx){
         $scope.svArr[pidx].servesList[idx]['isde'] = true;
         console.log($scope.svArr);
+      };
+      $scope.saveSv = function(pidx,idx,bsi){
+        console.log('bsis', $scope.svArr[pidx].servesList[idx]);
+        // $scope.svArr[pidx].servesList[idx]
+        var putobj ={
+          parameters:{}
+        };
+        putobj.parameters=bsi.quota
+        updateinstance.put({id:$scope.nodeId,instanceName:bsi.instanceName},putobj,function (data) {
+
+        })
+        $scope.svArr[pidx].servesList[idx]['isde'] = false;
       };
     }]);
