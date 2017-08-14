@@ -136,30 +136,30 @@
                         </div>
                       </div>
                       <div class="list-con" ng-show="arr.isshow">
-                          <div class="row add-myserve">
-                              <div class="col-md-2">容量</div>
+                          <div class="row add-myserve" ng-repeat="(Indexs,quotas) in arr.quota" >
+                              <div class="col-md-2">{{Indexs}}</div>
                               <div class="col-md-10">
                                 <div class="use-num-wrop">
-                                  <input class="no-monetary" type="text" ng-disabled="!arr.isde">
+                                  <input class="no-monetary" ng-model="quotas" type="text" ng-disabled="!arr.isde">
                                 </div>
                               </div>
                           </div>
-                          <div class="row add-myserve">
-                            <div class="col-md-2">最大容量</div>
-                            <div class="col-md-10">
-                              <div class="use-num-wrop">
-                                <input class="use-input" type="text" ng-disabled="!arr.isde"><span class="monetary">%</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row add-myserve">
-                            <div class="col-md-2">应用程序上限</div>
-                            <div class="col-md-10">
-                              <div class="use-num-wrop">
-                                <input type="text" class="use-input" ng-disabled="!arr.isde"><span class="monetary">%</span>
-                              </div>
-                            </div>
-                          </div>
+                          <!--<div class="row add-myserve">-->
+                            <!--<div class="col-md-2">最大容量</div>-->
+                            <!--<div class="col-md-10">-->
+                              <!--<div class="use-num-wrop">-->
+                                <!--<input class="use-input" type="text" ng-disabled="!arr.isde"><span class="monetary">%</span>-->
+                              <!--</div>-->
+                            <!--</div>-->
+                          <!--</div>-->
+                          <!--<div class="row add-myserve">-->
+                            <!--<div class="col-md-2">应用程序上限</div>-->
+                            <!--<div class="col-md-10">-->
+                              <!--<div class="use-num-wrop">-->
+                                <!--<input type="text" class="use-input" ng-disabled="!arr.isde"><span class="monetary">%</span>-->
+                              <!--</div>-->
+                            <!--</div>-->
+                          <!--</div>-->
                       </div>
                     </div>
                   </div>
