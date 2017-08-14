@@ -602,69 +602,79 @@ angular.module('basic')
           //$scope.grid.bsitotal = $scope.bsis.length;
           //checkServe($scope.servesArr, $scope.bsis);
           //refresh(1);
-          bsis = [
-            {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "ETCD",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "HDFS",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "HBase",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "MapReduce",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "Spark",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "Kafka",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "Spark",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "ETCD",
-              "tenantId": "zhaoyim"
-            }, {
-              "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-              "instanceName": "ETCD-instance017",
-              "serviceTypeId": "",
-              "serviceTypeName": "ETCD",
-              "tenantId": "zhaoyim"
-            },
-          ]
-          classify (bsis)
+
 
 
 
           //console.log('servicenames', servicenames);
           if (bsis.length > 0) {
+            bsis = [
+              {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "ETCD",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "HDFS",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "HBase",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "MapReduce",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "Spark",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "Kafka",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "Spark",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "ETCD",
+                "tenantId": "zhaoyim"
+              }, {
+                "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
+                "instanceName": "ETCD-instance017",
+                "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
+                "serviceTypeId": "",
+                "serviceTypeName": "ETCD",
+                "tenantId": "zhaoyim"
+              },
+            ]
+            classify (bsis)
             $scope.roleDemoList = roleDemoList.slice(2);
             //console.log('bbbbb');
             $scope.grid.showCompany = false;
