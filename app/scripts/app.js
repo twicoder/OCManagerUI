@@ -74,6 +74,7 @@ angular.module('basic', [
   }])
   .run(['$rootScope', '$state', 'user', 'Cookie',
     function ($rootScope, $state, user, Cookie) {
+
       function statego(data) {
         var ishas = false;
         angular.forEach(data, function (use) {
