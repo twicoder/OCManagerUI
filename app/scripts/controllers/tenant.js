@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['deletebsi','creatbsi','getplan','updateinstance','addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (deletebsi,creatbsi,getplan,updateinstance,addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['uuid','deletebsi','creatbsi','getplan','updateinstance','addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (uuid,deletebsi,creatbsi,getplan,updateinstance,addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         var res = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -22,6 +22,7 @@ angular.module('basic')
         }
         return res;
       }
+
       //左边导航自动变化
       var left_by_block = function () {
         var thisheight = $(window).height() - 80;
@@ -624,8 +625,8 @@ angular.module('basic')
                   obj[k]=bs.spec.plans[0].metadata.customize[k].default.toString()
                 }
               }
-              var timestamp = Date.parse(new Date());
-              timestamp = timestamp / 1000;
+              //var timestamp = Date.parse(new Date());
+              //timestamp = timestamp / 1000;
               //var newid = id;
               var username = Cookie.get("username")
               var bsiobj={
@@ -633,7 +634,7 @@ angular.module('basic')
                 "apiVersion":"v1",
                 "metadata":
                 {
-                  "name":bs.metadata.name+'-'+username +'-' + timestamp,
+                  "name":bs.metadata.name+'-'+username +'-' + uuid.num(7, 16),
                 },
                 "spec":
                 {

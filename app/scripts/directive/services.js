@@ -283,6 +283,39 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
+  .service('uuid', ['$uibModal', function ($uibModal) {
+    this.num = function (len, radix) {
+        var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+        var chars = CHARS, uuid = [], i;
+        radix = radix || chars.length;
+
+        if (len) {
+          // Compact form
+          for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+        } else {
+          // rfc4122, version 4 form
+          var r;
+
+          // rfc4122 requires these characters
+          uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+          uuid[14] = '4';
+
+          // Fill in random data.  At i==19 set the high bits of clock sequence as
+          // per rfc4122, sec. 4.1.5
+          for (i = 0; i < 36; i++) {
+            if (!uuid[i]) {
+              r = 0 | Math.random()*16;
+              uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+            }
+          }
+        }
+
+        return uuid.join('');
+      };
+
+
+
+  }])
   .service('delconfirm', ['$uibModal', function ($uibModal) {
     this.open = function (title, roleId, userId, username) {
       return $uibModal.open({
@@ -688,7 +721,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'creatbsi','Cookie', function ($scope, $uibModalInstance, creatbsi,Cookie) {
+        controller: ['uuid','$scope', '$uibModalInstance', 'creatbsi','Cookie',
+          function (uuid,$scope, $uibModalInstance, creatbsi,Cookie) {
           $scope.data = data;
           $scope.svName = ''
           $scope.checkSv = function (val, idx) {
@@ -710,8 +744,8 @@ angular.module('basic.services', ['ngResource'])
                 obj[k]=data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString()
               }
             }
-            var timestamp = Date.parse(new Date());
-            timestamp = timestamp / 1000;
+            //var timestamp = Date.parse(new Date());
+            //timestamp = timestamp / 1000;
             //var newid = id;
             var username = Cookie.get("username")
             var bsiobj={
@@ -719,7 +753,7 @@ angular.module('basic.services', ['ngResource'])
               "apiVersion":"v1",
               "metadata":
               {
-                "name":data[$scope.svActive].metadata.name+'-'+username +'-' + timestamp,
+                "name":data[$scope.svActive].metadata.name+'-'+username +'-' + uuid.num(7, 16),
               },
               "spec":
               {
