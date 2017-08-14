@@ -137,6 +137,15 @@ angular.module('basic.resource', ['ngResource'])
     });
     return addtenant;
   }])
+  .factory('updateinstance', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var updateinstance = $resource(GLOBAL.host + '/tenant/:id/service/instance/:instanceName', {
+      instanceName:'@instanceName',
+      id:'@id'
+    }, {
+      put: {method: "PUT"}
+    });
+    return updateinstance;
+  }])
   .factory('deletetenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var deletetenantapi = $resource(GLOBAL.host + '/tenant/:id', {
       id:'@id'
