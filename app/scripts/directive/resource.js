@@ -75,7 +75,7 @@ angular.module('basic.resource', ['ngResource'])
     return tenantuser;
   }])
   .factory('login', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
-    var login = $resource(GLOBAL.host + '/login', {}, {
+    var login = $resource(GLOBAL.host + '/authc/login', {}, {
       post: {method: "POST"}
     });
     return login;
