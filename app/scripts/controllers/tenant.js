@@ -561,7 +561,7 @@ angular.module('basic')
 
       // 左侧导航切换
       function classify (bsis){
-        $scope.testServeArr = []
+        $scope.svArr = []
         var servicenames = [];
         angular.forEach(bsis, function (bsi, i) {
           servicenames.push(bsi.serviceTypeName);
@@ -570,14 +570,14 @@ angular.module('basic')
         servicenames = servicenames.unique()
 
         angular.forEach(servicenames, function (servicename, k) {
-          $scope.testServeArr.push({
+          $scope.svArr.push({
             serviceTypeName: servicename,
             isshow: false,
             servesList: []
           })
         })
         angular.forEach(bsis, function (bsi, i) {
-          angular.forEach($scope.testServeArr, function (serve, k) {
+          angular.forEach($scope.svArr, function (serve, k) {
             if (serve.serviceTypeName === bsi.serviceTypeName) {
               serve.servesList.push(bsi) ;
             }
@@ -761,27 +761,27 @@ angular.module('basic')
       $scope.addTenant = function () {
         console.log('$scope.nodeId', $scope.nodeId);
         addTenant.open($scope.nodeId).then(function () {
-          gettree()
+          gettree();
         });
       }
-      $scope.testtoggleServe = function (idx) {
-        if ($scope.testServeArr[idx].isshow) {
-          $scope.testServeArr[idx].isshow = false;
+      $scope.bsiToggle = function (idx) {
+        if ($scope.svArr[idx].isshow) {
+          $scope.svArr[idx].isshow = false;
         } else {
-          $scope.testServeArr[idx].isshow = true;
+          $scope.svArr[idx].isshow = true;
         }
       };
-      $scope.testtoggleServeList = function (pIdx, idx, serveObj) {
+      $scope.svToggle = function (pIdx, idx, serveObj) {
         //console.log('$scope.newServeArr', $scope.newServeArr);
-        if ($scope.testServeArr[pIdx].servesList[idx].isshow) {
-          $scope.testServeArr[pIdx].servesList[idx].isshow = false;
+        if ($scope.svArr[pIdx].servesList[idx].isshow) {
+          $scope.svArr[pIdx].servesList[idx].isshow = false;
         } else {
           bsidata.get({id: serveObj.tenantId, name: serveObj.instanceName}, function (sdata) {
             //bsidata.get({id: 'san', name: 'n4j'}, function (sdata) {
 
-            $scope.testServeArr[pIdx].servesList[idx].charsArr = [];
+            $scope.svArr[pIdx].servesList[idx].charsArr = [];
 
-            $scope.testServeArr[pIdx].servesList[idx].showused = sdata.items;
+            $scope.svArr[pIdx].servesList[idx].showused = sdata.items;
 
             //console.log('sdata', sdata);
             for (var i = 0; i < sdata.items.length; i++) {
@@ -792,7 +792,7 @@ angular.module('basic')
           });
 
 
-          $scope.testServeArr[pIdx].servesList[idx].isshow = true;
+          $scope.svArr[pIdx].servesList[idx].isshow = true;
         }
       };
 
@@ -803,5 +803,9 @@ angular.module('basic')
           addserve_Confirm.open(data.items, $scope.nodeId);
         });
 
-      }
+      };
+      $scope.editSv = function(pidx,idx){
+        $scope.svArr[pidx].servesList[idx]['isde'] = true;
+        console.log($scope.svArr);
+      };
     }]);

@@ -104,13 +104,13 @@
             <li>
               <!--资源管理资源管理资源管理-->
               <div class="user-authorize" ng-click="addServe()"><span>添加服务</span></div>
-              <div class="resource-wrop" ng-repeat="(timeIndex,item) in testServeArr">
+              <div class="resource-wrop" ng-repeat="(timeIndex,item) in svArr">
                 <div>
                   <div class="row resource-top">
                     <div class="col-md-10"
                          style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;padding:0;">
                       <sapn ng-class="{'rotate':!item.isshow, 'check-btn': item.isshow}"
-                            ng-click="testtoggleServe($index)" style="float: left;margin-right:10px;"></sapn>
+                            ng-click="bsiToggle($index)" style="float: left;margin-right:10px;"></sapn>
                       {{item.serviceTypeName}}
                     </div>
                     <div class="col-md-2" style="text-align: right;font-size: 16px;">
@@ -124,14 +124,14 @@
                         <div class="col-md-10"
                              style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;">
                           <sapn ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
-                                ng-click="testtoggleServeList(timeIndex,$index,arr)" style="float: left;margin-right:10px;">
+                                ng-click="svToggle(timeIndex,$index,arr)" style="float: left;margin-right:10px;">
 
                           </sapn>
                           {{arr.instanceName}}
                         </div>
                         <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                          <sapn style="float:right;color:#f39c12;cursor: pointer;" ng-click="">删除</sapn>
-                          <sapn style="float:right;color:#f39c12;cursor: pointer;margin-right: 15px;" ng-click="">编辑</sapn>
+                          <sapn style="" class="delbsi" ng-click="">删除</sapn>
+                          <sapn style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</sapn>
 
                         </div>
                       </div>
@@ -140,7 +140,7 @@
                               <div class="col-md-2">容量</div>
                               <div class="col-md-10">
                                 <div class="use-num-wrop">
-                                  <input class="use-input" type="text"><span class="monetary">%</span>
+                                  <input class="no-monetary" type="text" ng-disabled="!arr.isde">
                                 </div>
                               </div>
                           </div>
@@ -148,7 +148,7 @@
                             <div class="col-md-2">最大容量</div>
                             <div class="col-md-10">
                               <div class="use-num-wrop">
-                                <input class="use-input" type="text"><span class="monetary">%</span>
+                                <input class="use-input" type="text" ng-disabled="!arr.isde"><span class="monetary">%</span>
                               </div>
                             </div>
                           </div>
@@ -156,7 +156,7 @@
                             <div class="col-md-2">应用程序上限</div>
                             <div class="col-md-10">
                               <div class="use-num-wrop">
-                                <input type="text" class="use-input"><span class="monetary">%</span>
+                                <input type="text" class="use-input" ng-disabled="!arr.isde"><span class="monetary">%</span>
                               </div>
                             </div>
                           </div>
