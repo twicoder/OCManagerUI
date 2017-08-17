@@ -219,6 +219,7 @@ angular.module('basic')
 
             //console.log(item.serviceTypeName, list.serviceTypeName);
             if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
+              list.isaddbsi=false;
               item.servesList.push(list);
             }
           });
@@ -238,23 +239,23 @@ angular.module('basic')
         //if (!node) {
         //  $scope.bsis = [];
         //
-        //  tenantbsi.query({id: id}, function (bsis) {
-        //    $scope.bsis = bsis;
-        //    $scope.grid.bsitotal = $scope.bsis.length;
-        //    checkServe($scope.servesArr, $scope.bsis);
-        //    refresh(1);
-        //    //console.log('bsi', bsis);
-        //  }, function (err) {
-        //
-        //  })
+          tenantbsi.query({id: node.id}, function (bsis) {
+            $scope.bsis = bsis;
+            $scope.grid.bsitotal = $scope.bsis.length;
+            checkServe($scope.servesArr, $scope.bsis);
+            refresh(1);
+            //console.log('bsi', bsis);
+          }, function (err) {
+
+          })
         //}else {
         //alert(1)
-        $scope.bsis = node.bsis;
-        if ($scope.bsis) {
-          $scope.grid.bsitotal = $scope.bsis.length;
-          checkServe($scope.servesArr, $scope.bsis);
-          refresh(1);
-        }
+        //$scope.bsis = node.bsis;
+        //if ($scope.bsis) {
+        //  $scope.grid.bsitotal = $scope.bsis.length;
+        //  checkServe($scope.servesArr, $scope.bsis);
+        //  refresh(1);
+        //}
 
         //console.log('bsi', bsis);
         //}
@@ -294,7 +295,8 @@ angular.module('basic')
         showChildnode: false,//展示子项目列表
         showbsi: false,
         roleTitle: tree[0] ? tree[0].name : '',
-        treeId: ''
+        treeId: '',
+        isaddbsi:false
       };
 
       function getUserInfo(id, node) {
@@ -307,7 +309,9 @@ angular.module('basic')
 
       }
 
-      var roleDemoList = ['a10170cb-524a-11e7-9dbb-fa163ed7d0ae',
+      var roleDemoList =
+        [
+          'a10170cb-524a-11e7-9dbb-fa163ed7d0ae',
         'a1149421-524a-11e7-9dbb-fa163ed7d0ae',
         'a12a84d0-524a-11e7-9dbb-fa163ed7d0ae',
         'a13dd087-524a-11e7-9dbb-fa163ed7d0ae'
@@ -549,6 +553,8 @@ angular.module('basic')
       };
       //左侧导航切换
       function classify(bsis) {
+        //$scope.bsis=bsis;
+        getTenantServe($scope.nodeIf)
         if (bsis.length > 0) {
           $scope.svArr = []
           var servicenames = [];
@@ -591,7 +597,7 @@ angular.module('basic')
             })
           })
           //var obj = JSON.parse(str)
-          console.log('$scope.svArr', $scope.svArr);
+          //console.log('$scope.svArr', $scope.svArr);
         } else {
           $scope.svArr = []
           return
@@ -600,7 +606,9 @@ angular.module('basic')
         // $scope.mybsis=$scope.svArr
       }
       //添加实例
-      $scope.addser = function (name) {
+      $scope.addser = function (name,item) {
+        console.log(item.isaddbsi);
+        item.isaddbsi=true;
         getdfbs.get(function (data) {
           //data.items
           angular.forEach(data.items, function (bs, i) {
@@ -633,7 +641,7 @@ angular.module('basic')
               }
 
               creatbsi.post({id: $scope.nodeId}, bsiobj, function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 tenantbsi.query({id: $scope.nodeId}, function (bsis) {
                   var bsitems = []
                   angular.forEach(bsis, function (bsi, i) {

@@ -175,6 +175,11 @@ angular.module('basic.resource', ['ngResource'])
     });
     return deletetenantapi;
   }])
+   .factory('authctype', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+      var authctype = $resource(GLOBAL.host + '/authc/type', {
+      }, {});
+      return authctype;
+    }])
 
   .factory('serveinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var serveinfo = $resource(GLOBAL.host + '/tenant/:tenantId/service/instance/:serviceInstanceName/access/info', {tenantId:'@tenantId',serviceInstanceName:'@serviceInstanceName'}, {

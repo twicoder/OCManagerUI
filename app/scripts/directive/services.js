@@ -370,8 +370,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/user_Confirm.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'user', 'putuser',
-          function ($scope, $uibModalInstance, user, putuser) {
+        controller: ['$scope', '$uibModalInstance', 'user', 'putuser','authctype',
+          function ($scope, $uibModalInstance, user, putuser,authctype) {
             $scope.userErrInfo = '用户名不能为空';
             $scope.thisTitle = '';
             if (item) {
@@ -388,7 +388,9 @@ angular.module('basic.services', ['ngResource'])
                 description: ''
               };
             }
-
+            authctype.get({}, function (data) {
+              console.log('data', data);
+            })
             $scope.error = {
               namenull: false,
               emailnull: false

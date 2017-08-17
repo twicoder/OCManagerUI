@@ -21,7 +21,7 @@
             <li class="active" ng-show="grid.showCompany" ng-click="changeCon()"><span>子公司列表</span></li>
             <li ng-show="grid.showProject" ng-click="changeCon()"><span>项目列表</span></li>
             <li ng-show="grid.showChildnode" ng-click="changeCon()"><span>基本信息</span></li>
-            <li ng-show="grid.showChildnode" ng-click="changeCon()"><span>服务列表</span></li>
+            <li ng-show="bsis.length" ng-click="changeCon()"><span>服务列表</span></li>
             <li ng-show="grid.showbsi" ng-click="changeCon()"><span>资源管理</span></li>
             <li ng-click="changeCon()"><span>资源报告</span></li>
             <li ng-click="changeCon()"><span>用户列表</span></li>
@@ -66,7 +66,7 @@
               </ul>
 
             </li>
-            <li>
+            <li ng-show="bsis.length">
               <ul class="tenant-serve-list">
                 <li class="row" ng-repeat="bsi in bsisitem">
                   <div class="col-md-1 lscn"><img src="./images/serviceimg/{{bsi.serviceTypeName | lowerCase}}.png"
@@ -76,12 +76,11 @@
                   </div>
                   <!--<div class="col-md-3"><span>用户容量</span>&nbsp;&nbsp;路径&nbsp;:&nbsp;/usr/zhongxin/balbala;</div>-->
                   <div class="col-md-6" style="line-height: 17px;margin-top:12px;color: #999;overflow: hidden;text-overflow:ellipsis;">
-                    <p>instance_id&nbsp;:&nbsp;{{bsi.instance_id}}</p>
-                    <label ng-repeat="(key,val) in bsi.quota">{{key+'&nbsp;:&nbsp;'+val}}&nbsp;&nbsp;</label>
+                    <!--<p>instance_id&nbsp;:&nbsp;{{bsi.instance_id}}</p>-->
+                    <!--<label ng-repeat="(key,val) in bsi.quota">{{key+'&nbsp;:&nbsp;'+val}}&nbsp;&nbsp;</label>-->
                   </div>
                   <!--<div class="col-md-2">{{}}</div>-->
-                  <div class="col-md-2 lscn" style="text-align: right"><a style="margin-right: 15px;"
-                                                                          ng-click="checkInfo(bsi.tenantId,bsi.instanceName)"
+                  <div class="col-md-2 lscn" style="text-align: right"><a style="margin-right: 15px;"ng-click="checkInfo(bsi.tenantId,bsi.instanceName)"
                                                                           href="javascript:void(0);">访问信息</a></div>
                 </li>
               </ul>
@@ -145,29 +144,13 @@
                                 </div>
                               </div>
                           </div>
-                          <!--<div class="row add-myserve">-->
-                            <!--<div class="col-md-2">最大容量</div>-->
-                            <!--<div class="col-md-10">-->
-                              <!--<div class="use-num-wrop">-->
-                                <!--<input class="use-input" type="text" ng-disabled="!arr.isde"><span class="monetary">%</span>-->
-                              <!--</div>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="row add-myserve">-->
-                            <!--<div class="col-md-2">应用程序上限</div>-->
-                            <!--<div class="col-md-10">-->
-                              <!--<div class="use-num-wrop">-->
-                                <!--<input type="text" class="use-input" ng-disabled="!arr.isde"><span class="monetary">%</span>-->
-                              <!--</div>-->
-                            <!--</div>-->
-                          <!--</div>-->
                       </div>
                     </div>
                   </div>
                 </div>
                 <div style="margin:20px 0px;">
-                  <botton class="add-instance" ng-click="addser(item.serviceTypeName)">添加实例</botton>
-                  <botton class="add-loading" ng-click="addser(item.serviceTypeName)"><i></i>正在添加</botton>
+                  <botton class="add-instance" ng-show="!item.isaddbsi" ng-click="addser(item.serviceTypeName,item)">添加实例</botton>
+                  <botton class="add-loading" ng-show="item.isaddbsi"><i></i>正在添加</botton>
                 </div>
               </div>
 
@@ -225,7 +208,7 @@
                   </div>
 
                   <div class="col-md-3" ng-show="item.userName!=='admin'">
-                    <a href="javascript:void(0);" ng-click="looklog(item.userName)">日志</a>
+                    <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'" ng-click="looklog(item.userName)">日志</a>
                     <a href="javascript:void(0);" ng-click="updataUser(item)">修改</a>
                     <a href="javascript:void(0);" ng-click="delUser(item.userId,item.userName)">删除</a>
                   </div>

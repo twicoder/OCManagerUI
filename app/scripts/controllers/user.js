@@ -13,6 +13,42 @@ angular.module('basic')
         var skip = (page - 1) * $scope.grid.size;
         $scope.items = $scope.users.slice(skip, skip + $scope.grid.size);
       };
+      $scope.$watch('grid.txt', function (n, o) {
+        if (n === o) {
+          return
+        }
+        //$scope.items=[]
+        if (!n) {
+          $scope.users = angular.copy($scope.copyusers)
+          refresh(1);
+          $scope.grid.page = 1;
+          $scope.grid.total = $scope.copyusers.length;
+          //return;
+        } else {
+          var iarr = [];
+          var str = $scope.grid.txt;
+          str = str.toLocaleLowerCase();
+          //console.log('$scope.copydata', $scope.copyusers);
+          angular.forEach($scope.copyusers, function (item, i) {
+            //console.log(item.build);
+            var nstr = item.username;
+            nstr = nstr.toLocaleLowerCase();
+            if (nstr.indexOf(str) !== -1) {
+              iarr.push(item)
+            }
+            //console.log(repo.instance_data, $scope.grid.txt);
+          })
+
+
+          $scope.users = angular.copy(iarr);
+          refresh(1);
+          //$scope.$apply()
+          $scope.grid.page = 1;
+          //console.log('$scope.data', $scope.users);
+          $scope.grid.total = $scope.users.length;
+        }
+        //console.log('newVal', newVal);
+      });
 
       function loaduser() {
         newUser.query(function (data) {
@@ -38,39 +74,43 @@ angular.module('basic')
         txt:'',
         size: 24,
       };
-      $scope.usersearch = function () {
 
-        if (!$scope.grid.txt) {
-          $scope.users = angular.copy($scope.copyusers)
-          refresh(1);
-          $scope.grid.page = 1;
-          $scope.grid.total = $scope.copyusers.length;
-          //return;
-        } else {
-          var iarr = [];
-          var str = $scope.grid.txt;
-          str = str.toLocaleLowerCase();
-          console.log('$scope.copydata', $scope.copyusers);
-          angular.forEach($scope.copyusers, function (item, i) {
-            //console.log(item.build);
-            var nstr = item.username;
-            nstr = nstr.toLocaleLowerCase();
-            if (nstr.indexOf(str) !== -1) {
-              iarr.push(item)
-            }
-            //console.log(repo.instance_data, $scope.grid.txt);
-          })
-
-
-          $scope.users = angular.copy(iarr);
-          refresh(1);
-          $scope.grid.page = 1;
-          console.log('$scope.data', $scope.users);
-          $scope.grid.total = $scope.users.length;
-        }
-
-
-      }
+      //$scope.usersearch = function () {
+      //
+      //  //if (!$scope.grid.txt) {
+      //  //  $scope.users=[]
+      //  //  $scope.users = angular.copy($scope.copyusers)
+      //  //  refresh(1);
+      //  //  $scope.grid.page = 1;
+      //  //  $scope.grid.total = $scope.copyusers.length;
+      //  //  //return;
+      //  //} else {
+      //  //  $scope.users=[]
+      //  //  var iarr = [];
+      //  //  var str = $scope.grid.txt;
+      //  //  str = str.toLocaleLowerCase();
+      //  //  //console.log('$scope.copydata', $scope.copyusers);
+      //  //  angular.forEach($scope.copyusers, function (item, i) {
+      //  //    //console.log(item.build);
+      //  //    var nstr = item.username;
+      //  //    nstr = nstr.toLocaleLowerCase();
+      //  //    if (nstr.indexOf(str) !== -1) {
+      //  //      iarr.push(item)
+      //  //    }
+      //  //    //console.log(repo.instance_data, $scope.grid.txt);
+      //  //  })
+      //  //
+      //  //
+      //  //  $scope.users = angular.copy(iarr);
+      //  //  refresh(1);
+      //  //  //$scope.$apply()
+      //  //  $scope.grid.page = 1;
+      //  //  console.log('$scope.data', $scope.users);
+      //  //  $scope.grid.total = $scope.users.length;
+      //  //}
+      //
+      //
+      //}
 
       $scope.$watch('grid.page', function (newVal, oldVal) {
         if (newVal !== oldVal) {
