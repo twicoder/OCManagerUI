@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['uuid','deletebsi','creatbsi','getplan','updateinstance','addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (uuid,deletebsi,creatbsi,getplan,updateinstance,addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         var res = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -26,8 +26,6 @@ angular.module('basic')
       //左边导航自动变化
       var left_by_block = function () {
         var thisheight = $(window).height() - 80;
-        //$('.tree-classic').height(thisheight);
-        //$('.tree-classic').css('overflow-y','auto');
         $('.tree-classic').css('min-height', thisheight);
       };
       $scope.deltenan = function (e, node) {
@@ -39,11 +37,9 @@ angular.module('basic')
       }
       function gettree() {
         tenantname.query({name: Cookie.get('username')}, function (tree) {
-
           creattree(tree)
         })
       }
-
       $scope.looklog = function (name) {
         userinfo.query({name: name, id: Cookie.get('tenantId')}, function (res) {
           console.log('resinfo', res);
@@ -54,7 +50,6 @@ angular.module('basic')
         left_by_block();
       });
       var out = ["hdfs", "hbase", "hive", "mapreduce", "spark", "kafka"];
-
       $(function () {
         left_by_block();
       });
@@ -319,7 +314,6 @@ angular.module('basic')
       ];
       $scope.roleDemoList = roleDemoList.slice(0, 1);
       ///访问信息
-
       $scope.checkInfo = function (id, name) {
         serveinfo.get({tenantId: id, serviceInstanceName: name}, function (res) {
           //console.log('res', res.spec.provisioning.backingservice_name.toLocaleLowerCase());
@@ -405,7 +399,6 @@ angular.module('basic')
           //console.log(data);
         });
       };
-
       //用户授权
       $scope.userAuthorize = function () {
         //console.log('$scope.roleDemoList1111', $scope.roleDemoList);
@@ -451,8 +444,6 @@ angular.module('basic')
           }
         );
       };
-
-
       //右侧tabel切换
       $(function () {
         $('.right-nav>li').click(function () {
@@ -477,8 +468,6 @@ angular.module('basic')
           }
         );
       };
-
-
       var chartsFun = function (sdata, pIdx, idx) {
         var used = parseInt(sdata.used);
         var size = parseInt(sdata.size);
@@ -558,16 +547,14 @@ angular.module('basic')
           $scope.newServeArr[idx].isshow = true;
         }
       };
-
-
-      // 左侧导航切换
-      function classify (bsis){
+      //左侧导航切换
+      function classify(bsis) {
         if (bsis.length > 0) {
           $scope.svArr = []
           var servicenames = [];
           angular.forEach(bsis, function (bsi, i) {
             servicenames.push(bsi.serviceTypeName);
-            bsi.isshow=false
+            bsi.isshow = false
           })
           servicenames = servicenames.unique()
 
@@ -581,20 +568,20 @@ angular.module('basic')
           angular.forEach(bsis, function (bsi, i) {
             angular.forEach($scope.svArr, function (serve, k) {
               if (serve.serviceTypeName === bsi.serviceTypeName) {
-                serve.servesList.push(bsi) ;
+                serve.servesList.push(bsi);
               }
             })
           })
-          angular.forEach($scope.svArr, function (items,i) {
+          angular.forEach($scope.svArr, function (items, i) {
 
-            angular.forEach(items.servesList, function (item,k) {
-              item.ziyuan=[]
+            angular.forEach(items.servesList, function (item, k) {
+              item.ziyuan = []
               if (item.quota) {
                 var obj = JSON.parse(item.quota)
-                angular.forEach(obj, function (quota,j) {
-                  console.log(quota,j);
+                angular.forEach(obj, function (quota, j) {
+                  console.log(quota, j);
                   if (j !== "instance_id") {
-                    item.ziyuan.push({key:j,value:quota})
+                    item.ziyuan.push({key: j, value: quota})
                   }
 
 
@@ -605,89 +592,84 @@ angular.module('basic')
           })
           //var obj = JSON.parse(str)
           console.log('$scope.svArr', $scope.svArr);
-        }else {
+        } else {
           $scope.svArr = []
           return
         }
 
         // $scope.mybsis=$scope.svArr
       }
-      $scope.addser= function (name) {
+      //添加实例
+      $scope.addser = function (name) {
         getdfbs.get(function (data) {
           //data.items
-          angular.forEach(data.items, function (bs,i) {
+          angular.forEach(data.items, function (bs, i) {
             if (bs.metadata.name === name) {
               var obj = {}
 
               if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
                 for (var k in bs.spec.plans[0].metadata.customize) {
                   // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
-                  obj[k]=bs.spec.plans[0].metadata.customize[k].default.toString()
+                  obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString()
                 }
               }
               //var timestamp = Date.parse(new Date());
               //timestamp = timestamp / 1000;
               //var newid = id;
               var username = Cookie.get("username")
-              var bsiobj={
-                "kind":"BackingServiceInstance",
-                "apiVersion":"v1",
-                "metadata":
-                {
-                  "name":bs.metadata.name+'-'+username +'-' + uuid.num(7, 16),
+              var bsiobj = {
+                "kind": "BackingServiceInstance",
+                "apiVersion": "v1",
+                "metadata": {
+                  "name": bs.metadata.name + '-' + username + '-' + uuid.num(7, 16),
                 },
-                "spec":
-                {
-                  "provisioning":
-                  {
-                    "backingservice_name":bs.metadata.name,
-                    "backingservice_plan_guid":bs.spec.plans[0].id,
-                    "parameters":obj
+                "spec": {
+                  "provisioning": {
+                    "backingservice_name": bs.metadata.name,
+                    "backingservice_plan_guid": bs.spec.plans[0].id,
+                    "parameters": obj
                   }
                 }
               }
 
-              creatbsi.post({id:$scope.nodeId},bsiobj, function (data) {
+              creatbsi.post({id: $scope.nodeId}, bsiobj, function (data) {
                 console.log('data', data);
-                tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+                tenantbsi.query({id: $scope.nodeId}, function (bsis) {
                   var bsitems = []
-                  angular.forEach(bsis, function (bsi,i) {
+                  angular.forEach(bsis, function (bsi, i) {
                     if (bsi.status == "Failure") {
 
-                    }else {
+                    } else {
                       bsitems.push(bsi)
                     }
                   })
-                  bsis=angular.copy(bsitems)
-                  classify (bsis)
+                  bsis = angular.copy(bsitems)
+                  classify(bsis)
                 })
               })
             }
           })
         })
       }
-
-
-
-      $scope.delbsied= function (name) {
-        deletebsi.delete({id:$scope.nodeId,name:name}, function (datq) {
-          tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+      //删除bsi
+      $scope.delbsied = function (name) {
+        deletebsi.delete({id: $scope.nodeId, name: name}, function (datq) {
+          tenantbsi.query({id: $scope.nodeId}, function (bsis) {
             var bsitems = []
-            angular.forEach(bsis, function (bsi,i) {
+            angular.forEach(bsis, function (bsi, i) {
               if (bsi.status == "Failure") {
-
-              }else {
+              } else {
                 bsitems.push(bsi)
               }
             })
-            bsis=angular.copy(bsitems)
+            bsis = angular.copy(bsitems)
             console.log('delete', bsis);
 
-            classify (bsis)
+            classify(bsis)
           })
         })
       }
-
+      //选中一个节点
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
         //console.log('node', node);
@@ -708,14 +690,14 @@ angular.module('basic')
           //refresh(1);
 
           var bsitems = []
-          angular.forEach(bsis, function (bsi,i) {
+          angular.forEach(bsis, function (bsi, i) {
             if (bsi.status == "Failure") {
 
-            }else {
+            } else {
               bsitems.push(bsi)
             }
           })
-          bsis=angular.copy(bsitems)
+          bsis = angular.copy(bsitems)
 
           //console.log('servicenames', servicenames);
           if (bsis.length > 0) {
@@ -787,7 +769,7 @@ angular.module('basic')
             //    "tenantId": "zhaoyim"
             //  },
             //]
-            classify (bsitems)
+            classify(bsitems)
             $scope.roleDemoList = roleDemoList.slice(2);
             //console.log('bbbbb');
             $scope.grid.showCompany = false;
@@ -803,7 +785,7 @@ angular.module('basic')
               $scope.grid.showChildnode = false;
               $('.right-nav>li').eq(1).addClass('active').siblings().removeClass('active');
               $('.right-content>li').eq(1).show().siblings().hide();
-              $scope.roleDemoList = roleDemoList.slice(1, 2);
+              $scope.roleDemoList = roleDemoList.slice(2);
             } else if (!node.parentId) {//lev1
               $scope.grid.treeId = 2;
               $scope.roleDemoList = roleDemoList.slice(0, 1);
@@ -826,11 +808,7 @@ angular.module('basic')
 
 
       };
-
-
-      /////获取租户信息
-
-      ////添加子租户
+      //创建树状结构
       function creattree(trees) {
         $scope.dataForTheTree = [];
         $scope.treemap = {};
@@ -879,14 +857,17 @@ angular.module('basic')
           fristLoad($scope.dataForTheTree[0].id, $scope.dataForTheTree[0]);
         }
       }
-
       creattree(tree)
+      //添加租户
       $scope.addTenant = function () {
         console.log('$scope.nodeId', $scope.nodeId);
-        addTenant.open($scope.nodeId).then(function () {
+        addTenant.open($scope.nodeId).then(function (tenant) {
+          console.log('tenant', $scope.nodeIf);
+
           gettree();
         });
       }
+      //资源管理bsi展开
       $scope.bsiToggle = function (idx) {
         if ($scope.svArr[idx].isshow) {
           $scope.svArr[idx].isshow = false;
@@ -925,57 +906,59 @@ angular.module('basic')
           //console.log('data', data);
           addserve_Confirm.open(data.items, $scope.nodeId).then(function () {
             //$scope.showSelected($scope.nodeIf)
-            tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+            tenantbsi.query({id: $scope.nodeId}, function (bsis) {
               var bsitems = []
-              angular.forEach(bsis, function (bsi,i) {
+              angular.forEach(bsis, function (bsi, i) {
                 if (bsi.status == "Failure") {
 
-                }else {
+                } else {
                   bsitems.push(bsi)
                 }
               })
-              bsis=angular.copy(bsitems)
-              classify (bsis)
+              bsis = angular.copy(bsitems)
+              classify(bsis)
             })
-              //console.log('bsis', bsis);
+            //console.log('bsis', bsis);
 
-              //$scope.bsis = bsis;
-              //$scope.grid.bsitotal = $scope.bsis.length;
-              //checkServe($scope.servesArr, $scope.bsis);
-              //refresh(1);
+            //$scope.bsis = bsis;
+            //$scope.grid.bsitotal = $scope.bsis.length;
+            //checkServe($scope.servesArr, $scope.bsis);
+            //refresh(1);
 
 
           });
         });
 
       };
-      $scope.editSv = function(pidx,idx){
+      //修改bsi
+      $scope.editSv = function (pidx, idx) {
         $scope.svArr[pidx].servesList[idx]['isde'] = true;
-        console.log($scope.svArr);
+        //console.log($scope.svArr);
       };
-      $scope.saveSv = function(pidx,idx,bsi){
+      //保存bsi
+      $scope.saveSv = function (pidx, idx, bsi) {
         console.log('bsis', bsi.ziyuan);
         // $scope.svArr[pidx].servesList[idx]
-        var putobj ={
-          parameters:{}
+        var putobj = {
+          parameters: {}
         };
-        angular.forEach(bsi.ziyuan, function (item,i) {
-          putobj.parameters[item.key]=item.value
+        angular.forEach(bsi.ziyuan, function (item, i) {
+          putobj.parameters[item.key] = item.value
         })
         //putobj.parameters=bsi.quota
-        updateinstance.put({id:$scope.nodeId,instanceName:bsi.instanceName},putobj,function (data) {
+        updateinstance.put({id: $scope.nodeId, instanceName: bsi.instanceName}, putobj, function (data) {
           //$scope.showSelected($scope.nodeIf)
-          tenantbsi.query({id:$scope.nodeId}, function (bsis) {
+          tenantbsi.query({id: $scope.nodeId}, function (bsis) {
             var bsitems = []
-            angular.forEach(bsis, function (bsi,i) {
+            angular.forEach(bsis, function (bsi, i) {
               if (bsi.status == "Failure") {
 
-              }else {
+              } else {
                 bsitems.push(bsi)
               }
             })
-            bsis=angular.copy(bsitems)
-            classify (bsis)
+            bsis = angular.copy(bsitems)
+            classify(bsis)
           })
 
         })
