@@ -133,17 +133,17 @@ angular.module('basic.services', ['ngResource'])
             console.log('id', id);
             deletetenantapi.delete({id: id}, function () {
               $scope.con = '删除成功';
-              //window.setTimeout(closeConf, 1500);
+              window.setTimeout(closeConf, 1500);
             }, function (res) {
               // console.log('111',res);
-              if (res.data.resCodel == 4001) {
-                $scope.con = '该用户并非由您创建，您无权删除该用户!';
-              } else if (res.data.resCodel == 4002) {
-                $scope.con = '该用户已被绑定角色，请解绑后再进行删除!';
-              } else {
+              //if (res.data.resCodel == 4001) {
+              //  $scope.con = '该用户并非由您创建，您无权删除该用户!';
+              //} else if (res.data.resCodel == 4002) {
+              //  $scope.con = '该用户已被绑定角色，请解绑后再进行删除!';
+              //} else {
                 $scope.con = '删除失败!';
-              }
-              //window.setTimeout(closeConf, 2000);
+              //}
+              window.setTimeout(closeConf, 2000);
             });
 
           };
@@ -344,7 +344,8 @@ angular.module('basic.services', ['ngResource'])
         }]
       }).result;
     };
-  }]).service('Alert', ['$uibModal', function ($uibModal) {
+  }])
+  .service('Alert', ['$uibModal', function ($uibModal) {
     this.open = function (con) {
       return $uibModal.open({
         backdrop: 'static',
@@ -679,13 +680,14 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
-  .service('addTenant', ['$uibModal', 'addtenantapi', 'Cookie', function ($uibModal, addtenantapi, Cookie) {
+  .service('addTenant', ['$uibModal', function ($uibModal) {
     this.open = function (id) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/addTenant.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+        controller: ['$scope', '$uibModalInstance','addtenantapi', 'Cookie',
+          function ($scope, $uibModalInstance, addtenantapi, Cookie) {
           var timestamp = Date.parse(new Date());
           timestamp = timestamp / 1000;
           //var newid = id;
@@ -703,10 +705,12 @@ angular.module('basic.services', ['ngResource'])
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
-            addtenantapi.post($scope.message, function (data) {
-              console.log('data', data);
 
-              $uibModalInstance.close(true);
+            addtenantapi.post($scope.message, function (data) {
+              //alert(data)
+              //console.log('data111', data);
+
+              $uibModalInstance.close(data);
             });
 
           };
