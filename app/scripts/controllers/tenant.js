@@ -219,6 +219,7 @@ angular.module('basic')
 
             //console.log(item.serviceTypeName, list.serviceTypeName);
             if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
+              list.isaddbsi=false;
               item.servesList.push(list);
             }
           });
@@ -294,7 +295,8 @@ angular.module('basic')
         showChildnode: false,//展示子项目列表
         showbsi: false,
         roleTitle: tree[0] ? tree[0].name : '',
-        treeId: ''
+        treeId: '',
+        isaddbsi:false
       };
 
       function getUserInfo(id, node) {
@@ -307,7 +309,9 @@ angular.module('basic')
 
       }
 
-      var roleDemoList = ['a10170cb-524a-11e7-9dbb-fa163ed7d0ae',
+      var roleDemoList =
+        [
+          'a10170cb-524a-11e7-9dbb-fa163ed7d0ae',
         'a1149421-524a-11e7-9dbb-fa163ed7d0ae',
         'a12a84d0-524a-11e7-9dbb-fa163ed7d0ae',
         'a13dd087-524a-11e7-9dbb-fa163ed7d0ae'
@@ -593,7 +597,7 @@ angular.module('basic')
             })
           })
           //var obj = JSON.parse(str)
-          console.log('$scope.svArr', $scope.svArr);
+          //console.log('$scope.svArr', $scope.svArr);
         } else {
           $scope.svArr = []
           return
@@ -602,7 +606,9 @@ angular.module('basic')
         // $scope.mybsis=$scope.svArr
       }
       //添加实例
-      $scope.addser = function (name) {
+      $scope.addser = function (name,item) {
+        console.log(item.isaddbsi);
+        item.isaddbsi=true;
         getdfbs.get(function (data) {
           //data.items
           angular.forEach(data.items, function (bs, i) {

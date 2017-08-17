@@ -144,29 +144,13 @@
                                 </div>
                               </div>
                           </div>
-                          <!--<div class="row add-myserve">-->
-                            <!--<div class="col-md-2">最大容量</div>-->
-                            <!--<div class="col-md-10">-->
-                              <!--<div class="use-num-wrop">-->
-                                <!--<input class="use-input" type="text" ng-disabled="!arr.isde"><span class="monetary">%</span>-->
-                              <!--</div>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="row add-myserve">-->
-                            <!--<div class="col-md-2">应用程序上限</div>-->
-                            <!--<div class="col-md-10">-->
-                              <!--<div class="use-num-wrop">-->
-                                <!--<input type="text" class="use-input" ng-disabled="!arr.isde"><span class="monetary">%</span>-->
-                              <!--</div>-->
-                            <!--</div>-->
-                          <!--</div>-->
                       </div>
                     </div>
                   </div>
                 </div>
                 <div style="margin:20px 0px;">
-                  <botton class="add-instance" ng-click="addser(item.serviceTypeName)">添加实例</botton>
-                  <botton class="add-loading" ng-click="addser(item.serviceTypeName)"><i></i>正在添加</botton>
+                  <botton class="add-instance" ng-show="!item.isaddbsi" ng-click="addser(item.serviceTypeName,item)">添加实例</botton>
+                  <botton class="add-loading" ng-show="item.isaddbsi"><i></i>正在添加</botton>
                 </div>
               </div>
 
