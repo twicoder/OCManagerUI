@@ -19,7 +19,7 @@ angular.module('basic')
         }
         //$scope.items=[]
         if (!n) {
-          $scope.users = angular.copy($scope.copyusers)
+          $scope.users = angular.copy($scope.copyusers);
           refresh(1);
           $scope.grid.page = 1;
           $scope.grid.total = $scope.copyusers.length;

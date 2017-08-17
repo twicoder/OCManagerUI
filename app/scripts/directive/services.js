@@ -370,8 +370,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/user_Confirm.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'user', 'putuser','authctype',
-          function ($scope, $uibModalInstance, user, putuser,authctype) {
+        controller: ['$scope', '$uibModalInstance', 'user', 'putuser','authctype','ladptype',
+          function ($scope, $uibModalInstance, user, putuser,authctype,ladptype) {
             $scope.userErrInfo = '用户名不能为空';
             $scope.thisTitle = '';
             if (item) {
@@ -388,8 +388,26 @@ angular.module('basic.services', ['ngResource'])
                 description: ''
               };
             }
-            authctype.get({}, function (data) {
-              console.log('data', data);
+            authctype.get({}, function (type) {
+              //console.log('type', type);
+              //type.type=1
+              if (!type.type) {
+               $scope.isladp=true
+              }else {
+                $scope.isladp=false
+              }
+              ladptype.query({}, function (data) {
+                $scope.ladpname =[]
+                $scope.input.username=data[0]
+                angular.forEach(data, function (name,i) {
+                  $scope.ladpname.push({name:name})
+
+                })
+                //
+                //console.log('data', data);
+
+
+              })
             })
             $scope.error = {
               namenull: false,

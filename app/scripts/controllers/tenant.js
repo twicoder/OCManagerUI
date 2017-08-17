@@ -208,7 +208,7 @@ angular.module('basic')
       };
 
       var checkServe = function (allserve, onlyserve) {
-        //console.log(allserve);
+        console.log(allserve,onlyserve);
         $scope.newServeArr = [];
         angular.forEach(allserve, function (item) {
           if (item.servesList.length > 0) {
@@ -230,7 +230,7 @@ angular.module('basic')
           }
         });
 
-        //console.log('$scope.newServeArr', $scope.newServeArr);
+        console.log('$scope.newServeArr', $scope.newServeArr);
         //console.log('$scope.servesArr', $scope.servesList);
       };
       /// 获取租户下的服务
@@ -787,6 +787,17 @@ angular.module('basic')
             $('.right-nav>li').eq(2).addClass('active').siblings().removeClass('active');
             $('.right-content>li').eq(2).show().siblings().hide();
           } else {
+            service.query(function (data) {
+              angular.forEach(data, function (item) {
+
+                var thisobj = {serviceTypeName: item.servicename, servesList: []};
+                $scope.servesArr.push(thisobj);
+
+              });
+              console.log($scope.servesArr);
+              checkServe($scope.servesArr, node.bsis);
+            })
+
             if (node.parentId) {//lev2
               $scope.grid.showCompany = false;
               $scope.grid.showProject = true;

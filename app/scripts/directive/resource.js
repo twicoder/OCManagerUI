@@ -180,6 +180,11 @@ angular.module('basic.resource', ['ngResource'])
       }, {});
       return authctype;
     }])
+  .factory('ladptype', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+      var ladptype = $resource(GLOBAL.host + '/user/ldap', {
+      }, {});
+      return ladptype;
+    }])
 
   .factory('serveinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var serveinfo = $resource(GLOBAL.host + '/tenant/:tenantId/service/instance/:serviceInstanceName/access/info', {tenantId:'@tenantId',serviceInstanceName:'@serviceInstanceName'}, {
