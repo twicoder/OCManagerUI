@@ -5,6 +5,11 @@ angular.module('basic.resource', ['ngResource'])
     });
     return role;
   }])
+  .factory('allRole', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var allRole = $resource(GLOBAL.host + '/role', {}, {
+    });
+    return allRole;
+  }])
 ///ocmanager/v1/api/service
   .factory('service', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var service = $resource(GLOBAL.host + '/service', {

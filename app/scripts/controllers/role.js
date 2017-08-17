@@ -4,7 +4,7 @@
  * Controller of the dataModel
  */
 angular.module('basic')
-  .controller('RoleCtrl',[ function () {
+  .controller('RoleCtrl',['$scope', 'allRole',function ($scope,allRole) {
     //$rootScope.tab = "role";
 
     //图片预加载
@@ -21,5 +21,7 @@ angular.module('basic')
     //  "images/role_item.png",
     //  "images/role_team.png"
     //);
-
+    allRole.query({}, function (res) {
+      $scope.allRole = res;
+    });
   }]);
