@@ -15,7 +15,7 @@ angular.module('basic')
       };
       $scope.$watch('grid.txt', function (n, o) {
         if (n === o) {
-                  return
+          return
         }
         //$scope.items=[]
         if (!n) {
