@@ -222,7 +222,7 @@
                   </div>
 
                   <div class="col-md-3" ng-show="item.userName!=='admin'">
-                    <a href="javascript:void(0);" ng-click="looklog(item.userName)">日志</a>
+                    <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'" ng-click="looklog(item.userName)">日志</a>
                     <a href="javascript:void(0);" ng-click="updataUser(item)">修改</a>
                     <a href="javascript:void(0);" ng-click="delUser(item.userId,item.userName)">删除</a>
                   </div>
