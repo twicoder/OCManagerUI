@@ -21,7 +21,7 @@
             <li class="active" ng-show="grid.showCompany" ng-click="changeCon()"><span>子公司列表</span></li>
             <li ng-show="grid.showProject" ng-click="changeCon()"><span>项目列表</span></li>
             <li ng-show="grid.showChildnode" ng-click="changeCon()"><span>基本信息</span></li>
-            <li ng-show="grid.showChildnode" ng-click="changeCon()"><span>服务列表</span></li>
+            <li ng-show="bsis.length" ng-click="changeCon()"><span>服务列表</span></li>
             <li ng-show="grid.showbsi" ng-click="changeCon()"><span>资源管理</span></li>
             <li ng-click="changeCon()"><span>资源报告</span></li>
             <li ng-click="changeCon()"><span>用户列表</span></li>
@@ -66,7 +66,7 @@
               </ul>
 
             </li>
-            <li>
+            <li ng-show="bsis.length">
               <ul class="tenant-serve-list">
                 <li class="row" ng-repeat="bsi in bsisitem">
                   <div class="col-md-1 lscn"><img src="./images/serviceimg/{{bsi.serviceTypeName | lowerCase}}.png"
@@ -76,12 +76,11 @@
                   </div>
                   <!--<div class="col-md-3"><span>用户容量</span>&nbsp;&nbsp;路径&nbsp;:&nbsp;/usr/zhongxin/balbala;</div>-->
                   <div class="col-md-6" style="line-height: 17px;margin-top:12px;color: #999;overflow: hidden;text-overflow:ellipsis;">
-                    <p>instance_id&nbsp;:&nbsp;{{bsi.instance_id}}</p>
-                    <label ng-repeat="(key,val) in bsi.quota">{{key+'&nbsp;:&nbsp;'+val}}&nbsp;&nbsp;</label>
+                    <!--<p>instance_id&nbsp;:&nbsp;{{bsi.instance_id}}</p>-->
+                    <!--<label ng-repeat="(key,val) in bsi.quota">{{key+'&nbsp;:&nbsp;'+val}}&nbsp;&nbsp;</label>-->
                   </div>
                   <!--<div class="col-md-2">{{}}</div>-->
-                  <div class="col-md-2 lscn" style="text-align: right"><a style="margin-right: 15px;"
-                                                                          ng-click="checkInfo(bsi.tenantId,bsi.instanceName)"
+                  <div class="col-md-2 lscn" style="text-align: right"><a style="margin-right: 15px;"ng-click="checkInfo(bsi.tenantId,bsi.instanceName)"
                                                                           href="javascript:void(0);">访问信息</a></div>
                 </li>
               </ul>

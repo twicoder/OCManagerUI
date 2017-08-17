@@ -238,23 +238,23 @@ angular.module('basic')
         //if (!node) {
         //  $scope.bsis = [];
         //
-        //  tenantbsi.query({id: id}, function (bsis) {
-        //    $scope.bsis = bsis;
-        //    $scope.grid.bsitotal = $scope.bsis.length;
-        //    checkServe($scope.servesArr, $scope.bsis);
-        //    refresh(1);
-        //    //console.log('bsi', bsis);
-        //  }, function (err) {
-        //
-        //  })
+          tenantbsi.query({id: node.id}, function (bsis) {
+            $scope.bsis = bsis;
+            $scope.grid.bsitotal = $scope.bsis.length;
+            checkServe($scope.servesArr, $scope.bsis);
+            refresh(1);
+            //console.log('bsi', bsis);
+          }, function (err) {
+
+          })
         //}else {
         //alert(1)
-        $scope.bsis = node.bsis;
-        if ($scope.bsis) {
-          $scope.grid.bsitotal = $scope.bsis.length;
-          checkServe($scope.servesArr, $scope.bsis);
-          refresh(1);
-        }
+        //$scope.bsis = node.bsis;
+        //if ($scope.bsis) {
+        //  $scope.grid.bsitotal = $scope.bsis.length;
+        //  checkServe($scope.servesArr, $scope.bsis);
+        //  refresh(1);
+        //}
 
         //console.log('bsi', bsis);
         //}
@@ -549,6 +549,8 @@ angular.module('basic')
       };
       //左侧导航切换
       function classify(bsis) {
+        //$scope.bsis=bsis;
+        getTenantServe($scope.nodeIf)
         if (bsis.length > 0) {
           $scope.svArr = []
           var servicenames = [];
@@ -633,7 +635,7 @@ angular.module('basic')
               }
 
               creatbsi.post({id: $scope.nodeId}, bsiobj, function (data) {
-                console.log('data', data);
+                //console.log('data', data);
                 tenantbsi.query({id: $scope.nodeId}, function (bsis) {
                   var bsitems = []
                   angular.forEach(bsis, function (bsi, i) {
