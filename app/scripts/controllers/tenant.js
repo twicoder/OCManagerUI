@@ -124,14 +124,6 @@ angular.module('basic')
           })
         }
       })
-
-      //console.log('absi1212121', absi);
-
-
-      //console.log('$scope.dataForTheTree', $scope.dataForTheTree);
-
-
-      //console.log('$scope.dataForTheTree', $scope.dataForTheTree);
       var refresh = function (page) {
         var skip = (page - 1) * $scope.grid.bsisize;
         if ($scope.bsis.length) {
@@ -231,7 +223,6 @@ angular.module('basic')
         });
 
         console.log('$scope.newServeArr', $scope.newServeArr);
-        //console.log('$scope.servesArr', $scope.servesList);
       };
       /// 获取租户下的服务
 
@@ -244,7 +235,6 @@ angular.module('basic')
             $scope.grid.bsitotal = $scope.bsis.length;
             checkServe($scope.servesArr, $scope.bsis);
             refresh(1);
-            //console.log('bsi', bsis);
           }, function (err) {
 
           })
@@ -268,7 +258,6 @@ angular.module('basic')
           angular.forEach(data, function (item) {
             var thisobj = {serviceTypeName: item.servicename, servesList: []};
             $scope.servesArr.push(thisobj);
-
           });
           getTenantServe(node);
         });
@@ -522,15 +511,15 @@ angular.module('basic')
       };
       $scope.toggleServeList = function (pIdx, idx, serveObj) {
         //console.log('$scope.newServeArr', $scope.newServeArr);
-        if ($scope.newServeArr[pIdx].servesList[idx].isshow) {
-          $scope.newServeArr[pIdx].servesList[idx].isshow = false;
+        if ($scope.newServeArrs[pIdx].servesList[idx].isshow) {
+          $scope.newServeArrs[pIdx].servesList[idx].isshow = false;
         } else {
           bsidata.get({id: serveObj.tenantId, name: serveObj.instanceName}, function (sdata) {
             //bsidata.get({id: 'san', name: 'n4j'}, function (sdata) {
 
-            $scope.newServeArr[pIdx].servesList[idx].charsArr = [];
+            $scope.newServeArrs[pIdx].servesList[idx].charsArr = [];
 
-            $scope.newServeArr[pIdx].servesList[idx].showused = sdata.items;
+            $scope.newServeArrs[pIdx].servesList[idx].showused = sdata.items;
 
             //console.log('sdata', sdata);
             for (var i = 0; i < sdata.items.length; i++) {
@@ -541,19 +530,20 @@ angular.module('basic')
           });
 
 
-          $scope.newServeArr[pIdx].servesList[idx].isshow = true;
+          $scope.newServeArrs[pIdx].servesList[idx].isshow = true;
         }
       };
       $scope.toggleServe = function (idx) {
-        if ($scope.newServeArr[idx].isshow) {
-          $scope.newServeArr[idx].isshow = false;
+        if ($scope.newServeArrs[idx].isshow) {
+          $scope.newServeArrs[idx].isshow = false;
         } else {
-          $scope.newServeArr[idx].isshow = true;
+          $scope.newServeArrs[idx].isshow = true;
         }
       };
       //左侧导航切换
       function classify(bsis) {
         //$scope.bsis=bsis;
+        ziyuan(bsis)
         getTenantServe($scope.nodeIf)
         if (bsis.length > 0) {
           $scope.svArr = []
@@ -659,6 +649,38 @@ angular.module('basic')
           })
         })
       }
+      //资源报告
+    function ziyuan(bsis) {
+        service.query(function (data) {
+          $scope.servesArrs=[];
+          $scope.newServeArrs = [];
+          angular.forEach(data, function (item) {
+            var thisobj = {serviceTypeName: item.servicename, servesList: [],isshow:false};
+            $scope.servesArrs.push(thisobj);
+
+          });
+          //console.log('node.bsis', node.bsis);
+          angular.forEach($scope.servesArrs, function (item) {
+            if (item.servesList.length > 0) {
+              item.servesList = [];
+            }
+
+            angular.forEach(bsis, function (list) {
+              if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
+                list.isaddbsi=false;
+                list.isaddbsi=false;
+                item.servesList.push(list);
+              }
+            });
+          });
+          angular.forEach($scope.servesArrs, function (item) {
+            if (item.servesList.length > 0) {
+              $scope.newServeArrs.push(item);
+            }
+          });
+          console.log('$scope.servesArr111',$scope.newServeArrs);
+        })
+      };
       //删除bsi
       $scope.delbsied = function (name) {
         deletebsi.delete({id: $scope.nodeId, name: name}, function (datq) {
@@ -680,8 +702,6 @@ angular.module('basic')
       //选中一个节点
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
-        //console.log('node', node);
-        //console.log(node.level, $scope.userroleid);
         Cookie.set('tenantId', node.id, 24 * 3600 * 1000);
         $scope.grid.roleTitle = node.name;
         $scope.nodeIf = node;
@@ -691,12 +711,6 @@ angular.module('basic')
         getUserInfo(node.id, node);
         tenantbsi.query({id: node.id}, function (bsis) {
           //console.log('bsis', bsis);
-
-          //$scope.bsis = bsis;
-          //$scope.grid.bsitotal = $scope.bsis.length;
-          //checkServe($scope.servesArr, $scope.bsis);
-          //refresh(1);
-
           var bsitems = []
           angular.forEach(bsis, function (bsi, i) {
             if (bsi.status == "Failure") {
@@ -709,95 +723,15 @@ angular.module('basic')
 
           //console.log('servicenames', servicenames);
           if (bsis.length > 0) {
-
-            // $scope.mybsis =[];
-            //bsis = [
-            //  {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "ETCD",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "HDFS",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "HBase",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "MapReduce",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "Spark",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "Kafka",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "Spark",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "ETCD",
-            //    "tenantId": "zhaoyim"
-            //  }, {
-            //    "id": "e45783a5-5240-11e7-8905-fa163efdbea8",
-            //    "instanceName": "ETCD-instance017",
-            //    "quota": {hiveStorageQuota:1024,yarnQueueQuota:10},
-            //    "serviceTypeId": "",
-            //    "serviceTypeName": "ETCD",
-            //    "tenantId": "zhaoyim"
-            //  },
-            //]
             classify(bsitems)
             $scope.roleDemoList = roleDemoList.slice(2);
-            //console.log('bbbbb');
             $scope.grid.showCompany = false;
             $scope.grid.showProject = false;
             $scope.grid.showChildnode = true;
-
             $('.right-nav>li').eq(2).addClass('active').siblings().removeClass('active');
             $('.right-content>li').eq(2).show().siblings().hide();
           } else {
-            service.query(function (data) {
-              angular.forEach(data, function (item) {
-
-                var thisobj = {serviceTypeName: item.servicename, servesList: []};
-                $scope.servesArr.push(thisobj);
-
-              });
-              console.log($scope.servesArr);
-              checkServe($scope.servesArr, node.bsis);
-            })
-
+            ziyuan(node.bsis);
             if (node.parentId) {//lev2
               $scope.grid.showCompany = false;
               $scope.grid.showProject = true;
@@ -813,7 +747,6 @@ angular.module('basic')
               $scope.grid.showChildnode = false;
               $('.right-nav>li').eq(0).addClass('active').siblings().removeClass('active');
               $('.right-content>li').eq(0).show().siblings().hide();
-
             }
           }
         }, function (err) {
