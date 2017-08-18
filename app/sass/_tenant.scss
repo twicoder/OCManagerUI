@@ -126,10 +126,11 @@ $smbg: #c256fc !default;
     }
     li.tree-leaf {
       i.tree-leaf-head {
-        background-image: url('../images/file.png');
-        -webkit-background-size: 20px !important;
-        background-size: 20px !important;
-        background-position: 0px -2px !important;
+        //background-image: url('../images/file.png');
+        //-webkit-background-size: 20px !important;
+        //background-size: 20px !important;
+        //background-position: 0px -2px !important;
+        background: none;
       }
     }
 
