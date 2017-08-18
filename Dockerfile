@@ -1,4 +1,4 @@
-FROM registry.dataos.io/datafoundry/ocdp-web-base
+FROM registry.dataos.io/datafoundry/ocdp-web-base:latest
 
 COPY . /data/mainline/
 
