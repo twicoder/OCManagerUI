@@ -10,25 +10,14 @@
 <div class="modal-body confirm-con" >
 
     <div class="con-wrop">
-      <label>原始密码<i class="modal_red">*</i></label>
-      <div class="confirm-select modal_select" ng-class="{modal_select_red:error.passwordnull}">
-        <input type="password" class="modal_input" ng-model="input.password">
-      </div>
-      <div class="error_block_tit" ng-if="error.oldpwd">
-        <p style="margin:0;">密码不能为空</p>
-      </div>
-    </div>
-    <div class="con-wrop">
       <label>新密码<i class="modal_red">*</i></label>
       <div class="confirm-select modal_select" ng-class="{modal_select_red:error.passwordnull}">
-        <input type="password" class="modal_input" ng-model="input.newpwd">
+        <input type="password" name="password" class="modal_input" ng-model="password" required>
       </div>
-      <div class="error_block_tit" ng-if="error.passwordnull">
+      <div class="error_block_tit" ng-if="frm.password.$dirty && frm.password.$invalid">
         <p style="margin:0;">密码不能为空</p>
       </div>
     </div>
-
-
 </div>
 <div class="modal-footer"   style="text-align: right">
   <span class="btn-newst" ng-click="frm.$valid && ok()">确认</span>

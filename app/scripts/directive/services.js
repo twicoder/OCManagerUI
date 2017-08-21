@@ -141,7 +141,7 @@ angular.module('basic.services', ['ngResource'])
               //} else if (res.data.resCodel == 4002) {
               //  $scope.con = '该用户已被绑定角色，请解绑后再进行删除!';
               //} else {
-                $scope.con = '删除失败!';
+              $scope.con = '删除失败!';
               //}
               window.setTimeout(closeConf, 2000);
             });
@@ -285,34 +285,33 @@ angular.module('basic.services', ['ngResource'])
   }])
   .service('uuid', ['$uibModal', function ($uibModal) {
     this.num = function (len, radix) {
-        var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-        var chars = CHARS, uuid = [], i;
-        radix = radix || chars.length;
+      var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+      var chars = CHARS, uuid = [], i;
+      radix = radix || chars.length;
 
-        if (len) {
-          // Compact form
-          for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
-        } else {
-          // rfc4122, version 4 form
-          var r;
+      if (len) {
+        // Compact form
+        for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
+      } else {
+        // rfc4122, version 4 form
+        var r;
 
-          // rfc4122 requires these characters
-          uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-          uuid[14] = '4';
+        // rfc4122 requires these characters
+        uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+        uuid[14] = '4';
 
-          // Fill in random data.  At i==19 set the high bits of clock sequence as
-          // per rfc4122, sec. 4.1.5
-          for (i = 0; i < 36; i++) {
-            if (!uuid[i]) {
-              r = 0 | Math.random()*16;
-              uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
-            }
+        // Fill in random data.  At i==19 set the high bits of clock sequence as
+        // per rfc4122, sec. 4.1.5
+        for (i = 0; i < 36; i++) {
+          if (!uuid[i]) {
+            r = 0 | Math.random() * 16;
+            uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
           }
         }
+      }
 
-        return uuid.join('');
-      };
-
+      return uuid.join('');
+    };
 
 
   }])
@@ -370,8 +369,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/user_Confirm.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'user', 'putuser','authctype','ladptype',
-          function ($scope, $uibModalInstance, user, putuser,authctype,ladptype) {
+        controller: ['$scope', '$uibModalInstance', 'user', 'putuser', 'authctype', 'ladptype',
+          function ($scope, $uibModalInstance, user, putuser, authctype, ladptype) {
             $scope.userErrInfo = '用户名不能为空';
             $scope.thisTitle = '';
             if (item) {
@@ -385,19 +384,19 @@ angular.module('basic.services', ['ngResource'])
               $scope.input = {
                 username: '',
                 email: '',
-                password:'',
+                password: '',
                 description: ''
               };
               authctype.get({}, function (type) {
                 //console.log('type', type);
                 //type.type=1
                 if (!type.type) {
-                  $scope.isladp=true;
+                  $scope.isladp = true;
                   ladptype.query({}, function (data) {
-                    $scope.ladpname =[];
-                    $scope.input.username=data[0];
-                    angular.forEach(data, function (name,i) {
-                      $scope.ladpname.push({name:name})
+                    $scope.ladpname = [];
+                    $scope.input.username = data[0];
+                    angular.forEach(data, function (name, i) {
+                      $scope.ladpname.push({name: name})
 
                     })
                     //
@@ -405,8 +404,8 @@ angular.module('basic.services', ['ngResource'])
 
 
                   })
-                }else {
-                  $scope.isladp=false
+                } else {
+                  $scope.isladp = false
                 }
 
               })
@@ -415,7 +414,7 @@ angular.module('basic.services', ['ngResource'])
             $scope.error = {
               namenull: false,
               emailnull: false,
-              passwordnull:false
+              passwordnull: false
             };
             $scope.resErr = {
               info: '',
@@ -443,7 +442,7 @@ angular.module('basic.services', ['ngResource'])
                 //console.log('n', n);
                 $scope.error.emailnull = false;
               }
-              if (!$scope.isupdata&&!$scope.isladp) {
+              if (!$scope.isupdata && !$scope.isladp) {
                 if (n.password && n.password.length > 0) {
                   //console.log('n', n);
                   $scope.error.passwordnull = false;
@@ -485,16 +484,16 @@ angular.module('basic.services', ['ngResource'])
               }
 
 
-              if ($scope.error.namenull || $scope.error.emailnull||$scope.error.passwordnull) {
+              if ($scope.error.namenull || $scope.error.emailnull || $scope.error.passwordnull) {
                 return;
               }
 
               //console.log('$scope.input', $scope.input);
 
               if ($scope.isupdata) {
-                $scope.putapi =angular.copy($scope.input);
+                $scope.putapi = angular.copy($scope.input);
                 delete $scope.putapi.password
-                putuser.updata({name:$scope.putapi.username},$scope.putapi, function () {
+                putuser.updata({name: $scope.putapi.username}, $scope.putapi, function () {
                   $uibModalInstance.close(true);
                 }, function (res) {
                   if (res.data.resCodel == 4004) {
@@ -728,120 +727,119 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addTenant.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance','addtenantapi', 'Cookie',
+        controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie',
           function ($scope, $uibModalInstance, addtenantapi, Cookie) {
-          var timestamp = Date.parse(new Date());
-          timestamp = timestamp / 1000;
-          //var newid = id;
-          var username = Cookie.get("username")
-          //if (id.indexOf(username)) {
-          //  newid=newid.split(username)[0]
-          //}
-          $scope.message = {
-            id: username + '-' + timestamp,
-            name: '',
-            description: '',
-            parentId: id
-          }
-          $scope.cancel = function () {
-            $uibModalInstance.dismiss();
-          };
-          $scope.ok = function () {
+            var timestamp = Date.parse(new Date());
+            timestamp = timestamp / 1000;
+            //var newid = id;
+            var username = Cookie.get("username")
+            //if (id.indexOf(username)) {
+            //  newid=newid.split(username)[0]
+            //}
+            $scope.message = {
+              id: username + '-' + timestamp,
+              name: '',
+              description: '',
+              parentId: id
+            }
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss();
+            };
+            $scope.ok = function () {
 
-            addtenantapi.post($scope.message, function (data) {
-              //alert(data)
-              //console.log('data111', data);
+              addtenantapi.post($scope.message, function (data) {
+                //alert(data)
+                //console.log('data111', data);
 
-              $uibModalInstance.close(data);
-            });
+                $uibModalInstance.close(data);
+              });
 
-          };
-        }]
+            };
+          }]
       }).result;
     };
   }])
   //添加服务
   .service('addserve_Confirm', ['$uibModal', function ($uibModal) {
-    this.open = function (data,id) {
+    this.open = function (data, id) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
         size: 'default',
-        controller: ['uuid','$scope', '$uibModalInstance', 'creatbsi','Cookie',
-          function (uuid,$scope, $uibModalInstance, creatbsi,Cookie) {
-          $scope.data = data;
-          $scope.svName = ''
-          $scope.checkSv = function (val, idx) {
-            $scope.svName = val;
-            $scope.svActive = idx;
+        controller: ['uuid', '$scope', '$uibModalInstance', 'creatbsi', 'Cookie',
+          function (uuid, $scope, $uibModalInstance, creatbsi, Cookie) {
+            $scope.data = data;
+            $scope.svName = ''
+            $scope.checkSv = function (val, idx) {
+              $scope.svName = val;
+              $scope.svActive = idx;
 
-          }
-          $scope.cancel = function () {
-            $uibModalInstance.dismiss();
-          };
-          $scope.ok = function () {
-            console.log('bsid', data[$scope.svActive].spec.plans[0].id);
-            //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
-            var obj = {}
-
-            if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
-              for (var k in data[$scope.svActive].spec.plans[0].metadata.customize) {
-               // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
-                obj[k]=data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString()
-              }
             }
-            //var timestamp = Date.parse(new Date());
-            //timestamp = timestamp / 1000;
-            //var newid = id;
-            var username = Cookie.get("username")
-            var bsiobj={
-              "kind":"BackingServiceInstance",
-              "apiVersion":"v1",
-              "metadata":
-              {
-                "name":data[$scope.svActive].metadata.name+'-'+username +'-' + uuid.num(7, 16),
-              },
-              "spec":
-              {
-                "provisioning":
-                {
-                  "backingservice_name":data[$scope.svActive].metadata.name,
-                  "backingservice_plan_guid":data[$scope.svActive].spec.plans[0].id,
-                  "parameters":obj
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss();
+            };
+            $scope.ok = function () {
+              console.log('bsid', data[$scope.svActive].spec.plans[0].id);
+              //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
+              var obj = {}
+
+              if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
+                for (var k in data[$scope.svActive].spec.plans[0].metadata.customize) {
+                  // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+                  obj[k] = data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString()
                 }
               }
-            }
+              //var timestamp = Date.parse(new Date());
+              //timestamp = timestamp / 1000;
+              //var newid = id;
+              var username = Cookie.get("username")
+              var bsiobj = {
+                "kind": "BackingServiceInstance",
+                "apiVersion": "v1",
+                "metadata": {
+                  "name": data[$scope.svActive].metadata.name + '-' + username + '-' + uuid.num(7, 16),
+                },
+                "spec": {
+                  "provisioning": {
+                    "backingservice_name": data[$scope.svActive].metadata.name,
+                    "backingservice_plan_guid": data[$scope.svActive].spec.plans[0].id,
+                    "parameters": obj
+                  }
+                }
+              }
 
-            creatbsi.post({id:id},bsiobj, function (data) {
-              console.log('data', data);
-              $uibModalInstance.close(true);
-            })
+              creatbsi.post({id: id}, bsiobj, function (data) {
+                console.log('data', data);
+                $uibModalInstance.close(true);
+              })
 
-          };
-        }]
+            };
+          }]
       }).result;
     };
   }])
   .service('updatepwd', ['$uibModal', function ($uibModal) {
-    this.open = function () {
+    this.open = function (name) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/updatepwd.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+        controller: ['putuser', '$scope', '$uibModalInstance',
+          function (putuser, $scope, $uibModalInstance) {
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss();
+            };
+            $scope.ok = function () {
+              var putobj = {
+                password:$scope.password
+              }
+              putuser.updata({name:name},putobj, function (data) {
+                console.log('data', data);
+                $uibModalInstance.close(true);
+              })
 
-
-          $scope.oldpwd = '';
-          $scope.newpwd = '';
-
-
-          $scope.cancel = function () {
-            $uibModalInstance.dismiss();
-          };
-          $scope.ok = function () {
-            $uibModalInstance.close(true);
-          };
-        }]
+            };
+          }]
       }).result;
     };
   }])
