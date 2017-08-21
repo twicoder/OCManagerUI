@@ -4,8 +4,8 @@
  * Main Controller
  */
 angular.module('basic')
-  .controller('UserCtrl', ['$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm','newUser',
-    function ($rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm,newUser) {
+  .controller('UserCtrl', ['authctype','updatepwd','$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm','newUser',
+    function (authctype,updatepwd,$rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm,newUser) {
       var refresh = function (page) {
         $(document.body).animate({
           scrollTop: 0
@@ -13,6 +13,20 @@ angular.module('basic')
         var skip = (page - 1) * $scope.grid.size;
         $scope.items = $scope.users.slice(skip, skip + $scope.grid.size);
       };
+
+      authctype.get({}, function (type) {
+        //console.log('type', type);
+        //type.type=1
+        if (!type.type) {
+          $scope.userladp=true;
+
+
+
+        }else {
+          $scope.userladp=false
+        }
+
+      })
       $scope.$watch('grid.txt', function (n, o) {
         if (n === o) {
           return
@@ -138,4 +152,8 @@ angular.module('basic')
 
         });
       };
+      $scope.updatepwd = function(){
+        updatepwd.open();
+      }
+
     }]);
