@@ -152,8 +152,8 @@ angular.module('basic')
 
         });
       };
-      $scope.updatepwd = function(){
-        updatepwd.open();
+      $scope.updatepwd = function(name){
+        updatepwd.open(name);
       }
 
     }]);
