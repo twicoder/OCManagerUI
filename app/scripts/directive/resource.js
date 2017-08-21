@@ -41,7 +41,9 @@ angular.module('basic.resource', ['ngResource'])
     return newUser;
   }])
   .factory('putuser', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
-    var putuser = $resource(GLOBAL.host + '/user', {}, {
+    var putuser = $resource(GLOBAL.host + '/user/name/:name', {
+      name:'@name'
+    }, {
       updata: {method: 'PUT'}
     });
     return putuser;
@@ -166,6 +168,14 @@ angular.module('basic.resource', ['ngResource'])
       put: {method: "PUT"}
     });
     return updateinstance;
+  }])
+  .factory('putusername', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var putusername = $resource(GLOBAL.host + '/user/:name/password', {
+      name:'@name',
+    }, {
+      put: {method: "PUT"}
+    });
+    return putusername;
   }])
   .factory('deletetenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var deletetenantapi = $resource(GLOBAL.host + '/tenant/:id', {

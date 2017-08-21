@@ -385,33 +385,37 @@ angular.module('basic.services', ['ngResource'])
               $scope.input = {
                 username: '',
                 email: '',
+                password:'',
                 description: ''
               };
-            }
-            authctype.get({}, function (type) {
-              //console.log('type', type);
-              //type.type=1
-              if (!type.type) {
-               $scope.isladp=true
-              }else {
-                $scope.isladp=false
-              }
-              ladptype.query({}, function (data) {
-                $scope.ladpname =[]
-                $scope.input.username=data[0]
-                angular.forEach(data, function (name,i) {
-                  $scope.ladpname.push({name:name})
+              authctype.get({}, function (type) {
+                //console.log('type', type);
+                //type.type=1
+                if (!type.type) {
+                  $scope.isladp=true;
+                  ladptype.query({}, function (data) {
+                    $scope.ladpname =[];
+                    $scope.input.username=data[0];
+                    angular.forEach(data, function (name,i) {
+                      $scope.ladpname.push({name:name})
 
-                })
-                //
-                //console.log('data', data);
+                    })
+                    //
+                    //console.log('data', data);
 
+
+                  })
+                }else {
+                  $scope.isladp=false
+                }
 
               })
-            })
+            }
+
             $scope.error = {
               namenull: false,
-              emailnull: false
+              emailnull: false,
+              passwordnull:false
             };
             $scope.resErr = {
               info: '',
@@ -439,9 +443,15 @@ angular.module('basic.services', ['ngResource'])
                 //console.log('n', n);
                 $scope.error.emailnull = false;
               }
-
+              if (!$scope.isupdata&&!$scope.isladp) {
+                if (n.password && n.password.length > 0) {
+                  //console.log('n', n);
+                  $scope.error.passwordnull = false;
+                }
+              }
 
             }, true);
+
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
@@ -461,19 +471,30 @@ angular.module('basic.services', ['ngResource'])
                 $scope.isOk = false;
                 return;
               }
+              if (!$scope.isupdata && !$scope.isladp) {
+                if ($scope.input.password === '') {
+                  $scope.error.passwordnull = true;
+                  $scope.isOk = false;
+                  return;
+                }
+              }
               if ($scope.input.email === '') {
                 $scope.error.emailnull = true;
                 $scope.isOk = false;
                 return;
               }
 
-              if ($scope.error.namenull || $scope.error.emailnull) {
+
+              if ($scope.error.namenull || $scope.error.emailnull||$scope.error.passwordnull) {
                 return;
               }
 
               //console.log('$scope.input', $scope.input);
+
               if ($scope.isupdata) {
-                putuser.updata($scope.input, function () {
+                $scope.putapi =angular.copy($scope.input);
+                delete $scope.putapi.password
+                putuser.updata({name:$scope.putapi.username},$scope.putapi, function () {
                   $uibModalInstance.close(true);
                 }, function (res) {
                   if (res.data.resCodel == 4004) {
@@ -486,7 +507,8 @@ angular.module('basic.services', ['ngResource'])
                   $scope.isOk = false;
                 });
               } else {
-                console.log('111');
+                //console.log('111');
+
                 user.create($scope.input, function () {
                   $uibModalInstance.close(true);
                 }, function (res) {
