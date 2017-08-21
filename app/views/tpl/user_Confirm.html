@@ -31,24 +31,15 @@
       <p style="margin:0;">{{userErrInfo}}</p>
     </div>
   </div>
-  <!--<div class="con-wrop">-->
-    <!--<label>用户源</label>-->
-    <!--<div class="confirm-select modal_select">-->
-      <!--<div uib-dropdown on-toggle="toggled(open)">-->
-        <!--<a href="javascript:void(0);" class="" uib-dropdown-toggle>-->
-          <!--<span class="select-title">中信云用户中心</span>-->
-          <!--<b class="ser_bg_btn"></b>-->
-        <!--</a>-->
-        <!--<ul class="service_drop service_drop_gj" uib-dropdown-menu aria-labelledby="user-menu">-->
-          <!--<li>-->
-            <!--<a href="javascript:void(0);">-->
-              <!--<span class="drop_name_tit two_tab_ellipsis">中信云用户中心</span>-->
-            <!--</a></li>-->
-        <!--</ul>-->
-
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
+  <div class="con-wrop" ng-show="!isladp&&!isupdata">
+    <label>密码<i class="modal_red">*</i></label>
+    <div class="confirm-select modal_select" ng-class="{modal_select_red:error.passwordnull}">
+      <input type="password" class="modal_input" ng-model="input.password">
+    </div>
+    <div class="error_block_tit" ng-if="error.passwordnull">
+      <p style="margin:0;">密码不能为空</p>
+    </div>
+  </div>
   <div class="con-wrop">
     <label>邮箱<i class="modal_red">*</i></label>
     <div class="confirm-select modal_select" ng-class="{modal_select_red:error.emailnull}">
