@@ -6,6 +6,7 @@
         <div class="row prompt mgt">
           <div class="col-md-6 text-l">用户名</div>
           <div class="col-md-6 text-r err-text" ng-if="frm.username.$dirty && frm.username.$invalid"><img src="../images/tip.png" alt="" class="err-img">用户名不能为空</div>
+          <div class="col-md-6 text-r err-text" ng-if="loginerr"><img src="../images/tip.png" alt="" class="err-img">账号或密码错误</div>
         </div>
         <div><input ng-model="usermessage.username" name="username" type="text" class="login-input mgt" required></div>
         <div class="row prompt mgt">
