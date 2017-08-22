@@ -635,11 +635,11 @@ angular.module('basic')
                 tenantbsi.query({id: $scope.nodeId}, function (bsis) {
                   var bsitems = []
                   angular.forEach(bsis, function (bsi, i) {
-                    if (bsi.status == "Failure") {
-
-                    } else {
+                    //if (bsi.status == "Failure") {
+                    //
+                    //} else {
                       bsitems.push(bsi)
-                    }
+                    //}
                   })
                   bsis = angular.copy(bsitems)
                   classify(bsis)
@@ -687,10 +687,10 @@ angular.module('basic')
           tenantbsi.query({id: $scope.nodeId}, function (bsis) {
             var bsitems = []
             angular.forEach(bsis, function (bsi, i) {
-              if (bsi.status == "Failure") {
-              } else {
+              //if (bsi.status == "Failure") {
+              //} else {
                 bsitems.push(bsi)
-              }
+              //}
             })
             bsis = angular.copy(bsitems)
             console.log('delete', bsis);
@@ -713,11 +713,11 @@ angular.module('basic')
           //console.log('bsis', bsis);
           var bsitems = []
           angular.forEach(bsis, function (bsi, i) {
-            if (bsi.status == "Failure") {
-
-            } else {
+            //if (bsi.status == "Failure") {
+            //
+            //} else {
               bsitems.push(bsi)
-            }
+            //}
           })
           bsis = angular.copy(bsitems)
 
@@ -861,11 +861,11 @@ angular.module('basic')
             tenantbsi.query({id: $scope.nodeId}, function (bsis) {
               var bsitems = []
               angular.forEach(bsis, function (bsi, i) {
-                if (bsi.status == "Failure") {
-
-                } else {
+                //if (bsi.status == "Failure") {
+                //
+                //} else {
                   bsitems.push(bsi)
-                }
+                //}
               })
               bsis = angular.copy(bsitems)
               classify(bsis)
@@ -903,11 +903,11 @@ angular.module('basic')
           tenantbsi.query({id: $scope.nodeId}, function (bsis) {
             var bsitems = []
             angular.forEach(bsis, function (bsi, i) {
-              if (bsi.status == "Failure") {
-
-              } else {
+              //if (bsi.status == "Failure") {
+              //
+              //} else {
                 bsitems.push(bsi)
-              }
+              //}
             })
             bsis = angular.copy(bsitems)
             classify(bsis)
