@@ -28,6 +28,16 @@ angular.module('basic')
           Cookie.set('jizhu', 'true', 24 * 3600 * 1000*30);
         }
     }
+    $scope.loginerr=false;
+    $scope.$watch('usermessage', function (n,o) {
+      if (n === o) {
+              return
+      }
+      //if (n) {
+      console.log('n',n);
+      $scope.loginerr=false;
+              //}
+    },true)
     $scope.gologin= function () {
       login.post($scope.usermessage, function (data) {
         //console.log('data', data);
@@ -35,6 +45,9 @@ angular.module('basic')
         Cookie.set('jzusername',$scope.usermessage.username ,  24 * 3600 * 1000*30);
         Cookie.set('token', data.token, 24 * 3600 * 1000);
         $state.go('console.tenant');
+      }, function (err) {
+        console.log('err', err);
+        $scope.loginerr=true;
       })
     }
   }]);
