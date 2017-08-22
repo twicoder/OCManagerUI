@@ -10,13 +10,13 @@ angular.module('basic.controller', [])
 
     $rootScope.$on(AUTH_EVENTS.loginNeeded, function () {
       $log.info(AUTH_EVENTS.loginNeeded);
-      Cookie.clear('username');
-      Cookie.clear('tenantId');
-      Cookie.clear('token');
-      //$rootScope.region = '';
-      //$rootScope.user = '';
-      //$rootScope.namespace = "";
-      $state.go('home.login');
+      //Cookie.clear('username');
+      //Cookie.clear('tenantId');
+      //Cookie.clear('token');
+      ////$rootScope.region = '';
+      ////$rootScope.user = '';
+      ////$rootScope.namespace = "";
+      //$state.go('home.login');
     });
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
       $log.info(AUTH_EVENTS.loginSuccess);
