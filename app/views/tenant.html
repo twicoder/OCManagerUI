@@ -201,7 +201,7 @@
               <ul class="tenant-serve-list">
                 <li class="row" ng-repeat="item in useritem">
                   <div class="col-md-1"><img src="./images/user-listicon.png" alt=""></div>
-                  <div class="col-md-2 tentusername" uib-tooltip="{{item.userName}}"><span>用户名</span>&nbsp;&nbsp;{{item.userName}}
+                  <div class="col-md-2 tentusername" uib-tooltip="{{item.userName}}" style="white-space: nowrap"><span>用户名</span>&nbsp;&nbsp;{{item.userName}}
                   </div>
                   <div class="col-md-3"><span>用户角色</span>&nbsp;&nbsp;{{item.roleId | phaseFilter}}</div>
                   <div class="col-md-3 tentusername" uib-tooltip="{{item.userDescription}}"><span>用户描述</span>&nbsp;:&nbsp;{{item.userDescription}}
@@ -209,7 +209,7 @@
 
                   <div class="col-md-3" ng-show="item.userName!=='admin'">
                     <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'" ng-click="looklog(item.userName)">日志</a>
-                    <a href="javascript:void(0);" ng-click="updataUser(item)">修改</a>
+                    <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'" ng-click="updataUser(item)">修改</a>
                     <a href="javascript:void(0);" ng-click="delUser(item.userId,item.userName)">删除</a>
                   </div>
 
