@@ -2,14 +2,15 @@
  * Created by sorcerer on 2017/8/3.
  */
 angular.module('basic')
-  .controller('loginCtrl',['login','$scope','Cookie','$state',function (login,$scope,Cookie,$state) {
+  .controller('loginCtrl',['$location','login','$scope','Cookie','$state',
+    function ($location,login,$scope,Cookie,$state) {
     //$rootScope.tab = "service";
     $scope.usermessage={
       username:'',
       password:''
     }
-
-    if (Cookie.get('jizhu')) {
+      //console.log('location', location.origin);
+      if (Cookie.get('jizhu')) {
       if (Cookie.get('jizhu') === 'true') {
         $scope.me = true;
         $scope.usermessage.username=Cookie.get('jzusername');
