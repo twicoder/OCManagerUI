@@ -12,7 +12,10 @@
   <div class="con-wrop" style="margin-top:0px;">
     <label>租户名<i class="modal_red">*</i></label>
     <div class="confirm-select modal_select" ng-class="{modal_select_red:error.namenull}">
-      <input type="text" name="username" class="modal_input" ng-model="message.name" required>
+      <input type="text" name="username"
+             onkeypress="if((event.keyCode > 31 && event.keyCode < 44) || (event.keyCode > 46 && event.keyCode < 48) || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97))event.returnValue = false;"
+             ng-pattern="/^[a-z][a-z0-9-]{2,28}[a-z0-9]$/"
+      class="modal_input" ng-model="message.name" required>
     </div>
     <div class="error_block_tit" ng-if="frm.username.$dirty && frm.username.$invalid">
       <p style="margin:0;">租户名不能为空</p>
