@@ -4,8 +4,8 @@
  * Main Controller
  */
 angular.module('basic')
-  .controller('UserCtrl', ['authctype','updatepwd','$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm','newUser',
-    function (authctype,updatepwd,$rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm,newUser) {
+  .controller('UserCtrl', ['$state','authctype','updatepwd','$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm','newUser',
+    function ($state,authctype,updatepwd,$rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm,newUser) {
       var refresh = function (page) {
         $(document.body).animate({
           scrollTop: 0
@@ -136,6 +136,7 @@ angular.module('basic')
       $scope.adduser = function () {
         user_Confirm.open('', $scope.users).then(function () {
           loaduser();
+          $state.reload()
         });
       };
 //用户管理-修改
