@@ -56,7 +56,7 @@ angular.module('basic')
       if (tree[0] && tree[0].id) {
         $scope.nodeId = tree[0].id;
       }
-      console.log('tree', tree);
+      //console.log('tree', tree);
       if (tree && tree.length === 0) {
 
         $state.go('home.permission');
@@ -650,7 +650,7 @@ angular.module('basic')
         })
       }
       //资源报告
-    function ziyuan(bsis) {
+      function ziyuan(bsis) {
         service.query(function (data) {
           $scope.servesArrs=[];
           $scope.newServeArrs = [];
@@ -814,9 +814,13 @@ angular.module('basic')
       $scope.addTenant = function () {
         console.log('$scope.nodeId', $scope.nodeId);
         addTenant.open($scope.nodeId).then(function (tenant) {
-          console.log('tenant', $scope.nodeIf);
 
-          gettree();
+          //console.log('tenantif', $scope.nodeIf);
+          tenant.databaseInfo.children=[]
+          $scope.nodeIf.children.push(tenant.databaseInfo)
+          //console.log('addtenant', tenant.databaseInfo);
+          $scope.showSelected($scope.nodeIf)
+          //gettree();
         });
       }
       //资源管理bsi展开
