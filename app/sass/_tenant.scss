@@ -74,7 +74,8 @@ $smbg: #c256fc !default;
         display: block;
         width: 100%;
         height: 100%;
-        padding-left: 60px;border-left:4px solid #ebebe9;
+        padding-left: 60px;
+        border-left:4px solid #ebebe9;
         text-overflow: ellipsis;
         overflow: hidden;
       }
@@ -105,8 +106,25 @@ $smbg: #c256fc !default;
           }
           ul {
             li {
+              div {
+                padding-left: 120px !important;
+
+              }
               i {
-                //background: none !important;
+                left: 85px !important;
+                top: 18px !important;
+              }
+              ul {
+                li {
+                  div {
+                    //padding-left: 120px !important;
+
+                  }
+                  i {
+                    //left: 85px !important;
+                    //top: 18px !important;
+                  }
+                }
               }
             }
           }
