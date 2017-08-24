@@ -40,6 +40,7 @@ angular.module('basic')
           creattree(tree)
         })
       }
+
       $scope.looklog = function (name) {
         userinfo.query({name: name, id: Cookie.get('tenantId')}, function (res) {
           console.log('resinfo', res);
@@ -56,27 +57,27 @@ angular.module('basic')
       if (tree[0] && tree[0].id) {
         $scope.nodeId = tree[0].id;
       }
-      //console.log('tree', tree);
+
       if (tree && tree.length === 0) {
 
         $state.go('home.permission');
       }
       $scope.treeOptions = {
         nodeChildren: "children",
-        dirSelectable: true,
-        allowDeselect: false,
-        injectClasses: {
-          ul: "a1",
-          li: "a2",
-          liSelected: "a7",
-          iExpanded: "a3",
-          iCollapsed: "a4",
-          iLeaf: "a5",
-          label: "a6",
-          labelSelected: "a8"
-        }
+        //dirSelectable: true,
+        //allowDeselect: false,
+        //injectClasses: {
+        //  ul: "a1",
+        //  li: "a2",
+        //  liSelected: "a7",
+        //  iExpanded: "a3",
+        //  iCollapsed: "a4",
+        //  iLeaf: "a5",
+        //  label: "a6",
+        //  labelSelected: "a8"
+        //}
       };
-      // $scope.selected = tree[0];
+
 
       $scope.ismember = true;
       var allbsi = [];
@@ -97,7 +98,7 @@ angular.module('basic')
         });
       });
 
-//console.log('absi', absi);
+
       angular.forEach(absi, function (bsi) {
         //console.log('bsi', bsi);
         //console.log("sssssssss",bsi.quota,typeof bsi.quota);
@@ -200,7 +201,7 @@ angular.module('basic')
       };
 
       var checkServe = function (allserve, onlyserve) {
-        console.log(allserve,onlyserve);
+        console.log(allserve, onlyserve);
         $scope.newServeArr = [];
         angular.forEach(allserve, function (item) {
           if (item.servesList.length > 0) {
@@ -211,7 +212,7 @@ angular.module('basic')
 
             //console.log(item.serviceTypeName, list.serviceTypeName);
             if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
-              list.isaddbsi=false;
+              list.isaddbsi = false;
               item.servesList.push(list);
             }
           });
@@ -230,14 +231,14 @@ angular.module('basic')
         //if (!node) {
         //  $scope.bsis = [];
         //
-          tenantbsi.query({id: node.id}, function (bsis) {
-            $scope.bsis = bsis;
-            $scope.grid.bsitotal = $scope.bsis.length;
-            checkServe($scope.servesArr, $scope.bsis);
-            refresh(1);
-          }, function (err) {
+        tenantbsi.query({id: node.id}, function (bsis) {
+          $scope.bsis = bsis;
+          $scope.grid.bsitotal = $scope.bsis.length;
+          checkServe($scope.servesArr, $scope.bsis);
+          refresh(1);
+        }, function (err) {
 
-          })
+        })
         //}else {
         //alert(1)
         //$scope.bsis = node.bsis;
@@ -285,7 +286,7 @@ angular.module('basic')
         showbsi: false,
         roleTitle: tree[0] ? tree[0].name : '',
         treeId: '',
-        isaddbsi:false
+        isaddbsi: false
       };
 
       function getUserInfo(id, node) {
@@ -301,10 +302,10 @@ angular.module('basic')
       var roleDemoList =
         [
           'a10170cb-524a-11e7-9dbb-fa163ed7d0ae',
-        'a1149421-524a-11e7-9dbb-fa163ed7d0ae',
-        'a12a84d0-524a-11e7-9dbb-fa163ed7d0ae',
-        'a13dd087-524a-11e7-9dbb-fa163ed7d0ae'
-      ];
+          'a1149421-524a-11e7-9dbb-fa163ed7d0ae',
+          'a12a84d0-524a-11e7-9dbb-fa163ed7d0ae',
+          'a13dd087-524a-11e7-9dbb-fa163ed7d0ae'
+        ];
       $scope.roleDemoList = roleDemoList.slice(0, 1);
       ///访问信息
       $scope.checkInfo = function (id, name) {
@@ -595,10 +596,11 @@ angular.module('basic')
 
         // $scope.mybsis=$scope.svArr
       }
+
       //添加实例
-      $scope.addser = function (name,item) {
+      $scope.addser = function (name, item) {
         console.log(item.isaddbsi);
-        item.isaddbsi=true;
+        item.isaddbsi = true;
         getdfbs.get(function (data) {
           //data.items
           angular.forEach(data.items, function (bs, i) {
@@ -638,7 +640,7 @@ angular.module('basic')
                     //if (bsi.status == "Failure") {
                     //
                     //} else {
-                      bsitems.push(bsi)
+                    bsitems.push(bsi)
                     //}
                   })
                   bsis = angular.copy(bsitems)
@@ -652,10 +654,10 @@ angular.module('basic')
       //资源报告
       function ziyuan(bsis) {
         service.query(function (data) {
-          $scope.servesArrs=[];
+          $scope.servesArrs = [];
           $scope.newServeArrs = [];
           angular.forEach(data, function (item) {
-            var thisobj = {serviceTypeName: item.servicename, servesList: [],isshow:false};
+            var thisobj = {serviceTypeName: item.servicename, servesList: [], isshow: false};
             $scope.servesArrs.push(thisobj);
 
           });
@@ -667,8 +669,8 @@ angular.module('basic')
 
             angular.forEach(bsis, function (list) {
               if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
-                list.isaddbsi=false;
-                list.isaddbsi=false;
+                list.isaddbsi = false;
+                list.isaddbsi = false;
                 item.servesList.push(list);
               }
             });
@@ -678,7 +680,7 @@ angular.module('basic')
               $scope.newServeArrs.push(item);
             }
           });
-          console.log('$scope.servesArr111',$scope.newServeArrs);
+          console.log('$scope.servesArr111', $scope.newServeArrs);
         })
       };
       //删除bsi
@@ -689,7 +691,7 @@ angular.module('basic')
             angular.forEach(bsis, function (bsi, i) {
               //if (bsi.status == "Failure") {
               //} else {
-                bsitems.push(bsi)
+              bsitems.push(bsi)
               //}
             })
             bsis = angular.copy(bsitems)
@@ -716,7 +718,7 @@ angular.module('basic')
             //if (bsi.status == "Failure") {
             //
             //} else {
-              bsitems.push(bsi)
+            bsitems.push(bsi)
             //}
           })
           bsis = angular.copy(bsitems)
@@ -809,6 +811,7 @@ angular.module('basic')
           fristLoad($scope.dataForTheTree[0].id, $scope.dataForTheTree[0]);
         }
       }
+
       creattree(tree)
       //添加租户
       $scope.addTenant = function () {
@@ -816,7 +819,7 @@ angular.module('basic')
         addTenant.open($scope.nodeId).then(function (tenant) {
 
           //console.log('tenantif', $scope.nodeIf);
-          tenant.databaseInfo.children=[]
+          tenant.databaseInfo.children = []
           $scope.nodeIf.children.push(tenant.databaseInfo)
           //console.log('addtenant', tenant.databaseInfo);
           $scope.showSelected($scope.nodeIf)
@@ -868,7 +871,7 @@ angular.module('basic')
                 //if (bsi.status == "Failure") {
                 //
                 //} else {
-                  bsitems.push(bsi)
+                bsitems.push(bsi)
                 //}
               })
               bsis = angular.copy(bsitems)
@@ -910,7 +913,7 @@ angular.module('basic')
               //if (bsi.status == "Failure") {
               //
               //} else {
-                bsitems.push(bsi)
+              bsitems.push(bsi)
               //}
             })
             bsis = angular.copy(bsitems)
