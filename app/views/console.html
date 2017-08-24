@@ -32,34 +32,38 @@
             </ul>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a ng-class="{true:'active'}[tab === 'console.tenant']" ui-sref="console.tenant">
+            <li ng-repeat="item in navArr" ng-class="{'bdb':item.bdb,'active':idx == $index}"
+                ng-click="changeUrl(item.url,$index)"
+                ng-mouseover="addBdb($index)"
+                ng-mouseleave="removeBdb($index)"
+            >
+              <a >
                 <!--<span class="glyphicon glyphicon-picture"></span>-->
-                <span>租户管理</span>
+                <span>{{item.name}}</span>
               </a>
             </li>
-            <li>
+            <!--<li ng-class="{true:'active'}[tab === 'console.user']">-->
 
-              <a ng-class="{true:'active'}[tab === 'console.user']" ui-sref="console.user">
-                <!--<span class="glyphicon glyphicon-list"></span>-->
-                <span>用户管理</span>
-              </a>
-            </li>
-            <li>
+              <!--<a  ui-sref="console.user">-->
+                <!--&lt;!&ndash;<span class="glyphicon glyphicon-list"></span>&ndash;&gt;-->
+                <!--<span>用户管理</span>-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{true:'active'}[tab === 'console.role']">-->
 
 
-              <a ng-class="{true:'active'}[tab === 'console.role']" ui-sref="console.role">
+              <!--<a  ui-sref="console.role">-->
 
-                <!--<span class="glyphicon glyphicon-list"></span>-->
-                <span>角色管理</span>
-              </a>
-            </li>
-            <li>
-              <a ng-class="{true:'active'}[tab === 'console.service']" ui-sref="console.service">
-                <!--<span class="glyphicon glyphicon-cog"></span>-->
-                <span>服务管理</span>
-              </a>
-            </li>
+                <!--&lt;!&ndash;<span class="glyphicon glyphicon-list"></span>&ndash;&gt;-->
+                <!--<span>角色管理</span>-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{true:'active'}[tab === 'console.service']">-->
+              <!--<a  ui-sref="console.service">-->
+                <!--&lt;!&ndash;<span class="glyphicon glyphicon-cog"></span>&ndash;&gt;-->
+                <!--<span>服务管理</span>-->
+              <!--</a>-->
+            <!--</li>-->
 
 
           </ul>
