@@ -43,10 +43,10 @@
   <div class="con-wrop">
     <label>邮箱<i class="modal_red">*</i></label>
     <div class="confirm-select modal_select" ng-class="{modal_select_red:error.emailnull}">
-      <input type="text" class="modal_input" ng-model="input.email">
+      <input type="text" class="modal_input" ng-blur="checkEmail(input.email)" ng-model="input.email">
     </div>
     <div class="error_block_tit" ng-if="error.emailnull">
-      <p style="margin:0;">邮箱不能为空</p>
+      <p style="margin:0;">{{emailErrInfo}}</p>
     </div>
   </div>
   <!--<div class="con-wrop" ng-show="isupdata">-->

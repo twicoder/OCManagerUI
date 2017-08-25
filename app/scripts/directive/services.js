@@ -372,6 +372,7 @@ angular.module('basic.services', ['ngResource'])
         controller: ['$scope', '$uibModalInstance', 'user', 'putuser', 'authctype', 'ladptype',
           function ($scope, $uibModalInstance, user, putuser, authctype, ladptype) {
             $scope.userErrInfo = '用户名不能为空';
+            $scope.emailErrInfo = '邮箱不能为空';
             $scope.thisTitle = '';
             if (item) {
               $scope.isupdata = true;
@@ -420,6 +421,21 @@ angular.module('basic.services', ['ngResource'])
               info: '',
               status: false
             }
+            $scope.checkEmail = function(email){
+              var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+              if(!email){
+                $scope.emailErrInfo = '邮箱不能为空';
+                $scope.error.emailnull = true;
+                return false;
+              }else if(!reg.test(email)){
+                $scope.emailErrInfo = '邮箱不正确';
+                $scope.error.emailnull = true;
+                return false;
+              }else{
+                return true;
+              }
+
+            }
             $scope.$watch('input', function (n, o) {
               if (n === o) {
                 return;
@@ -463,7 +479,7 @@ angular.module('basic.services', ['ngResource'])
               if ($scope.isOk === true) {
                 return;
               }
-              $scope.isOk = true;
+
               if ($scope.input.username === '') {
                 $scope.error.namenull = true;
                 $scope.userErrInfo = '用户名不能为空';
@@ -484,12 +500,12 @@ angular.module('basic.services', ['ngResource'])
               }
 
 
-              if ($scope.error.namenull || $scope.error.emailnull || $scope.error.passwordnull) {
+              if ($scope.error.namenull || $scope.error.emailnull || $scope.error.passwordnull || !$scope.checkEmail($scope.input.email)) {
                 return;
               }
 
               //console.log('$scope.input', $scope.input);
-
+              $scope.isOk = true;
               if ($scope.isupdata) {
                 $scope.putapi = angular.copy($scope.input);
                 delete $scope.putapi.password
