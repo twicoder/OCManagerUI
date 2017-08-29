@@ -26,7 +26,20 @@ angular.module('basic')
         {name:'角色管理',url:'console.role',bdb:false},
         {name:'服务管理',url:'console.service',bdb:false}
       ];
-      $scope.idx = 0;
+
+      var getIdx = function(){
+        var idx = '';
+        for(var i = 0 ; i < $scope.navArr.length ; i++){
+          if($rootScope.tab == $scope.navArr[i].url){
+            idx = i;
+            break;
+          }
+        }
+        return idx;
+      }
+
+      $scope.idx = getIdx();
+
       $scope.changeUrl = function (url,idx) {
         $state.go(url);
         $scope.idx = idx;
@@ -42,6 +55,8 @@ angular.module('basic')
         $scope.navArr[idx].bdb = false;
         $scope.navArr[$scope.idx].bdb = true;
       };
+      $scope.removeBdb(0);
+      $scope.addBdb($scope.idx);
     //sso.get(function (data) {
     //  if (data['http_x_proxy_cas_loginname']) {
     //    $scope.loginname=data['http_x_proxy_cas_loginname']
