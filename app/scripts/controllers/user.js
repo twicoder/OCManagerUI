@@ -4,14 +4,26 @@
  * Main Controller
  */
 angular.module('basic')
-  .controller('UserCtrl', ['$state','authctype','updatepwd','$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm','newUser',
-    function ($state,authctype,updatepwd,$rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm,newUser) {
+  .controller('UserCtrl', ['$timeout','$state','authctype','updatepwd','$rootScope', '$scope', 'user', 'user_Confirm', 'user_change_Confirm', 'user_del_Confirm','newUser',
+    function ($timeout,$state,authctype,updatepwd,$rootScope, $scope, user, user_Confirm, user_change_Confirm, user_del_Confirm,newUser) {
       var refresh = function (page) {
         $(document.body).animate({
           scrollTop: 0
         }, 200);
+        $scope.isshow=false;
         var skip = (page - 1) * $scope.grid.size;
         $scope.items = $scope.users.slice(skip, skip + $scope.grid.size);
+        var a = $timeout(function(){
+          //console.log('执行$timeout回调');
+          return 'angular'
+        },500);
+
+        a.then(function(data){
+          $scope.isshow=true;
+          $timeout.cancel(a);
+        },function(data){
+          console.log(data)
+        });
       };
 
       authctype.get({}, function (type) {
