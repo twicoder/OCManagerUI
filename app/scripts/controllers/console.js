@@ -45,36 +45,51 @@ angular.module('basic')
       //     $(this).css({"border-bottom-color":"#f39c12","border-bottom-width":"2px",'border-bottom-style':'solid'}).siblings('li').css('border','none')
       // });
       $scope.navArr = [
-        {name: '租户管理', url: 'console.tenant', bdb: true},
-        {name: '用户管理', url: 'console.user', bdb: false},
-        {name: '角色管理', url: 'console.role', bdb: false},
-        {name: '服务管理', url: 'console.service', bdb: false}
+        {name:'租户管理',url:'console.tenant',bdb:true},
+        {name:'用户管理',url:'console.user',bdb:false},
+        {name:'角色管理',url:'console.role',bdb:false},
+        {name:'服务管理',url:'console.service',bdb:false}
       ];
-      $scope.idx = 0;
-      $scope.changeUrl = function (url, idx) {
+
+      var getIdx = function(){
+        var idx = '';
+        for(var i = 0 ; i < $scope.navArr.length ; i++){
+          if($rootScope.tab == $scope.navArr[i].url){
+            idx = i;
+            break;
+          }
+        }
+        return idx;
+      }
+
+      $scope.idx = getIdx();
+
+      $scope.changeUrl = function (url,idx) {
         $state.go(url);
         $scope.idx = idx;
       };
-      $scope.addBdb = function (idx) {
+      $scope.addBdb = function(idx){
         $scope.navArr[idx].bdb = true;
-        if (idx != $scope.idx) {
+        if(idx != $scope.idx){
           $scope.navArr[$scope.idx].bdb = false;
         }
 
       };
-      $scope.removeBdb = function (idx) {
+      $scope.removeBdb = function(idx){
         $scope.navArr[idx].bdb = false;
         $scope.navArr[$scope.idx].bdb = true;
       };
-      //sso.get(function (data) {
-      //  if (data['http_x_proxy_cas_loginname']) {
-      //    $scope.loginname=data['http_x_proxy_cas_loginname']
-      //    $rootScope.isadmin = data.admin;
-      //    console.log('ssodata', data);
-      //  }
-      //
-      //
-      //}, function (err) {
-      //  console.log('ssodata', err);
-      //})
-    }]);
+      $scope.removeBdb(0);
+      $scope.addBdb($scope.idx);
+    //sso.get(function (data) {
+    //  if (data['http_x_proxy_cas_loginname']) {
+    //    $scope.loginname=data['http_x_proxy_cas_loginname']
+    //    $rootScope.isadmin = data.admin;
+    //    console.log('ssodata', data);
+    //  }
+    //
+    //
+    //}, function (err) {
+    //  console.log('ssodata', err);
+    //})
+  }]);
