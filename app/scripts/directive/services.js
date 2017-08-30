@@ -73,6 +73,7 @@ angular.module('basic.services', ['ngResource'])
             config.headers["http_x_proxy_cas_loginname"] = "like";
             config.headers["http_x_proxy_cas_username"] = "like";
           }
+          //console.log('config', config);
           if (config.headers) {
             config.headers["token"] = Cookie.get('token');
           }
