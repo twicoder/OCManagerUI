@@ -754,7 +754,7 @@ angular.module('basic.services', ['ngResource'])
             //  newid=newid.split(username)[0]
             //}
             $scope.message = {
-              id: username + '-' + timestamp,
+              id: username + '_' + timestamp,
               name: '',
               description: '',
               parentId: id
@@ -814,7 +814,7 @@ angular.module('basic.services', ['ngResource'])
                 "kind": "BackingServiceInstance",
                 "apiVersion": "v1",
                 "metadata": {
-                  "name": data[$scope.svActive].metadata.name + '-' + username + '-' + uuid.num(7, 16),
+                  "name": data[$scope.svActive].metadata.name + '_' + username + '_' + uuid.num(7, 16),
                 },
                 "spec": {
                   "provisioning": {
