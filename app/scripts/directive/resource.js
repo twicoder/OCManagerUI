@@ -195,6 +195,19 @@ angular.module('basic.resource', ['ngResource'])
       }, {});
       return ladptype;
     }])
+  .factory('createkeytab', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+        var createkeytab = $resource(GLOBAL.host + '/kerberos/create/keytab', {
+        }, {
+          post: {method: "POST"}
+        });
+        return createkeytab;
+      }])
+    .factory('getkeytab', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+        var getkeytab = $resource(GLOBAL.host + '/kerberos/keytab/:name', {
+          name:'@name'
+        }, {});
+        return getkeytab;
+      }])
 
   .factory('serveinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var serveinfo = $resource(GLOBAL.host + '/tenant/:tenantId/service/instance/:serviceInstanceName/access/info', {tenantId:'@tenantId',serviceInstanceName:'@serviceInstanceName'}, {
