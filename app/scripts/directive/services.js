@@ -786,7 +786,12 @@ angular.module('basic.services', ['ngResource'])
         controller: ['uuid', '$scope', '$uibModalInstance', 'creatbsi', 'Cookie',
           function (uuid, $scope, $uibModalInstance, creatbsi, Cookie) {
             $scope.data = data;
-            $scope.svName = ''
+            $scope.svList = true;
+            $scope.svName = 'HBase';
+            $scope.svActive = 0;
+            $scope.nextDiv = function () {
+              $scope.svList = false;
+            }
             $scope.checkSv = function (val, idx) {
               $scope.svName = val;
               $scope.svActive = idx;
