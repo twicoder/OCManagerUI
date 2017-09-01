@@ -860,3 +860,22 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
+  //添加实例
+  .service('addBsi', ['$uibModal', function ($uibModal) {
+    this.open = function () {
+      return $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'views/tpl/add_bsi.html',
+        size: 'default',
+        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+          };
+          $scope.ok = function () {
+
+            $uibModalInstance.close(true);
+          };
+        }]
+      }).result;
+    };
+  }])
