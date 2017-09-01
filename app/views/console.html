@@ -32,6 +32,12 @@
             </ul>
           </form>
           <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a ng-click="download()"  target="_self">
+                <!--<span class="glyphicon glyphicon-picture"></span>-->
+                <span>下载keytab文件</span>
+              </a>
+            </li>
             <li ng-repeat="item in navArr" ng-class="{'bdb':item.bdb,'active':idx == $index}"
                 ng-click="changeUrl(item.url,$index)"
                 ng-mouseover="addBdb($index)"

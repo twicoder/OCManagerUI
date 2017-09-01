@@ -621,7 +621,7 @@ angular.module('basic')
                 "kind": "BackingServiceInstance",
                 "apiVersion": "v1",
                 "metadata": {
-                  "name": bs.metadata.name + '-' + username + '-' + uuid.num(7, 16),
+                  "name": bs.metadata.name + '_' + username + '_' + uuid.num(7, 16),
                 },
                 "spec": {
                   "provisioning": {
