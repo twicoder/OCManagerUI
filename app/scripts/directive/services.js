@@ -867,18 +867,56 @@ angular.module('basic.services', ['ngResource'])
   }])
   //添加实例
   .service('addBsi', ['$uibModal', function ($uibModal) {
-    this.open = function () {
+    this.open = function (name,item,id) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/add_bsi.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+        controller: ['creatbsi','Cookie','$scope', '$uibModalInstance','getdfbs', function (creatbsi,Cookie,$scope, $uibModalInstance,getdfbs) {
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
-          $scope.ok = function () {
+          $scope.bsiobj = {
+            "kind": "BackingServiceInstance",
+            "apiVersion": "v1",
+            "metadata": {
+              "name":'',
+            },
+            "spec": {
+              "provisioning":{}
+            }
+          }
+          $scope.tenurl=''
 
-            $uibModalInstance.close(true);
+          getdfbs.get(function (data) {
+            //data.items
+            angular.forEach(data.items, function (bs, i) {
+              if (bs.metadata.name === name) {
+                var obj = {}
+
+                if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
+                  for (var k in bs.spec.plans[0].metadata.customize) {
+                    // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+                    obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString()
+                  }
+                }
+                var username = Cookie.get("username")
+                $scope.bsiobj.spec.provisioning={
+                  "backingservice_name": bs.metadata.name,
+                  "backingservice_plan_guid": bs.spec.plans[0].id,
+                  "parameters": obj
+                }
+              }
+            })
+          })
+          $scope.ok = function () {
+            $scope.bsiobj.spec.provisioning.parameters.cuzBsiName=$scope.tenurl;
+            creatbsi.post({id: id}, $scope.bsiobj, function (data) {
+              console.log('data', data);
+
+              $uibModalInstance.close(data);
+            })
+
           };
         }]
       }).result;
