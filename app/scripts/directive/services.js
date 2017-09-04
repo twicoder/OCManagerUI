@@ -754,7 +754,7 @@ angular.module('basic.services', ['ngResource'])
             //  newid=newid.split(username)[0]
             //}
             $scope.message = {
-              id: username + '_' + timestamp,
+              id: username + '-' + timestamp,
               name: '',
               description: '',
               parentId: id
