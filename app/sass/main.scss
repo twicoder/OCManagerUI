@@ -10,6 +10,7 @@ $titcolor:#333 !default;//定义全局变量
 $smbg:#c256fc!default;
 .set_top_tu{width:146px;height:146px;position:absolute;top:50%;left:50%;margin-left:-72px;margin-top:-72px;}
 body{font-family:"微软雅黑",Helvetica;}
+body{font-family:"微软雅黑",Helvetica;}
 .modal-dialog{
   .well-log{
     background: none !important;
@@ -572,6 +573,9 @@ table a{
   color: #999999;
 }
 //// 弹窗
+.small_alert{
+  width: 300px !important
+}
 .modal-default .modal-content .modal-footer {
   border-top: none;
   text-align: center;

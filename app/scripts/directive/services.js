@@ -925,3 +925,25 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
+  .service('smallAlert', ['$uibModal', function ($uibModal) {
+    this.open = function (con) {
+      return $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'views/tpl/small_alert.html',
+        size: 'default small_alert',
+        controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+          $scope.con = con;
+          var closeConf = function () {
+            $uibModalInstance.close();
+          }
+          window.setTimeout(closeConf, 1500);
+          // $scope.cancel = function () {
+          //   $uibModalInstance.dismiss();
+          // };
+          // $scope.ok = function () {
+          //   $uibModalInstance.dismiss();
+          // };
+        }]
+      }).result;
+    };
+  }])
