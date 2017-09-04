@@ -577,7 +577,7 @@ angular.module('basic')
                 var obj = JSON.parse(item.quota)
                 angular.forEach(obj, function (quota, j) {
                   console.log(quota, j);
-                  if (j !== "instance_id") {
+                  if (j !== "instance_id"&&j !== "cuzBsiName") {
                     item.ziyuan.push({key: j, value: quota})
                   }
 
@@ -596,62 +596,25 @@ angular.module('basic')
 
         // $scope.mybsis=$scope.svArr
       }
-
       //添加实例
       $scope.addser = function (name, item) {
         console.log(item.isaddbsi);
-        addBsi.open();
-        return;
         item.isaddbsi = true;
-        getdfbs.get(function (data) {
-          //data.items
-          angular.forEach(data.items, function (bs, i) {
-            if (bs.metadata.name === name) {
-              var obj = {}
-
-              if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
-                for (var k in bs.spec.plans[0].metadata.customize) {
-                  // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
-                  obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString()
-                }
-              }
-              //var timestamp = Date.parse(new Date());
-              //timestamp = timestamp / 1000;
-              //var newid = id;
-              var username = Cookie.get("username")
-              var bsiobj = {
-                "kind": "BackingServiceInstance",
-                "apiVersion": "v1",
-                "metadata": {
-                  "name": bs.metadata.name + '_' + username + '_' + uuid.num(7, 16),
-                },
-                "spec": {
-                  "provisioning": {
-                    "backingservice_name": bs.metadata.name,
-                    "backingservice_plan_guid": bs.spec.plans[0].id,
-                    "parameters": obj
-                  }
-                }
-              }
-
-              creatbsi.post({id: $scope.nodeId}, bsiobj, function (data) {
-                //console.log('data', data);
-                tenantbsi.query({id: $scope.nodeId}, function (bsis) {
-                  var bsitems = []
-                  angular.forEach(bsis, function (bsi, i) {
-                    //if (bsi.status == "Failure") {
-                    //
-                    //} else {
-                    bsitems.push(bsi)
-                    //}
-                  })
-                  bsis = angular.copy(bsitems)
-                  classify(bsis)
-                })
-              })
-            }
+        addBsi.open(name,item,$scope.nodeId).then(function (data) {
+          tenantbsi.query({id: $scope.nodeId}, function (bsis) {
+            var bsitems = []
+            angular.forEach(bsis, function (bsi, i) {
+              //if (bsi.status == "Failure") {
+              //
+              //} else {
+              bsitems.push(bsi)
+              //}
+            })
+            bsis = angular.copy(bsitems)
+            classify(bsis)
           })
         })
+
       }
       //资源报告
       function ziyuan(bsis) {
