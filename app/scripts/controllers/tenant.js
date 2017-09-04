@@ -339,6 +339,8 @@ angular.module('basic')
                   }
 
 
+                }else {
+                  Alert.open('没有绑定！');
                 }
 
               } else {
