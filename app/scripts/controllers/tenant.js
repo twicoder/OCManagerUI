@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addBsi','uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (addBsi,uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['smallAlert','addBsi','uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (smallAlert,addBsi,uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         var res = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -212,7 +212,6 @@ angular.module('basic')
 
             //console.log(item.serviceTypeName, list.serviceTypeName);
             if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
-              list.isaddbsi = false;
               item.servesList.push(list);
             }
           });
@@ -286,7 +285,6 @@ angular.module('basic')
         showbsi: false,
         roleTitle: tree[0] ? tree[0].name : '',
         treeId: '',
-        isaddbsi: false
       };
 
       function getUserInfo(id, node) {
@@ -600,8 +598,6 @@ angular.module('basic')
       }
       //添加实例
       $scope.addser = function (name, item) {
-        console.log(item.isaddbsi);
-        item.isaddbsi = true;
         addBsi.open(name,item,$scope.nodeId).then(function (data) {
           tenantbsi.query({id: $scope.nodeId}, function (bsis) {
             var bsitems = []
@@ -636,8 +632,6 @@ angular.module('basic')
 
             angular.forEach(bsis, function (list) {
               if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
-                list.isaddbsi = false;
-                list.isaddbsi = false;
                 item.servesList.push(list);
               }
             });
@@ -884,9 +878,12 @@ angular.module('basic')
               //}
             })
             bsis = angular.copy(bsitems)
-            classify(bsis)
+            classify(bsis);
+            smallAlert.open('保存成功');
           })
 
+        },function () {
+          smallAlert.open('保存失败');
         })
         $scope.svArr[pidx].servesList[idx]['isde'] = false;
       };
