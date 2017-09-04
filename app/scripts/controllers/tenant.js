@@ -577,7 +577,7 @@ angular.module('basic')
                 var obj = JSON.parse(item.quota)
                 angular.forEach(obj, function (quota, j) {
                   console.log(quota, j);
-                  if (j !== "instance_id") {
+                  if (j !== "instance_id"&&j !== "cuzBsiName") {
                     item.ziyuan.push({key: j, value: quota})
                   }
 

@@ -795,13 +795,14 @@ angular.module('basic.services', ['ngResource'])
             $scope.checkSv = function (val, idx) {
               $scope.svName = val;
               $scope.svActive = idx;
-
             }
+            $scope.bsiname = '';
+            $scope.bsiurl = '';
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
             $scope.ok = function () {
-              console.log('bsid', data[$scope.svActive].spec.plans[0].id);
+              //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
               //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
               var obj = {}
 
@@ -819,7 +820,7 @@ angular.module('basic.services', ['ngResource'])
                 "kind": "BackingServiceInstance",
                 "apiVersion": "v1",
                 "metadata": {
-                  "name": data[$scope.svActive].metadata.name + '_' + username + '_' + uuid.num(7, 16),
+                  "name":$scope.bsiname ,
                 },
                 "spec": {
                   "provisioning": {
@@ -829,7 +830,7 @@ angular.module('basic.services', ['ngResource'])
                   }
                 }
               }
-
+              bsiobj.spec.provisioning.parameters.cuzBsiName=$scope.bsiurl
               creatbsi.post({id: id}, bsiobj, function (data) {
                 console.log('data', data);
                 $uibModalInstance.close(true);
@@ -840,6 +841,7 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
+
   .service('updatepwd', ['$uibModal', function ($uibModal) {
     this.open = function (name) {
       return $uibModal.open({
@@ -872,7 +874,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/add_bsi.html',
         size: 'default',
-        controller: ['creatbsi','Cookie','$scope', '$uibModalInstance','getdfbs', function (creatbsi,Cookie,$scope, $uibModalInstance,getdfbs) {
+        controller: ['creatbsi','Cookie','$scope', '$uibModalInstance','getdfbs',
+          function (creatbsi,Cookie,$scope, $uibModalInstance,getdfbs) {
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
