@@ -72,6 +72,7 @@ angular.module('basic', [
       }
     ]);
   }])
+
   .run(['$rootScope', '$state', 'user', 'Cookie',
     function ($rootScope, $state, user, Cookie) {
 
