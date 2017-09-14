@@ -744,8 +744,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addTenant.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie',
-          function ($scope, $uibModalInstance, addtenantapi, Cookie) {
+        controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie','getdfbs',
+          function ($scope, $uibModalInstance, addtenantapi, Cookie,getdfbs) {
             var timestamp = Date.parse(new Date());
             timestamp = timestamp / 1000;
             //var newid = id;
@@ -753,23 +753,75 @@ angular.module('basic.services', ['ngResource'])
             //if (id.indexOf(username)) {
             //  newid=newid.split(username)[0]
             //}
+            $scope.isbs = false;
+            $scope.nextDiv = function(){
+              $scope.isbs = true;
+            }
             $scope.message = {
               id: username + '-' + timestamp,
               name: '',
               description: '',
               parentId: id
+            };
+            getdfbs.get(function (data) {
+              $scope.bsList = {};
+              $scope.newbsobj = [];
+              angular.forEach(data.items,function(bs,i){
+                var atson = {
+                  name:bs.metadata.name,
+                  quota:[]
+                };
+                $scope.bsList[bs.metadata.name] = {};
+
+                angular.forEach(bs.spec.plans[0].metadata.customize,function(ct,y){
+                  var obj = {
+                      key:y,
+                      val:0
+                  }
+                  $scope.bsList[bs.metadata.name][y] = 0;
+                  atson.quota.push(obj);
+                });
+                $scope.newbsobj.push(atson);
+              });
+            })
+
+            $scope.changeList =
+              {
+
+              }
+
+
+            $scope.changeBs = function(bskey,bsval){
+              $scope.changeList[bskey] = bsval;
+            }
+            $scope.delbsList = function (val,idx) {
+              delete $scope.changeList[val];
+              angular.forEach($scope.newbsobj[idx].quota,function(ct,y){
+                  ct.val=0;
+              });
             }
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
             $scope.ok = function () {
-
-              addtenantapi.post($scope.message, function (data) {
+              angular.forEach($scope.changeList,function(ct,i){
+                var qa = {};
+                angular.forEach($scope.newbsobj,function(arr,y){
+                      if(i === arr.name){
+                        angular.forEach(arr.quota,function(quota,z){
+                          qa[quota.key] = quota.val;
+                        });
+                      }
+                });
+                $scope.changeList[i] = qa;
+              });
+              console.log('bibibibibi',$scope.changeList);
+              // addtenantapi.post($scope.message, function (data) {
                 //alert(data)
                 //console.log('data111', data);
 
-                $uibModalInstance.close(data);
-              });
+                // $uibModalInstance.close(data);
+              // });
 
             };
           }]
