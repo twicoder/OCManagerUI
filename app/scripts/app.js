@@ -72,6 +72,7 @@ angular.module('basic', [
       }
     ]);
   }])
+
   .run(['$rootScope', '$state', 'user', 'Cookie',
     function ($rootScope, $state, user, Cookie) {
 
@@ -89,6 +90,7 @@ angular.module('basic', [
 
       $rootScope.$on('$stateChangeStart', function (event, toState) {
         console.log('toState', toState.name);
+
         $rootScope.tab = toState.name;
 
         //if (toState.name &&toState.name !== "home.permission") {
