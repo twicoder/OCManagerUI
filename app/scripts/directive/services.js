@@ -422,17 +422,17 @@ angular.module('basic.services', ['ngResource'])
               info: '',
               status: false
             }
-            $scope.checkEmail = function(email){
+            $scope.checkEmail = function (email) {
               var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
-              if(!email){
+              if (!email) {
                 $scope.emailErrInfo = '邮箱不能为空';
                 $scope.error.emailnull = true;
                 return false;
-              }else if(!reg.test(email)){
+              } else if (!reg.test(email)) {
                 $scope.emailErrInfo = '邮箱不正确';
                 $scope.error.emailnull = true;
                 return false;
-              }else{
+              } else {
                 return true;
               }
 
@@ -744,8 +744,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addTenant.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie','getdfbs',
-          function ($scope, $uibModalInstance, addtenantapi, Cookie,getdfbs) {
+        controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie', 'getdfbs',
+          function ($scope, $uibModalInstance, addtenantapi, Cookie, getdfbs) {
             var timestamp = Date.parse(new Date());
             timestamp = timestamp / 1000;
             //var newid = id;
@@ -754,74 +754,111 @@ angular.module('basic.services', ['ngResource'])
             //  newid=newid.split(username)[0]
             //}
             $scope.isbs = false;
-            $scope.nextDiv = function(){
+            $scope.nextDiv = function () {
               $scope.isbs = true;
             }
             $scope.message = {
               id: username + '-' + timestamp,
               name: '',
               description: '',
-              parentId: id
+              parentId: id,
+              quota:{}
             };
+            //var cancreat=["HBase","hbase","hive","mapreduce","spark","kafka"]
+            function isEmptyObject(obj) {
+
+              for (var key in obj) {
+                return false
+              }
+              ;
+              return true
+            };
+            $scope.bslength = 0;
             getdfbs.get(function (data) {
               $scope.bsList = {};
-              $scope.newbsobj = [];
-              angular.forEach(data.items,function(bs,i){
-                var atson = {
-                  name:bs.metadata.name,
-                  quota:[]
-                };
-                $scope.bsList[bs.metadata.name] = {};
+              $scope.newbsobj = {};
+              angular.forEach(data.items, function (bs, i) {
+                if (isEmptyObject(bs.spec.plans[0].metadata.customize)) {
+                }else {
+                  var atson = {
+                    name: bs.metadata.name,
+                    quota: []
+                  };
 
-                angular.forEach(bs.spec.plans[0].metadata.customize,function(ct,y){
-                  var obj = {
-                      key:y,
-                      val:0
-                  }
-                  $scope.bsList[bs.metadata.name][y] = 0;
-                  atson.quota.push(obj);
-                });
-                $scope.newbsobj.push(atson);
+                  $scope.bsList[bs.metadata.name] = {};
+                  $scope.bslength+=1
+                  angular.forEach(bs.spec.plans[0].metadata.customize, function (ct, y) {
+                    var obj = {
+                      key: y,
+                      val: 0
+                    }
+                    $scope.bsList[bs.metadata.name][y] = 0;
+                    atson.quota.push(obj);
+                  });
+                  $scope.newbsobj[bs.metadata.name]=atson.quota
+                  //$scope.newbsobj.push(atson);
+                }
+
+
               });
+              //$scope.newbsobj=angular.copy($scope.bsList)
+              //console.log('$scope.bsList', $scope.newbsobj);
             })
 
             $scope.changeList =
-              {
-
-              }
+            {}
 
 
-            $scope.changeBs = function(bskey,bsval){
+            $scope.changeBs = function (bskey, bsval) {
+
               $scope.changeList[bskey] = bsval;
+              angular.forEach($scope.bsList, function (bs,i) {
+                angular.forEach($scope.changeList, function (clickbs,k) {
+                  //console.log(i, k);
+                  if (i === k) {
+                    $scope.bslength=$scope.bslength-1
+                    delete $scope.bsList[k];
+                  }
+
+                })
+              })
+
             }
-            $scope.delbsList = function (val,idx) {
+            $scope.delbsList = function (val, idx) {
               delete $scope.changeList[val];
-              angular.forEach($scope.newbsobj[idx].quota,function(ct,y){
-                  ct.val=0;
-              });
+              $scope.bslength+=1;
+              //console.log('$scope.newbsobj[idx]', $scope.newbsobj[idx]);
+              angular.forEach($scope.newbsobj, function (bs,k) {
+                angular.forEach(bs, function (bsquo,k) {
+                  bsquo.val=0;
+                })
+                if (k === val) {
+                  $scope.bsList[k]=bs;
+                  console.log($scope.bsList);
+                }
+              })
+
             }
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
             $scope.ok = function () {
-              angular.forEach($scope.changeList,function(ct,i){
-                var qa = {};
-                angular.forEach($scope.newbsobj,function(arr,y){
-                      if(i === arr.name){
-                        angular.forEach(arr.quota,function(quota,z){
-                          qa[quota.key] = quota.val;
-                        });
-                      }
-                });
-                $scope.changeList[i] = qa;
-              });
-              console.log('bibibibibi',$scope.changeList);
-              // addtenantapi.post($scope.message, function (data) {
-                //alert(data)
-                //console.log('data111', data);
+              var postobj = {};
+              angular.forEach($scope.newbsobj, function (bs,i) {
+                postobj[i.toLowerCase()]={}
+                angular.forEach(bs, function (item,k) {
+                  postobj[i.toLowerCase()][item.key]=item.val-0;
+                })
+              })
 
-                // $uibModalInstance.close(data);
-              // });
+              $scope.message.quota=JSON.stringify(postobj);
+              //console.log('bibibibibi', postobj);
+               addtenantapi.post($scope.message, function (data) {
+              //alert(data)
+              console.log('data111', data);
+
+               $uibModalInstance.close(data);
+               });
 
             };
           }]
@@ -872,7 +909,7 @@ angular.module('basic.services', ['ngResource'])
                 "kind": "BackingServiceInstance",
                 "apiVersion": "v1",
                 "metadata": {
-                  "name":$scope.bsiname ,
+                  "name": $scope.bsiname,
                 },
                 "spec": {
                   "provisioning": {
@@ -882,7 +919,7 @@ angular.module('basic.services', ['ngResource'])
                   }
                 }
               }
-              bsiobj.spec.provisioning.parameters.cuzBsiName=$scope.bsiurl
+              bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.bsiurl
               creatbsi.post({id: id}, bsiobj, function (data) {
                 console.log('data', data);
                 $uibModalInstance.close(true);
@@ -907,9 +944,9 @@ angular.module('basic.services', ['ngResource'])
             };
             $scope.ok = function () {
               var putobj = {
-                password:$scope.password
+                password: $scope.password
               }
-              putuser.updata({name:name},putobj, function (data) {
+              putuser.updata({name: name}, putobj, function (data) {
                 console.log('data', data);
                 $uibModalInstance.close(true);
               })
@@ -921,59 +958,59 @@ angular.module('basic.services', ['ngResource'])
   }])
   //添加实例
   .service('addBsi', ['$uibModal', function ($uibModal) {
-    this.open = function (name,item,id) {
+    this.open = function (name, item, id) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/add_bsi.html',
         size: 'default',
-        controller: ['creatbsi','Cookie','$scope', '$uibModalInstance','getdfbs',
-          function (creatbsi,Cookie,$scope, $uibModalInstance,getdfbs) {
-          $scope.cancel = function () {
-            $uibModalInstance.dismiss();
-          };
-          $scope.bsiobj = {
-            "kind": "BackingServiceInstance",
-            "apiVersion": "v1",
-            "metadata": {
-              "name":'',
-            },
-            "spec": {
-              "provisioning":{}
+        controller: ['creatbsi', 'Cookie', '$scope', '$uibModalInstance', 'getdfbs',
+          function (creatbsi, Cookie, $scope, $uibModalInstance, getdfbs) {
+            $scope.cancel = function () {
+              $uibModalInstance.dismiss();
+            };
+            $scope.bsiobj = {
+              "kind": "BackingServiceInstance",
+              "apiVersion": "v1",
+              "metadata": {
+                "name": '',
+              },
+              "spec": {
+                "provisioning": {}
+              }
             }
-          }
-          $scope.tenurl=''
+            $scope.tenurl = ''
 
-          getdfbs.get(function (data) {
-            //data.items
-            angular.forEach(data.items, function (bs, i) {
-              if (bs.metadata.name === name) {
-                var obj = {}
+            getdfbs.get(function (data) {
+              //data.items
+              angular.forEach(data.items, function (bs, i) {
+                if (bs.metadata.name === name) {
+                  var obj = {}
 
-                if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
-                  for (var k in bs.spec.plans[0].metadata.customize) {
-                    // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
-                    obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString()
+                  if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
+                    for (var k in bs.spec.plans[0].metadata.customize) {
+                      // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+                      obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString()
+                    }
+                  }
+                  var username = Cookie.get("username")
+                  $scope.bsiobj.spec.provisioning = {
+                    "backingservice_name": bs.metadata.name,
+                    "backingservice_plan_guid": bs.spec.plans[0].id,
+                    "parameters": obj
                   }
                 }
-                var username = Cookie.get("username")
-                $scope.bsiobj.spec.provisioning={
-                  "backingservice_name": bs.metadata.name,
-                  "backingservice_plan_guid": bs.spec.plans[0].id,
-                  "parameters": obj
-                }
-              }
+              })
             })
-          })
-          $scope.ok = function () {
-            $scope.bsiobj.spec.provisioning.parameters.cuzBsiName=$scope.tenurl;
-            creatbsi.post({id: id}, $scope.bsiobj, function (data) {
-              console.log('data', data);
+            $scope.ok = function () {
+              $scope.bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.tenurl;
+              creatbsi.post({id: id}, $scope.bsiobj, function (data) {
+                console.log('data', data);
 
-              $uibModalInstance.close(data);
-            })
+                $uibModalInstance.close(data);
+              })
 
-          };
-        }]
+            };
+          }]
       }).result;
     };
   }])
