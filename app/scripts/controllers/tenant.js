@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['smallAlert','addBsi','uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (smallAlert,addBsi,uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['bsLimit','smallAlert','addBsi','uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (bsLimit,smallAlert,addBsi,uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         var res = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -887,4 +887,31 @@ angular.module('basic')
         })
         $scope.svArr[pidx].servesList[idx]['isde'] = false;
       };
+
+      // 资源限定
+      $scope.bsLimit = [{name:'name1',quota:{aa:'aa',bb:'bb',cc:'cc'}},{name:'name2',quota:{11:'11',22:'22',33:'33'}}];
+      $scope.limitToggle = function(idx){
+        if ($scope.bsLimit[idx].isshow) {
+          $scope.bsLimit[idx].isshow = false;
+        } else {
+          $scope.bsLimit[idx].isshow = true;
+        }
+      }
+      //添加服务限定
+      $scope.addBsLimit = function(){
+        bsLimit.open();
+      }
+      //修改服务限定
+      $scope.editBsLimit = function(idx){
+        $scope.bsLimit[idx]['isde'] = true;
+      }
+      //删除服务限定
+      $scope.delBsLimit = function(){
+        alert('删除成功！');
+      }
+      //保存服务限定
+      $scope.saveBsLimit = function(idx){
+        $scope.bsLimit[idx]['isde'] = false;
+      }
+
     }]);
