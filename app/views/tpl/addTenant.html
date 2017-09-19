@@ -38,23 +38,11 @@
 
       <div class="col-md-10" style="margin:0;padding:0;">
             <div class="confirm-select" style="height: auto;margin-bottom:15px;" ng-repeat="(index,item) in changeList">
-              <!--<div uib-dropdown on-toggle="toggled(open)">-->
-                <!--<a href="javascript:void(0);" class="" uib-dropdown-toggle>-->
-                  <!--<span  class="select-title" title="{{index}}">{{index}}</span>-->
-                  <!--<b class="ser_bg_btn"></b>-->
-                <!--</a>-->
-                <!--<ul class="service_drop service_drop_gj" uib-dropdown-menu aria-labelledby="user-menu">-->
-                  <!--<li class="zx_active" ng-repeat="(bskey,bsval) in bsList" ng-click="changeBs(bskey,bsval,index)">-->
-                    <!--<a href="javascript:void(0);">-->
-                      <!--<span class="drop_name_tit two_tab_ellipsis" ng-class="" title="{{bskey}}">{{bskey}}</span>-->
-                    <!--</a></li>-->
-                <!--</ul>-->
-               <!--</div>-->
               <div class="bs-list-title">
                 {{index}} <span class="del-bslist" ng-click="delbsList(index,$index)"></span>
               </div>
               <div  style="border-top:1px solid #eaeaea;">
-                <div ng-repeat="newval in newbsobj[$index].quota" class="row" style="margin:8px 0px;">
+                <div ng-repeat="newval in newbsobj[index]" class="row" style="margin:8px 0px;">
                   <div class="col-md-7">{{newval.key}}</div>
                   <div class="col-md-5"><input type="text" ng-model="newval.val" class="bsinput"></div>
                 </div>
@@ -63,7 +51,7 @@
              </div>
 
 
-        <div class="confirm-select">
+        <div class="confirm-select" ng-show="bslength>0">
           <div uib-dropdown on-toggle="toggled(open)">
             <a href="javascript:void(0);" class="" uib-dropdown-toggle>
               <span  class="select-title" title="选择服务类型">选择服务类型</span>

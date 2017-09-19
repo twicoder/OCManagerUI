@@ -4,8 +4,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['bsLimit','smallAlert','addBsi','uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (bsLimit,smallAlert,addBsi,uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['addtenantapi','bsLimit','smallAlert','addBsi','uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (addtenantapi,bsLimit,smallAlert,addBsi,uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         var res = [this[0]];
         for (var i = 1; i < this.length; i++) {
@@ -22,7 +22,14 @@ angular.module('basic')
         }
         return res;
       }
-
+      //function isEmptyObject(obj) {
+      //
+      //  for (var key in obj) {
+      //    return false
+      //  }
+      //  ;
+      //  return true
+      //};
       //左边导航自动变化
       var left_by_block = function () {
         var thisheight = $(window).height() - 80;
@@ -251,6 +258,7 @@ angular.module('basic')
         //}
 
       };
+      //[{"description":"","id":"admin-1503459666","level":3,"name":"OCMgr_01","parentId":"admin-1503459599"},{"description":"jdjf;asdjkfdsjf;lkjd","id":"demouser001-1503472970","level":3,"name":"OCMgr03","parentId":"admin-1503459599"},{"description":"test6666","id":"333","level":3,"name":"test333","parentId":"111"},{"description":"test7777","id":"777","level":3,"name":"test777","parentId":"111"},{"description":"","id":"ethan-1503392161","level":2,"name":"产品中心","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"testing for demo","id":"demouser001-1503392598","level":2,"name":"testing03","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"demo for testing","id":"demouser001-1503392620","level":3,"name":"demo01_03","parentId":"demouser001-1503392598"},{"description":"aaaaaa","id":"demouser001-1503475806","level":3,"name":"OCMgr04","parentId":"admin-1503459599"},{"description":"","id":"admin-1503559648","level":2,"name":"zhaoyim001","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"root tenant","id":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae","level":1,"name":"root.tenant"},{"description":"testingtesting tetsi","id":"admin-1503459599","level":2,"name":"OCMgr","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"","id":"admin-1503454070","level":3,"name":"jiangtong1","parentId":"admin-1503453755"},{"description":"testing","id":"demouser001-1503391261","level":3,"name":"demo01","parentId":"demouser001-1503391240"},{"description":"","id":"zhaoyim-1504601921","level":2,"name":"zhaoyim003","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"","id":"admin-1503454384","level":4,"name":"ssbsb","parentId":"admin-1503454187"},{"description":"","id":"ethan-1503392200","level":3,"name":"橘云产品线","parentId":"ethan-1503392161"},{"description":"testing hello demo","id":"demouser001-1503391300","level":3,"name":"demo02","parentId":"demouser001-1503391240"},{"description":"","id":"admin-1503453755","level":2,"name":"jiangtong","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"test222","id":"222","level":3,"name":"test222","parentId":"111"},{"description":"","id":"admin-1503453957","level":3,"name":"jttest0","parentId":"admin-1503453755"},{"description":"testing for demo03","id":"demouser001-1503392005","level":3,"name":"demo03","parentId":"demouser001-1503391240"},{"description":"sssas","id":"admin-1505456928","level":2,"name":"sssa","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"hello world","id":"demouser001-1503391240","level":2,"name":"testing01","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"test111","id":"111","level":2,"name":"test111","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"","id":"ethan-1503392268","level":4,"name":"OCManager","parentId":"ethan-1503392200"},{"description":"","id":"admin-1503454264","level":4,"name":"sbsbsb","parentId":"admin-1503453957"},{"description":"testingtestingtestin","id":"demouser001-1503471101","level":3,"name":"OCMgr_02","parentId":"admin-1503459599"},{"description":"","id":"zhaoyim-1504509718","level":2,"name":"zhaoyim002","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"testing for hello wo","id":"demouser001-1503392370","level":2,"name":"testing02","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"ascasc","id":"admin-1505457238","level":2,"name":"xiandingtest","parentId":"ae783b6d-655a-11e7-aa10-fa163ed7d0ae"},{"description":"testing","id":"demouser001-1503392394","level":3,"name":"demo01_02","parentId":"demouser001-1503392370"},{"description":"","id":"admin-1503454187","level":3,"name":"xsss","parentId":"admin-1503453755"},{"description":"zizuhufor","id":"demouser001-1503392039","level":4,"name":"demo03_1","parentId":"demouser001-1503392005"},{"description":"","id":"admin-1503453778","level":3,"name":"jttest","parentId":"admin-1503453755"}]
       // 得到所有服务类型
       var loadserve = function (id, node) {
         service.query(function (data) {
@@ -665,6 +673,22 @@ angular.module('basic')
       //选中一个节点
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
+        $scope.bsLimit={};
+        tenant.get({id:node.id}, function (tenant) {
+          if (tenant.quota) {
+            var quota = JSON.parse(tenant.quota) ;
+            for(var k in quota){
+              $scope.bsLimit[k]=[];
+              $scope.bsLimit[k].zt={isshow:false,isde:false}
+              for(var i in quota[k]){
+                $scope.bsLimit[k].push({key:i,val:quota[k][i]})
+              }
+            }
+          }
+          console.log('$scope.bsLimit', $scope.bsLimit);
+
+
+        })
         Cookie.set('tenantId', node.id, 24 * 3600 * 1000);
         $scope.grid.roleTitle = node.name;
         $scope.nodeIf = node;
@@ -889,12 +913,13 @@ angular.module('basic')
       };
 
       // 资源限定
-      $scope.bsLimit = [{name:'name1',quota:{aa:'aa',bb:'bb',cc:'cc'}},{name:'name2',quota:{11:'11',22:'22',33:'33'}}];
+
+      //$scope.bsLimit = [{name:'name1',quota:{aa:'aa',bb:'bb',cc:'cc'}},{name:'name2',quota:{11:'11',22:'22',33:'33'}}];
       $scope.limitToggle = function(idx){
-        if ($scope.bsLimit[idx].isshow) {
-          $scope.bsLimit[idx].isshow = false;
+        if ($scope.bsLimit[idx].zt.isshow) {
+          $scope.bsLimit[idx].zt.isshow = false;
         } else {
-          $scope.bsLimit[idx].isshow = true;
+          $scope.bsLimit[idx].zt.isshow = true;
         }
       }
       //添加服务限定
@@ -903,7 +928,8 @@ angular.module('basic')
       }
       //修改服务限定
       $scope.editBsLimit = function(idx){
-        $scope.bsLimit[idx]['isde'] = true;
+        //console.log('$scope.bsLimit[idx].zt', $scope.bsLimit[idx].zt['isde']);
+        $scope.bsLimit[idx].zt.isde= true;
       }
       //删除服务限定
       $scope.delBsLimit = function(){
@@ -911,7 +937,33 @@ angular.module('basic')
       }
       //保存服务限定
       $scope.saveBsLimit = function(idx){
-        $scope.bsLimit[idx]['isde'] = false;
+        //console.log('$scope.bsLimit[idx].zt', $scope.bsLimit[idx].zt['isde']);
+        $scope.bsLimit[idx].zt.isde = false;
+        tenant.get({id:$scope.nodeId}, function (tenant) {
+          if (tenant.quota) {
+            tenant.quota='';
+          }
+          var postobj = {};
+          angular.forEach($scope.bsLimit, function (bs,i) {
+            postobj[i.toLowerCase()]={}
+            angular.forEach(bs, function (item,k) {
+              postobj[i.toLowerCase()][item.key]=item.val-0;
+            })
+          })
+
+          tenant.quota=JSON.stringify(postobj);
+
+          //console.log('bibibibibi', postobj);
+          addtenantapi.updata(tenant, function (data) {
+            //alert(data)
+            console.log('成功', data);
+
+            //$uibModalInstance.close(data);
+          });
+          //console.log('$scope.bsLimit', $scope.bsLimit);
+
+
+        })
       }
 
     }]);

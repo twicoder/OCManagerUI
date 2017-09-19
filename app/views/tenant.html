@@ -201,30 +201,32 @@
 
 
 
-              <div class="user-authorize"><span ng-click="addBsLimit()">添加服务限定</span></div>
-              <div class="resource-wrop" ng-repeat="item in bsLimit">
+              <div class="user-authorize">
+                <!--<span ng-click="addBsLimit()">添加服务限定</span>-->
+              </div>
+              <div class="resource-wrop" ng-repeat="(timeIndex,item) in bsLimit">
                 <div>
                   <div class="row resource-top">
                     <div class="col-md-10"
                          style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;padding:0;">
-                      <sapn ng-class="{'rotate':!item.isshow, 'check-btn': item.isshow}"
-                            ng-click="limitToggle($index)" style="float: left;margin-right:10px;"></sapn>
-                      {{item.name}}
+                      <sapn ng-class="{'rotate':!item.zt.isshow, 'check-btn': item.zt.isshow}"
+                            ng-click="limitToggle(timeIndex)" style="float: left;margin-right:10px;"></sapn>
+                      {{timeIndex}}
                     </div>
                     <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                      <sapn style="" class="delbsi" ng-click="delBsLimit()">删除</sapn>
-                      <sapn ng-if="!item.isde" style="" class="editSv" ng-click="editBsLimit($index)">编辑</sapn>
-                      <sapn ng-if="item.isde" class="editSv" ng-click="saveBsLimit($index)">保存</sapn>
+                      <!--<sapn style="" class="delbsi" ng-click="delBsLimit()">删除</sapn>-->
+                      <sapn ng-if="!item.zt.isde" style="" class="editSv" ng-click="editBsLimit(timeIndex)">编辑</sapn>
+                      <sapn ng-if="item.zt.isde" class="editSv" ng-click="saveBsLimit(timeIndex)">保存</sapn>
                     </div>
                   </div>
-                  <div class="resource-list"  ng-if="item.isshow">
+                  <div class="resource-list"  ng-if="item.zt.isshow">
                     <div>
                       <div class="list-con">
-                        <div class="row add-myserve" ng-repeat="(k,v) in item.quota" >
-                          <div class="col-md-2">{{k}}</div>
+                        <div class="row add-myserve" ng-repeat="bs in item" >
+                          <div class="col-md-2">{{bs.key}}</div>
                           <div class="col-md-10">
                             <div class="use-num-wrop">
-                              <input class="no-monetary" ng-model="v" type="text" ng-disabled="!item.isde">
+                              <input class="no-monetary" ng-model="bs.val" type="text" ng-disabled="!item.zt.isde">
                             </div>
                           </div>
                         </div>

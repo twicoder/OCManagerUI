@@ -92,6 +92,7 @@ angular.module('basic', [
         console.log('toState', toState.name);
 
         $rootScope.tab = toState.name;
+
         //if (toState.name &&toState.name !== "home.permission") {
         //  if (!$rootScope.users) {
         //    user.query(function (data) {

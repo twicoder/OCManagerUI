@@ -10,7 +10,6 @@ angular.module('basic.resource', ['ngResource'])
     });
     return allRole;
   }])
-///ocmanager/v1/api/service
   .factory('service', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var service = $resource(GLOBAL.host + '/service', {
 
@@ -87,7 +86,6 @@ angular.module('basic.resource', ['ngResource'])
     });
     return login;
   }])
-///ocmanager/v1/api/tenant／{id}/service/instances
   .factory('tenantbsi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var tenantbsi = $resource(GLOBAL.host + '/tenant/:id/service/instances', {id:'@id'}, {
     });
@@ -103,7 +101,6 @@ angular.module('basic.resource', ['ngResource'])
     });
     return sso;
   }])
-
   .factory('bsidata', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var bsidata = $resource(GLOBAL.bdxhost + '/namespaces/:id/instances/:name', {id:'@id',name:'@name'}, {
     });
@@ -156,7 +153,8 @@ angular.module('basic.resource', ['ngResource'])
   }])
   .factory('addtenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var addtenant = $resource(GLOBAL.host + '/tenant', {}, {
-      post: {method: "POST"}
+      post: {method: "POST"},
+      updata: {method: "PUT"}
     });
     return addtenant;
   }])
@@ -185,7 +183,7 @@ angular.module('basic.resource', ['ngResource'])
     });
     return deletetenantapi;
   }])
-   .factory('authctype', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+  .factory('authctype', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
       var authctype = $resource(GLOBAL.host + '/authc/type', {
       }, {});
       return authctype;
@@ -202,13 +200,12 @@ angular.module('basic.resource', ['ngResource'])
         });
         return createkeytab;
       }])
-    .factory('getkeytab', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+  .factory('getkeytab', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
         var getkeytab = $resource(GLOBAL.host + '/kerberos/keytab/:name', {
           name:'@name'
         }, {});
         return getkeytab;
       }])
-
   .factory('serveinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var serveinfo = $resource(GLOBAL.host + '/tenant/:tenantId/service/instance/:serviceInstanceName/access/info', {tenantId:'@tenantId',serviceInstanceName:'@serviceInstanceName'}, {
     });
