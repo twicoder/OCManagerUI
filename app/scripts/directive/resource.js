@@ -153,7 +153,8 @@ angular.module('basic.resource', ['ngResource'])
   }])
   .factory('addtenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var addtenant = $resource(GLOBAL.host + '/tenant', {}, {
-      post: {method: "POST"}
+      post: {method: "POST"},
+      updata: {method: "PUT"}
     });
     return addtenant;
   }])
