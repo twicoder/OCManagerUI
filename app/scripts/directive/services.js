@@ -860,7 +860,7 @@ angular.module('basic.services', ['ngResource'])
 
                $uibModalInstance.close(data);
                },function(error){
-                 if(error.data.resCodel===4061){
+                 if(error.data && error.data.resCodel===4061){
                    $scope.set_use = true;
                  }
                });
@@ -930,7 +930,7 @@ angular.module('basic.services', ['ngResource'])
                 console.log('data', data);
                 $uibModalInstance.close(true);
               },function(error){
-                if(error.data.resCodel===4061){
+                if(error.data && error.data.resCodel===4061){
                   $scope.set_use = true;
                 }
               })
