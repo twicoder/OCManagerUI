@@ -1,29 +1,68 @@
 <!--用户管理页面-->
 <div class="user_page">
+  <div class="new-loading" ng-show="!items||!isshow">
+    <img style="height:60px;width:60px;" src="images/load.png" alt="">
+  </div>
 <div class="set_mange">
   <div class="set_ser_btn">
-    <p ng-click="adduser()">添加用户</p></div>
-  <ul class="role_mange_list">
-    <li class="role_li" ng-repeat="item in users">
+    <div class="row">
+      <div class="col-sm-4">
+        <p ng-click="adduser()" class="">添加用户</p>
+      </div>
+
+      <div class="input-group col-sm-4 col-sm-offset-8">
+        <input type="text"
+               class="form-control"
+               placeholder="搜索用户名称"
+               ng-model="grid.txt">
+        <!--ng-model="txt" ng-focus="showTip=true;" -->
+        <span class="search_public_btn"></span>
+        <!--<span class="input-group-btn">-->
+        <!--<a class="btn" ng-click="buildsearch('search')"></a>-->
+        <!--</span>-->
+      </div>
+    </div>
+
+    </div>
+
+  <ul class="role_mange_listnew"  ng-show="items&&isshow">
+    <li class="role_linew" ng-repeat="item in items">
       <div class="role_block">
-        <div class="set_top">
-          <img src="images/user_manage.png"  class="set_top_tu">
+        <div class="set_topuser">
+          <img src="images/user_manage.png"  class="set_top_tuer">
         </div>
-        <div class="set_bt">
+        <div class="set_bt" style="overflow: hidden;">
           <p>{{item.username}}</p>
-          <p>{{item.description}}</p>
+          <p style="margin:0;word-break:break-all;word-wrap:break-word;">{{item.description}}</p>
         </div>
       </div>
-      <div class="role_block_h" >
-        <span class="block_close" ng-click="deluser()" role="button" tabindex="0"></span>
+      <div class="role_block_huser" >
+        <span ng-if="item.username!=='admin'" class="block_close" ng-click="deluser(item.username,item.id)" role="button" tabindex="0" style="display:block!important;"></span>
         <div class="service_one">
-          <p class="serv_tit">用户来源</p>
-          <p class="serv_detail">中信云用户中心</p>
+          <p class="serv_tit">&nbsp;</p>
+          <p class="serv_detail">&nbsp;</p>
         </div>
-        <div class="h_set"></div>
-        <p class="servie_change" ng-click="changeuser()">修改</p>
+        <!--<div class="h_setuser"></div>-->
+        <p ng-if="!userladp" class="servie_change" ng-click="updatepwd(item.username)">修改密码</p>
+        <p class="servie_change" ng-click="changeuser(item)">修改用户</p>
       </div>
     </li>
   </ul>
 </div>
-</div>
+
+  <div class="page-style" ng-if="grid.total > 12">
+    <div uib-pagination
+         ng-model="grid.page"
+         total-items="grid.total"
+         items-per-page="grid.size"
+         class="pagination-sm"
+         boundary-links="false"
+         max-size="12"
+         rotate="true"
+         previous-text="上一页"
+         next-text="下一页"
+         first-text="首页"
+         last-text="末页">
+    </div>
+  </div>
+  </div>

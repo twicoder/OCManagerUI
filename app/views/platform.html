@@ -2,10 +2,10 @@
 <div class="home_page">
   <div class="set_mange">
     <ul class="role_mange_list">
-      <li class="role_li" ui-sref="console.tenant">
+      <li class="role_li" ng-click="toconsole()">
         <div class="role_block">
           <div class="set_top">
-            <img src="images/home_tenant.png" class="set_top_tu">
+            <img src="./images/home_tenant.png" class="set_top_tu">
           </div>
           <div class="set_bt">
             <p>多租户管理平台</p>
@@ -14,7 +14,7 @@
         </div>
       </li>
 
-      <li class="role_li">
+      <li class="role_li" onclick="window.open('http://10.247.11.9:8080/#/login')">
         <div class="role_block">
           <div class="set_top">
             <img src="images/home_orange.png" class="set_top_tu">
@@ -26,7 +26,7 @@
         </div>
       </li>
 
-      <li class="role_li">
+      <li class="role_li" onclick="window.open('http://10.247.33.80:28080/')">
         <div class="role_block">
           <div class="set_top">
             <img src="images/home_genplum.png" class="set_top_tu">
@@ -38,7 +38,7 @@
         </div>
       </li>
 
-      <li class="role_li">
+      <li class="role_li" onclick="window.open('http://rockmongo.dataapp.c.citic/index.php?action=login.index&host=0')">
         <div class="role_block">
           <div class="set_top">
             <img src="images/home_mongo.png" class="set_top_tu">

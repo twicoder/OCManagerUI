@@ -1,0 +1,49 @@
+<div class="modal-header" style="padding:14px 14px;background: #f2f2f1;border-bottom:0;">
+  <h5 class="modal-title">
+    <span class="modal_name">添加实例</span>
+    <a ng-click="cancel()" href="javascript:;" class="modal-close" style="margin-top:4px;">
+    </a>
+  </h5>
+</div>
+<form name="frm">
+<div class="modal-body confirm-con" style="padding:20px 20px 20px 20px;background: #fafafa;">
+  <div class="con-wrop" style="margin-top:0px;" >
+    <label>实例名称<i class="modal_red">*</i></label>
+      <div class="confirm-select modal_select">
+        <input type="text"
+               name="bsiname"
+               onkeypress="if((event.keyCode > 31 && event.keyCode < 44) || (event.keyCode > 46 && event.keyCode < 48) || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97))event.returnValue = false;"
+               ng-pattern="/^[a-zA-Z0-9]{1,28}$/"
+               class="modal_input"
+               ng-model="bsiobj.metadata.name"
+               required>
+      </div>
+      <!--<div class="error_block_tit" >-->
+        <!--<p style="margin:0;">111111</p>-->
+      <!--</div>-->
+    <div class="error_block_tit" ng-if="frm.bsiname.$dirty && frm.bsiname.$invalid">
+      <p style="margin:0;">实例名称不合法</p>
+    </div>
+  </div>
+  <div class="con-wrop">
+    <label>实例路径<i class="modal_red">*</i></label>
+    <div class="confirm-select modal_select">
+      <input type="text" name="bsiurl"
+             ng-pattern="/^[a-zA-Z0-9\/]{1,28}$/"
+             class="modal_input"
+             ng-model="tenurl"
+             required>
+    </div>
+    <!--<div class="error_block_tit">-->
+      <!--<p style="margin:0;">21222</p>-->
+    <!--</div>-->
+    <div class="error_block_tit" ng-if="frm.bsiurl.$dirty && frm.bsiurl.$invalid">
+      <p style="margin:0;">实例路径不合法</p>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer"   style="text-align: right">
+  <span class="btn-newst" ng-click="frm.$valid &&ok()">确认</span>
+</div>
+</form>

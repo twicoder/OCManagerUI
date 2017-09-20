@@ -2,6 +2,6 @@
  * Created by sorcerer on 2017/6/12.
  */
 angular.module('basic')
-  .controller('PermissionCtrl',['$rootScope', '$scope', function ($rootScope, $scope) {
+  .controller('PermissionCtrl',[function () {
     //$rootScope.tab = "service";
   }]);

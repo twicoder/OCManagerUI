@@ -12,32 +12,34 @@
         <input type="text" class="modal_input" readonly="true" value="HDFS" style="background:#eaeaea;color:#999;font-size:14px;cursor:not-allowed;">
       </div>
     </div>
-    <div class="con-wrop">
-      <label>服务类型</label>
-      <div class="confirm-select modal_select">
-        <div uib-dropdown on-toggle="toggled(open)">
-          <a href="javascript:void(0);" class="" uib-dropdown-toggle>
-            <span class="select-title">HDFS</span>
-            <b class="ser_bg_btn"></b>
-          </a>
-          <ul class="service_drop service_drop_gj" uib-dropdown-menu aria-labelledby="user-menu">
-            <li>
-              <a href="javascript:void(0);">
-                <span class="drop_name_tit two_tab_ellipsis">HDFS</span>
-              </a></li>
-            <li>
-              <a href="javascript:void(0);">
-                <span class="drop_name_tit two_tab_ellipsis">HDFS</span>
-              </a></li>
-          </ul>
+  <div class="con-wrop">
+    <label>用户名称<i class="modal_red">*</i></label>
+    <div class="confirm-select modal_select modal_select_red">
+      <input type="text" class="modal_input">
+    </div>
+    <div class="error_block_tit">
+      <p style="margin:0;">用户名称不能为空</p>
+    </div>
+  </div>
+  <div class="con-wrop">
+    <label>用户密码<i class="modal_red">*</i></label>
+    <div class="confirm-select modal_select modal_select_red">
+      <input type="text" class="modal_input">
+    </div>
+    <div class="error_block_tit">
+      <p style="margin:0;">用户密码不能为空</p>
+    </div>
+  </div>
+  <div class="con-wrop">
+    <label>URL地址<i class="modal_red">*</i></label>
+    <div class="confirm-select modal_select modal_select_red">
+      <input type="text" class="modal_input">
+    </div>
+    <div class="error_block_tit">
+      <p style="margin:0;">URL地址不能为空</p>
+    </div>
+  </div>
 
-        </div>
-      </div>
-    </div>
-    <div class="con-wrop">
-      <label>连接信息</label>
-      <textarea cols="60" rows="5" placeholder="连接信息内容不多于20个字符..." maxlength="20" style="resize: none;"></textarea>
-    </div>
 </div>
 <div class="modal-footer"   style="text-align: right">
   <span class="btn-newst" ng-click="ok()">确认</span>

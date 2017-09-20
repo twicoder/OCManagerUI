@@ -4,8 +4,9 @@
     <div class="container-fluid">
       <div class="col-lg-12">
         <div class="navbar-header">
-          <a href="#/" class="navbar-brand logo">
-            <img src="/images/logo.png" style="height: 41px;width:282px" alt="中信云 多租户管控平台" title="中信云 多租户管控平台">
+          <a ui-sref="console.tenant" class="navbar-brand logo">
+            <img src="./images/logo-white.png" style="height: 41px;width:41px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
+            <img src="./images/logo.png" style="height: 41px;width:282px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
             <!--<span class="brand">橘云多租户管控平台</span>-->
           </a>
           <!--<button type="button" class="navbar-toggle" data-toggle="sidebar" data-target=".sidebar">-->
@@ -18,45 +19,57 @@
 
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-          <form class="navbar-form navbar-right" ng-if="username !== null">
-            <!--<button class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"-->
-                    <!--aria-expanded="false">-->
-              <!--admin-->
-            <!--</button>-->
-            <div class="console_name"><p class="set_text_ellipsis" title="wagndong123">wagndong123</p></div>
+          <form style="margin-bottom: 0;padding-bottom: 0;padding-top: 18px;" class="navbar-form navbar-right">
+            <button  style="color: #0a0a0a;box-shadow:none;outline: none" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    aria-expanded="false">
+              <span>{{loginname}}</span>
+            </button>
+            <!--<div class="console_name">-->
+              <!--<p class="set_text_ellipsis" title={{loginname}}>{{loginname||''}}</p>-->
+            <!--</div>-->
             <ul class="dropdown-menu">
               <li><a href="" ng-click="logout()">登出</a></li>
             </ul>
           </form>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a ng-class="{true:'active'}[tab === 'console.tenant']" ui-sref="console.tenant">
+              <a ng-click="download()"  target="_self">
                 <!--<span class="glyphicon glyphicon-picture"></span>-->
-                <span>租户管理</span>
+                <span>下载keytab文件</span>
               </a>
             </li>
-            <li>
-
-              <a ng-class="{true:'active'}[tab === 'console.user']" ui-sref="console.user">
-                <!--<span class="glyphicon glyphicon-list"></span>-->
-                <span>用户管理</span>
+            <li ng-repeat="item in navArr" ng-class="{'bdb':item.bdb,'active':idx == $index}"
+                ng-click="changeUrl(item.url,$index)"
+                ng-mouseover="addBdb($index)"
+                ng-mouseleave="removeBdb($index)"
+            >
+              <a >
+                <!--<span class="glyphicon glyphicon-picture"></span>-->
+                <span>{{item.name}}</span>
               </a>
             </li>
-            <li>
+            <!--<li ng-class="{true:'active'}[tab === 'console.user']">-->
+
+              <!--<a  ui-sref="console.user">-->
+                <!--&lt;!&ndash;<span class="glyphicon glyphicon-list"></span>&ndash;&gt;-->
+                <!--<span>用户管理</span>-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{true:'active'}[tab === 'console.role']">-->
 
 
-              <a ng-class="{true:'active'}[tab === 'console.role']" ui-sref="console.role">
+              <!--<a  ui-sref="console.role">-->
 
-                <!--<span class="glyphicon glyphicon-list"></span>-->
-                <span>角色管理</span>
-              </a>
-            </li>
-            <li>
-              <a ng-class="{true:'active'}[tab === 'console.service']" ui-sref="console.service">
-                <!--<span class="glyphicon glyphicon-cog"></span>-->
-                <span>服务管理</span>
-              </a>
-            </li>
+                <!--&lt;!&ndash;<span class="glyphicon glyphicon-list"></span>&ndash;&gt;-->
+                <!--<span>角色管理</span>-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{true:'active'}[tab === 'console.service']">-->
+              <!--<a  ui-sref="console.service">-->
+                <!--&lt;!&ndash;<span class="glyphicon glyphicon-cog"></span>&ndash;&gt;-->
+                <!--<span>服务管理</span>-->
+              <!--</a>-->
+            <!--</li>-->
 
 
           </ul>

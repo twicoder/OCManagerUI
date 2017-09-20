@@ -12,7 +12,10 @@
                 <div class="well well-log" style="margin: 0;width: 100%;padding-left:0;padding-right:0;">
                     <!--<pre style="color:#fff;height:440px;" id="sc">{{con}}</pre>-->
                     <div ng-repeat="(key, value) in con" style="color: #fff;padding:0 15px;overflow: auto;">
-                        <div style="padding:2px 0px">{{key}}&nbsp;:&nbsp;{{value}}</div>
+                        <div style="padding:2px 0px;word-break:break-all;word-wrap:break-word;">{{key}}&nbsp;:&nbsp;{{value}}</div>
+                    </div>
+                  <div ng-show="status" style="color: #fff;padding:0 15px;overflow: auto;">
+                        <div style="padding:2px 0px;word-break:break-all;word-wrap:break-word;">status&nbsp;:&nbsp;{{status}}</div>
                     </div>
                 </div>
             </div>

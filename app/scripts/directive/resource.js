@@ -5,25 +5,213 @@ angular.module('basic.resource', ['ngResource'])
     });
     return role;
   }])
+  .factory('allRole', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var allRole = $resource(GLOBAL.host + '/role', {}, {
+    });
+    return allRole;
+  }])
   .factory('service', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
-    var service = $resource(GLOBAL.host + '/service', {}, {
+    var service = $resource(GLOBAL.host + '/service', {
+
+    }, {
+      create: {method: 'POST'}
     });
     return service;
   }])
+  .factory('broker', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var broker = $resource(GLOBAL.host + '/service/broker', {
+
+    }, {
+      create: {method: 'POST'}
+    });
+    return broker;
+  }])
   .factory('user', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
-    var user = $resource(GLOBAL.host + '/user', {}, {
+    var user = $resource(GLOBAL.host + '/user/:id', {id:'@id'}, {
+      create: {method: 'POST'},
+      updata: {method: 'PUT'},
+      delete: {method: "DELETE"}
     });
     return user;
+  }])
+  .factory('newUser', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var newUser = $resource(GLOBAL.host + '/user/with/tenants', {}, {
+    });
+    return newUser;
+  }])
+  .factory('putuser', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var putuser = $resource(GLOBAL.host + '/user/name/:name', {
+      name:'@name'
+    }, {
+      updata: {method: 'PUT'}
+    });
+    return putuser;
   }])
   .factory('tenant', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
     var tenant = $resource(GLOBAL.host + '/tenant/:id', {id:'@id'}, {
     });
     return tenant;
   }])
+  .factory('tenantname', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var tenantname = $resource(GLOBAL.host + '/user/name/:name/all/tenants', {name:'@name'}, {
+    });
+    return tenantname;
+  }])
   .factory('tenantchild', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
-    var tenantchild = $resource(GLOBAL.host + '/tenant/:id/children', {id:'@id'}, {
+    var tenantchild = $resource(GLOBAL.host + '/user/name/:name/tenant/:id/children/tenants', {name:'@name',id:'@id'}, {
     });
     return tenantchild;
   }])
+  .factory('tenantuser', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var tenantuser = $resource(GLOBAL.host + '/tenant/:id/users', {id:'@id'}, {
+    });
+    return tenantuser;
+  }])
+  .factory('deltenantuser', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var tenantuser = $resource(GLOBAL.host + '/tenant/:id/user/:userId/role/assignment', {id:'@id',userId:"@userId"}, {
+      delete: {method: "DELETE"}
+    });
+    return tenantuser;
+  }])
+  .factory('cGtenantuser', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var tenantuser = $resource(GLOBAL.host + '/tenant/:id/user/role/assignment', {id:'@id'}, {
+      post: {method: "POST"},
+      put: {method: "put"}
+    });
+    return tenantuser;
+  }])
+  .factory('login', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var login = $resource(GLOBAL.host + '/authc/login', {}, {
+      post: {method: "POST"}
+    });
+    return login;
+  }])
+  .factory('tenantbsi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var tenantbsi = $resource(GLOBAL.host + '/tenant/:id/service/instances', {id:'@id'}, {
+    });
+    return tenantbsi;
+  }])
+  .factory('allbsi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var allbsi = $resource(GLOBAL.host + '/service/all/instances', {id:'@id'}, {
+    });
+    return allbsi;
+  }])
+  .factory('sso', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var sso = $resource(GLOBAL.host + '/sso/user', {}, {
+    });
+    return sso;
+  }])
+  .factory('bsidata', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var bsidata = $resource(GLOBAL.bdxhost + '/namespaces/:id/instances/:name', {id:'@id',name:'@name'}, {
+    });
+    return bsidata;
+  }])
+  .factory('userole', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var userole = $resource(GLOBAL.host + '/tenant/:id/user/:name/role', {
+      id:'@id',
+      name:'@name'
+    }, {
+    });
+    return userole;
+  }])
+  .factory('userinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var userinfo = $resource(GLOBAL.host + '/user/name/:name/tenant/:id/assignments/info', {
+      name:'@name',
+      id:'@id'
+    }, {
+    });
+    return userinfo;
+  }])
+  .factory('deletebsi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var deletebsi = $resource(GLOBAL.host + '/tenant/:id/service/instance/:name', {
+      name:'@name',
+      id:'@id'
+    }, {
+      delete: {method: "DELETE"}
+    });
+    return deletebsi;
+  }])
+  .factory('getplan', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var getplan = $resource(GLOBAL.host + 'service/:name/plan', {
+      name:'@name'
+    }, {
+    });
+    return getplan;
+  }])
+  .factory('getdfbs', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var getdfbs = $resource(GLOBAL.host + '/service/df', {}, {
+    });
+    return getdfbs;
+  }])
+  .factory('creatbsi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var creatbsi = $resource(GLOBAL.host + '/tenant/:id/service/instance', {
+      id:'@id'
+    }, {
+      post: {method: "POST"}
+    });
+    return creatbsi;
+  }])
+  .factory('addtenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var addtenant = $resource(GLOBAL.host + '/tenant', {}, {
+      post: {method: "POST"},
+      updata: {method: "PUT"}
+    });
+    return addtenant;
+  }])
+  .factory('updateinstance', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var updateinstance = $resource(GLOBAL.host + '/tenant/:id/service/instance/:instanceName', {
+      instanceName:'@instanceName',
+      id:'@id'
+    }, {
+      put: {method: "PUT"}
+    });
+    return updateinstance;
+  }])
+  .factory('putusername', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var putusername = $resource(GLOBAL.host + '/user/:name/password', {
+      name:'@name',
+    }, {
+      put: {method: "PUT"}
+    });
+    return putusername;
+  }])
+  .factory('deletetenantapi', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var deletetenantapi = $resource(GLOBAL.host + '/tenant/:id', {
+      id:'@id'
+    }, {
+      delete: {method: "DELETE"}
+    });
+    return deletetenantapi;
+  }])
+  .factory('authctype', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+      var authctype = $resource(GLOBAL.host + '/authc/type', {
+      }, {});
+      return authctype;
+    }])
+  .factory('ladptype', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+      var ladptype = $resource(GLOBAL.host + '/user/ldap', {
+      }, {});
+      return ladptype;
+    }])
+  .factory('createkeytab', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+        var createkeytab = $resource(GLOBAL.host + '/kerberos/create/keytab', {
+        }, {
+          post: {method: "POST"}
+        });
+        return createkeytab;
+      }])
+  .factory('getkeytab', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+        var getkeytab = $resource(GLOBAL.host + '/kerberos/keytab/:name', {
+          name:'@name'
+        }, {});
+        return getkeytab;
+      }])
+  .factory('serveinfo', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+    var serveinfo = $resource(GLOBAL.host + '/tenant/:tenantId/service/instance/:serviceInstanceName/access/info', {tenantId:'@tenantId',serviceInstanceName:'@serviceInstanceName'}, {
+    });
+    return serveinfo;
+  }]);
+
+
 
 

@@ -1,4 +1,5 @@
 "use strict";
+console.log('process.env.HUANJING', process.env.RELEASE_EDITION);
 module.exports = {
   dev: {
     dist: 'app',
@@ -8,5 +9,5 @@ module.exports = {
     dist: 'dist',
     port: 9000
   },
-  env: "dev"
+  env: process.env.RELEASE_EDITION
 };

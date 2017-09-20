@@ -11,11 +11,18 @@ let app = express();
 let env = config.env || 'dev';
 
 if (env === 'dev') {
-  app.use(require('connect-livereload')());
+  //app.use(require('connect-livereload')());
   app.use("/fonts", express.static("app/bower_components/bootstrap/fonts"));
 }
-app.use('/ocmanager', proxy({target: 'http://10.1.236.113:9090', changeOrigin: true}));
-app.use('/oapi/', proxy({target: 'https://10.1.130.134:8443', changeOrigin: true, secure: false}));
+//app.use('/ocmanager', proxy({target: 'http://10.1.236.95:8080', changeOrigin: true}));
+
+  console.log('ADAPTER_API_SERVER', process.env.ADAPTER_API_SERVER);
+  console.log('SVCAMOUNT_API_SERVER', process.env.SVCAMOUNT_API_SERVER);
+
+app.use('/ocmanager', proxy({target: process.env.ADAPTER_API_SERVER, changeOrigin: true}));
+//app.use('/ocmanager', proxy({target: 'http://10.1.236.113:9090', changeOrigin: true}));
+//app.use('/oapi/', proxy({target: 'https://10.1.130.134:8443', changeOrigin: true, secure: false}));
+app.use('/sapi/', proxy({target: process.env.SVCAMOUNT_API_SERVER, changeOrigin: true}));
 
 app.use(express.static(config[env].dist));
 app.use(favicon(path.join(__dirname, '../', config[env].dist, '/favicon.ico')));

@@ -11,20 +11,52 @@
 <div class="modal-body confirm-con" style="padding:30px 20px 30px 20px;background: #fafafa;">
     <div class="con-wrop" style="margin-top:0px;">
       <label>选择用户</label>
+      <!--<input type="text"-->
+             <!--ng-model="selected"-->
+             <!--uib-typeahead="n.username as n.username for n in userList  | filter:{'username':$viewValue}"-->
+             <!--typeahead-focus-first="false"-->
+             <!--class="confirm-select">-->
       <div class="confirm-select">
-        <div uib-dropdown on-toggle="toggled(open)">
-          <a href="javascript:void(0);" class="" uib-dropdown-toggle>
-            <span class="select-title" title={{newUser|| userList[0]['n']}}>{{newUser || userList[0]['n']}}</span>
-            <b class="ser_bg_btn"></b>
-          </a>
-          <ul class="service_drop service_drop_gj" uib-dropdown-menu aria-labelledby="user-menu">
-            <li class="zx_active" ng-repeat="item in userList" ng-click="changeUser(item.n)">
-              <a href="javascript:void(0);">
-                <span class="drop_name_tit two_tab_ellipsis" ng-class="" title="{{item.n}}">{{item.n}}</span>
-              </a></li>
-          </ul>
+        <!--<div ng-if="isAdd" uib-dropdown on-toggle="toggled(open)">-->
+        <div ng-if="isAdd" class="meunu-wrop">
+          <!--<input type="text" ng-model="selected"  uib-typeahead="n.username as n.username for n in userList  | filter:{'username':$viewValue}" -->
+                 <!--typeahead-no-results="noResults" class="form-control">-->
+          <!--<i class="glyphicon glyphicon-refresh"></i>-->
+          <div ng-show="noResults">
+            <i class="glyphicon glyphicon-remove"></i> No Results Found
+          </div>
+          <!--<input type="text"-->
+                 <!--style="border:none;height: 28px;"-->
+                 <!--ng-model="newUser"-->
+                 <!--uib-typeahead="n.username as n.username for n in userList  | filter:{'username':$viewValue}"-->
+                 <!--typeahead-on-select="changeUser($item,$event)"-->
+                 <!--class="confirm-select select-title">-->
+          <div uib-dropdown on-toggle="toggled(open)">
+            <!--<a href="javascript:void(0);" class="" >-->
+              <input type="text"
+
+                     style="border:none;height: 28px;"
+                     ng-model="newUser.name"
+                     uib-typeahead="n.username as n.username for n in userList  | filter:{'username':$viewValue}"
+                     typeahead-on-select="xuanze($item, $model, $label, $event)"
+                     class="confirm-select select-title">
+              <!--<span class="select-title" title={{newUser}}>{{newUser}}</span>-->
+            <div class="ser-btn-wrop" uib-dropdown-toggle><b class="that-btn" style="display: inline-block"></b></div>
+            <!--</a>-->
+            <ul class="service_drop service_drop_gj" uib-dropdown-menu aria-labelledby="user-menu">
+              <li class="zx_active" ng-repeat="item in userList" ng-click="changeUser(item.username,item.id)">
+                <a href="javascript:void(0);">
+                  <span class="drop_name_tit two_tab_ellipsis" ng-class="" title="{{item.username}}">{{item.username}}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
 
         </div>
+        <input class="update" ng-if="!isAdd" type="text" value={{newUser.name}} disabled="disabled"
+          style="width: 100%;border: none;height: 28px;padding-left:9px;line-height: 28px;background:#eaeaea;cursor: not-allowed;"
+        />
       </div>
     </div>
     <div class="con-wrop">
@@ -32,25 +64,28 @@
       <div class="confirm-select">
         <div uib-dropdown on-toggle="toggled(open)">
           <a href="javascript:void(0);" class="" uib-dropdown-toggle>
-            <span class="select-title" title={{newRole|| roleList[0]['n']}}>{{newRole || roleList[0]['n']}}</span>
+            <span class="select-title" title={{newRole||roleList[0]|phaseFilter}}>{{newRole || roleList[0] | phaseFilter}}</span>
             <b class="ser_bg_btn"></b>
           </a>
           <ul class="service_drop service_drop_gj" uib-dropdown-menu aria-labelledby="user-menu">
-            <li class="zx_active" ng-repeat="item in roleList" ng-click="changeRole(item.n)">
+            <li class="zx_active" ng-repeat="item in roleList" ng-click="changeRole(item)">
               <a href="javascript:void(0);">
-                <span class="drop_name_tit two_tab_ellipsis" ng-class="" title="{{item.n}}">{{item.n}}</span>
+                <span class="drop_name_tit two_tab_ellipsis" ng-class="" title="{{item | phaseFilter}}">{{item | phaseFilter}}</span>
               </a></li>
           </ul>
 
         </div>
       </div>
     </div>
-    <div class="con-wrop">
+  <!-- 描述信息暂时去掉-->
+    <div class="con-wrop" style="display:none;">
       <label>描述信息</label>
       <textarea cols="60" rows="5" placeholder="描述内容不多于20个字符..." maxlength="20" style="resize: none;">{{description}}</textarea>
     </div>
 </div>
 <div class="modal-footer"   style="text-align: right">
-  <span class="btn-newst" ng-click="ok()">确认</span>
-</div>
+  <span style="color: red;margin-right:95px;" ng-show="isUserOk">请求已发送，请稍后刷新页面</span>
+  <span class="btn-newst" ng-show="!isUserOk" ng-click="ok()">确认</span>
+  <span class="btn-newst next_one_load" ng-show="isUserOk" ><i></i>加载中</span>
 
+</div>

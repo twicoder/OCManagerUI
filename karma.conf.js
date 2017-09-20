@@ -49,6 +49,9 @@ module.exports = function(config) {
       'app/bower_components/angular-chart.js/dist/angular-chart.js',
       'app/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js',
       'app/bower_components/mermaid/dist/mermaid.js',
+      'app/bower_components/angular-tree-control/angular-tree-control.js',
+      'app/bower_components/highcharts/highcharts.js',
+      'app/bower_components/highcharts-ng/dist/highcharts-ng.js',
       'app/build-scripts/**/*.js',
       'test/spec/**/*.js'
     ],
@@ -101,4 +104,4 @@ module.exports = function(config) {
     // how many browser should be started simultaneous
     concurrency: Infinity
   })
-}
+};

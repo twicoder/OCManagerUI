@@ -36,10 +36,13 @@ angular.module('basic', [
   'basic.resource',
   'basic.services',
   'basic.controller',
+  'basic.filter',
   'treeControl',
+  'highcharts-ng',
 ]).constant('GLOBAL', {
     size: 10,
     host: './ocmanager/v1/api',
+    bdxhost: './sapi/v1',
     host_k8s: './api/v1',
     host_repos: './v1/repos',
     host_registry: './registry/api',
@@ -69,17 +72,61 @@ angular.module('basic', [
       }
     ]);
   }])
-  .run(['$rootScope', '$state', function ($rootScope) {
-    $rootScope.$on('$stateChangeStart', function (event, toState) {
 
-      $rootScope.tab = toState.name;
-      console.log('$rootScope.tab', $rootScope.tab);
-    });
+  .run(['$rootScope', '$state', 'user', 'Cookie',
+    function ($rootScope, $state, user, Cookie) {
 
-    //$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-    //  //更新header标题
-    //
-    //});
-  }]);
+      function statego(data) {
+        var ishas = false;
+        angular.forEach(data, function (use) {
+          if (Cookie.get('username') === use.username) {
+            ishas = true;
+          }
+        });
+        if (!ishas) {
+          $state.go('home.permission');
+        }
+      }
+
+      $rootScope.$on('$stateChangeStart', function (event, toState) {
+        console.log('toState', toState.name);
+
+        $rootScope.tab = toState.name;
+
+        //if (toState.name &&toState.name !== "home.permission") {
+        //  if (!$rootScope.users) {
+        //    user.query(function (data) {
+        //      $rootScope.users = data;
+        //      statego($rootScope.users);
+        //    });
+        //
+        //  } else {
+        //    statego($rootScope.users);
+        //  }
+        //}
+        //console.log(Cookie.get('token'));
+        //if (toState.name && toState.name !== "home.login") {
+        //  if (Cookie.get('token')) {
+        //    //user.query(function (data)
+        //    // {
+        //    //  $rootScope.users = data;
+        //    //  statego($rootScope.users);
+        //    //});
+        //
+        //  } else {
+        //
+        //    $state.go('home.login');
+        //  }
+        //}
+
+        //console.log('$rootScope.tab', $rootScope.tab);
+      });
+
+
+      //$rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+      //  //更新header标题
+      //
+      //});
+    }]);
 
 
