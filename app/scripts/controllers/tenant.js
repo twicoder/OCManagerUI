@@ -848,7 +848,23 @@ angular.module('basic')
       $scope.addServe = function () {
         getdfbs.get(function (data) {
           //console.log('data', data);
-          addserve_Confirm.open(data.items, $scope.nodeId).then(function () {
+          function isEmptyObject(obj) {
+
+            for (var key in obj) {
+              return false
+            }
+            ;
+            return true
+          };
+          var newItem = [];
+          angular.forEach(data.items, function (bsi, i) {
+
+            var iscustomize = bsi.spec.plans[0].metadata.customize;
+              if(!isEmptyObject(iscustomize)){
+                newItem.push(bsi);
+              }
+          })
+          addserve_Confirm.open(newItem, $scope.nodeId).then(function () {
             //$scope.showSelected($scope.nodeIf)
             tenantbsi.query({id: $scope.nodeId}, function (bsis) {
               var bsitems = []
@@ -907,8 +923,10 @@ angular.module('basic')
           })
 
         },function (error) {
-            if(error.data.resCodel===4061){
+            if(error.data && error.data.resCodel===4061){
               smallAlert.open('可用容量不足');
+            }else{
+              smallAlert.open('保存失败');
             }
         }
         )
@@ -939,10 +957,12 @@ angular.module('basic')
         alert('删除成功！');
       }
       //保存服务限定
-      $scope.saveBsLimit = function(idx){
+      $scope.saveBsLimit = function(idx,item){
         //console.log('$scope.bsLimit[idx].zt', $scope.bsLimit[idx].zt['isde']);
         $scope.bsLimit[idx].zt.isde = false;
         tenant.get({id:$scope.nodeId}, function (tenant) {
+          var oldtenant = JSON.parse(tenant.quota);
+          var oldqupta = oldtenant[idx];
           if (tenant.quota) {
             tenant.quota='';
           }
@@ -953,18 +973,21 @@ angular.module('basic')
               postobj[i.toLowerCase()][item.key]=item.val-0;
             })
           })
-
           tenant.quota=JSON.stringify(postobj);
-
-          //console.log('bibibibibi', postobj);
           addtenantapi.updata(tenant, function (data) {
-            //alert(data)
             console.log('成功', data);
-
-            //$uibModalInstance.close(data);
           },function(error){
-            if(error.data.resCodel===4061){
+            var newArr = []
+            angular.forEach(oldqupta, function (name,i) {
+                var obj = {key:i,val:name};
+                newArr.push(obj);
+            })
+            newArr.zt = item.zt;
+            $scope.bsLimit[idx] = newArr;
+            if(error.data && error.data.resCodel===4061){
               smallAlert.open('可用容量不足');
+            }else{
+              smallAlert.open('保存失败');
             }
           });
           //console.log('$scope.bsLimit', $scope.bsLimit);
