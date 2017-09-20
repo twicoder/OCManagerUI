@@ -906,9 +906,12 @@ angular.module('basic')
             smallAlert.open('保存成功');
           })
 
-        },function () {
-          smallAlert.open('保存失败');
-        })
+        },function (error) {
+            if(error.data.resCodel===4061){
+              smallAlert.open('可用容量不足');
+            }
+        }
+        )
         $scope.svArr[pidx].servesList[idx]['isde'] = false;
       };
 
@@ -959,6 +962,10 @@ angular.module('basic')
             console.log('成功', data);
 
             //$uibModalInstance.close(data);
+          },function(error){
+            if(error.data.resCodel===4061){
+              smallAlert.open('可用容量不足');
+            }
           });
           //console.log('$scope.bsLimit', $scope.bsLimit);
 

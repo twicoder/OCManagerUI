@@ -82,7 +82,9 @@
 
 </div>
 <div class="modal-footer"   style="text-align: right">
+  <span class="btn-error" ng-show="set_use">可用容量不足</span>
   <span class="btn-newst"   ng-click="nextDiv()" ng-show="!isbs" >下一步</span>
   <span class="btn-newst" ng-click="frm.$valid && ok()" ng-show="isbs">确认</span>
+
 </div>
 </form>

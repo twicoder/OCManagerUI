@@ -842,7 +842,9 @@ angular.module('basic.services', ['ngResource'])
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
+            $scope.set_use = false;
             $scope.ok = function () {
+              alert(1);
               var postobj = {};
               angular.forEach($scope.newbsobj, function (bs,i) {
                 postobj[i.toLowerCase()]={}
@@ -858,6 +860,10 @@ angular.module('basic.services', ['ngResource'])
               console.log('data111', data);
 
                $uibModalInstance.close(data);
+               },function(error){
+                 if(error.data.resCodel===4061){
+                   $scope.set_use = true;
+                 }
                });
 
             };
@@ -890,6 +896,7 @@ angular.module('basic.services', ['ngResource'])
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
+            $scope.set_use = false;
             $scope.ok = function () {
               //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
               //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
@@ -923,6 +930,10 @@ angular.module('basic.services', ['ngResource'])
               creatbsi.post({id: id}, bsiobj, function (data) {
                 console.log('data', data);
                 $uibModalInstance.close(true);
+              },function(error){
+                if(error.data.resCodel===4061){
+                  $scope.set_use = true;
+                }
               })
 
             };
