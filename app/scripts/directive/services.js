@@ -844,7 +844,6 @@ angular.module('basic.services', ['ngResource'])
             };
             $scope.set_use = false;
             $scope.ok = function () {
-              alert(1);
               var postobj = {};
               angular.forEach($scope.newbsobj, function (bs,i) {
                 postobj[i.toLowerCase()]={}
