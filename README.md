@@ -8,7 +8,7 @@ Bower version: 1.8.0
 
 Gulp version: CLI version 1.2.2
 
-At first, run `npm install` and `bower install` to install 3rd packages.
+At first, run `yarn install` and `bower install` to install 3rd packages.
 
 ## Configuration
 
@@ -36,6 +36,10 @@ Use `gulp serve` to start express server.
 Use `gulp` to build static dist directory.
 
 Use `gulp war` to generate war package.
+
+## Env
+
+localstart.sh script for setting envs.
 
 ## Test
 
