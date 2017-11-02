@@ -6,11 +6,12 @@
   </h5>
 </div>
 <div class="modal-body confirm-con" style="padding:20px 20px 20px 20px;background: #fafafa;">
-  <div class="con-wrop" style="margin-top:0px;" >
+  <div class="con-wrop" style="margin-top:0px;">
     <label>用户名<i class="modal_red">*</i></label>
     <div class="confirm-select modal_select" ng-show="!isladp" ng-class="{modal_select_red:error.namenull}">
-      <input type="text" class="modal_input" ng-show="!isupdata"  ng-model="input.username">
-      <input type="text" class="modal_input" ng-show="isupdata" ng-readonly="isupdata" style="background:#eaeaea;color:#999;font-size:14px;cursor:not-allowed;" ng-model="input.username">
+      <input type="text" class="modal_input" ng-show="!isupdata" ng-model="input.username">
+      <input type="text" class="modal_input" ng-show="isupdata" ng-readonly="isupdata"
+             style="background:#eaeaea;color:#999;font-size:14px;cursor:not-allowed;" ng-model="input.username">
     </div>
     <div class="confirm-select modal_select" ng-show="isladp" ng-class="{modal_select_red:error.namenull}">
       <div uib-dropdown on-toggle="toggled(open)">
@@ -26,7 +27,7 @@
         </ul>
 
       </div>
-      </div>
+    </div>
     <div class="error_block_tit" ng-if="error.namenull">
       <p style="margin:0;">{{userErrInfo}}</p>
     </div>
@@ -50,24 +51,27 @@
     </div>
   </div>
   <!--<div class="con-wrop" ng-show="isupdata">-->
-    <!--<label>录入人员</label>-->
-    <!--<div class="confirm-select modal_select"  >-->
-      <!--<input type="text" class="modal_input" ng-readonly="isupdata" style="background:#eaeaea;color:#999;font-size:14px;cursor:not-allowed;" ng-model="input.createdUser">-->
-    <!--</div>-->
+  <!--<label>录入人员</label>-->
+  <!--<div class="confirm-select modal_select"  >-->
+  <!--<input type="text" class="modal_input" ng-readonly="isupdata" style="background:#eaeaea;color:#999;font-size:14px;cursor:not-allowed;" ng-model="input.createdUser">-->
   <!--</div>-->
-  <div class="con-wrop" ng-show="isupdata" >
+  <!--</div>-->
+  <div class="con-wrop" ng-show="isupdata">
     <label>所属组织</label>
-    <div class="confirm-select modal_select" style="min-height: 30px;background:#eaeaea;color:#999;font-size:14px;cursor:not-allowed; height: 93px;overflow-y:auto;" >
-      <p ng-repeat="arr in input.urv" style="margin:0;line-height: 30px;">{{arr.parentTenantName || ""}}  <span ng-if="arr.parentTenantName">-</span>  {{arr.tenantName}}</p>
+    <div class="confirm-select modal_select"
+         style="min-height: 30px;background:#eaeaea;color:#999;font-size:14px;cursor:not-allowed; height: 93px;overflow-y:auto;">
+      <p ng-repeat="arr in input.urv" style="margin:0;line-height: 30px;">{{arr.parentTenantName || ""}} <span
+        ng-if="arr.parentTenantName">-</span> {{arr.tenantName}}</p>
     </div>
   </div>
 
   <div class="con-wrop">
     <label>用户描述</label>
-    <textarea cols="60" rows="5" placeholder="描述内容不多于20个字符..." maxlength="20" ng-model="input.description" style="resize: none;"></textarea>
+    <textarea cols="60" rows="5" placeholder="描述内容不多于20个字符..." maxlength="20" ng-model="input.description"
+              style="resize: none;"></textarea>
   </div>
 </div>
-<div class="modal-footer"   style="text-align: right">
+<div class="modal-footer" style="text-align: right">
   <span ng-if="resErr.status" style="color: red;margin-right: 25px;">{{resErr.info}}</span>
   <span class="btn-newst" ng-show="!isOk" ng-click="ok()">确认</span>
   <span class="btn-newst next_one_load" ng-show="isOk"><i></i>加载中</span>

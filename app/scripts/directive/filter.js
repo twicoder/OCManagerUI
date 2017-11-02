@@ -1,7 +1,7 @@
 "use strict";
 angular.module('basic.filter', [])
-  .filter('phaseFilter', [function() {
-    return function(phase) {
+  .filter('phaseFilter', [function () {
+    return function (phase) {
       if (phase === "a10170cb-524a-11e7-9dbb-fa163ed7d0ae") {
         return "系统管理员";
       } else if (phase === "a1149421-524a-11e7-9dbb-fa163ed7d0ae") {
@@ -15,10 +15,8 @@ angular.module('basic.filter', [])
       }
     };
   }])
-.filter('lowerCase', [function() {
-  return function(res) {
-
-    return res.toLowerCase()
-  }
-
-}]);
+  .filter('lowerCase', [function () {
+    return function (res) {
+      return res.toLowerCase();
+    };
+  }]);

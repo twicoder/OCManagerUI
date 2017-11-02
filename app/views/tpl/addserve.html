@@ -7,16 +7,16 @@
   </h5>
 </div>
 <form name="frm">
-<div class="modal-body confirm-con" >
+  <div class="modal-body confirm-con">
     <ul class="sv-wrop" style="height: 245px;" ng-show="svList">
-          <li class="sv-list"  ng-class="{'svActive':svActive == $index}" ng-repeat="item in data"
-              ng-click="checkSv(item.metadata.name,$index)">
-            <img src="./images/serviceList/{{item.metadata.name | lowerCase}}.png">
-            <div class="sv-name">{{item.metadata.name}}</div>
-          </li>
+      <li class="sv-list" ng-class="{'svActive':svActive == $index}" ng-repeat="item in data"
+          ng-click="checkSv(item.metadata.name,$index)">
+        <img src="./images/serviceList/{{item.metadata.name | lowerCase}}.png">
+        <div class="sv-name">{{item.metadata.name}}</div>
+      </li>
     </ul>
     <div ng-show="!svList">
-      <div class="con-wrop" style="margin-top:0px;" >
+      <div class="con-wrop" style="margin-top:0px;">
         <label>实例名称<i class="modal_red">*</i></label>
         <div class="confirm-select modal_select">
           <input type="text"
@@ -45,10 +45,10 @@
         </div>
       </div>
     </div>
-</div>
-<div class="modal-footer"   style="text-align: right">
-  <span class="btn-error" ng-show="set_use">可用容量不足</span>
-  <span class="btn-newst" ng-show="svList"   ng-click="nextDiv()" >下一步</span>
-  <span class="btn-newst" ng-show="!svList" ng-click="frm.$valid &&ok()">确认</span>
-</div>
+  </div>
+  <div class="modal-footer" style="text-align: right">
+    <span class="btn-error" ng-show="set_use">可用容量不足</span>
+    <span class="btn-newst" ng-show="svList" ng-click="nextDiv()">下一步</span>
+    <span class="btn-newst" ng-show="!svList" ng-click="frm.$valid &&ok()">确认</span>
+  </div>
 </form>

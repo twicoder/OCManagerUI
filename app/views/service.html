@@ -3,38 +3,39 @@
   <div class="new-loading" ng-show="!items">
     <img style="height:60px;width:60px;" src="images/load.png" alt="">
   </div>
-<div class="set_mange">
-  <div class="set_ser_btn">
-    <p ng-click="addservice()" ng-show="isadmin">添加服务</p></div>
-  <ul class="role_mange_list">
-    <li class="role_li" ng-repeat="item in items" ng-show="items">
-      <div class="role_block">
+  <div class="set_mange">
+    <div class="set_ser_btn">
+      <p ng-click="addservice()" ng-show="isadmin">添加服务</p></div>
+    <ul class="role_mange_list">
+      <li class="role_li" ng-repeat="item in items" ng-show="items">
+        <div class="role_block">
           <div class="set_top">
-            <img src="images/serviceList/{{item.servicename | lowerCase}}.png" onerror="javascript:this.src='images/serviceList/pic_nor.png' " class="set_top_tu">
+            <img src="images/serviceList/{{item.servicename | lowerCase}}.png"
+                 onerror="javascript:this.src='images/serviceList/pic_nor.png' " class="set_top_tu">
           </div>
-        <div class="set_bt">
-          <p>{{item.servicename}}</p>
-          <p>{{item.description}}</p>
+          <div class="set_bt">
+            <p>{{item.servicename}}</p>
+            <p>{{item.description}}</p>
+          </div>
         </div>
-      </div>
-      <div class="role_block_h" >
-        <!--<span class="block_close" ng-click="delservice()"></span>-->
-        <div class="service_one">
-          <p class="serv_tit">服务来源</p>
-          <p class="serv_detail">{{item.origin}}</p>
+        <div class="role_block_h">
+          <!--<span class="block_close" ng-click="delservice()"></span>-->
+          <div class="service_one">
+            <p class="serv_tit">服务来源</p>
+            <p class="serv_detail">{{item.origin}}</p>
+          </div>
+          <div class="service_one service_two">
+            <p class="serv_tit">服务类型</p>
+            <p class="serv_detail">{{item.servicename}}</p>
+          </div>
+
+          <!--<p class="servie_change" ng-click="changeservice()">修改</p>-->
         </div>
-        <div class="service_one service_two">
-          <p class="serv_tit">服务类型</p>
-          <p class="serv_detail">{{item.servicename}}</p>
-        </div>
+      </li>
 
-        <!--<p class="servie_change" ng-click="changeservice()">修改</p>-->
-      </div>
-    </li>
+    </ul>
 
-  </ul>
-
-</div>
+  </div>
   <div class="page-style" ng-init="grid.size=4;">
     <div uib-pagination
          ng-model="grid.page"

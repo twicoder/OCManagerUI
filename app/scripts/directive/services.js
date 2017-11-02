@@ -5,13 +5,13 @@
 angular.module('basic.services', ['ngResource'])
   .service('Cookie', [function () {
     this.set = function (key, val, expires) {
-      var date = new Date();
+      let date = new Date();
       date.setTime(date.getTime() + expires);
       document.cookie = key + "=" + val + "; expires=" + date.toUTCString();
     };
     this.get = function (key) {
-      var reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
-      var arr = document.cookie.match(reg);
+      let reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
+      let arr = document.cookie.match(reg);
       if (arr) {
         return (arr[2]);
       }
@@ -23,7 +23,7 @@ angular.module('basic.services', ['ngResource'])
   }])
   .factory('AuthInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', 'Cookie',
     function ($rootScope, $q, AUTH_EVENTS, Cookie) {
-      var CODE_MAPPING = {
+      let CODE_MAPPING = {
         401: AUTH_EVENTS.loginNeeded,
         403: AUTH_EVENTS.httpForbidden,
         419: AUTH_EVENTS.loginNeeded,
@@ -34,37 +34,8 @@ angular.module('basic.services', ['ngResource'])
           if (/^\/login/.test(config.url)) {
             return config;
           }
-          //if (/^\/signin/.test(config.url)) {
-          //  return config;
-          //}
-          //$rootScope.region=
-          //var tokens = Cookie.get('df_access_token');
-          //var regions = Cookie.get('region');
-          //var token = '';
-          ////console.log(tokens);
-          //
-          //if (tokens && regions) {
-          //  var tokenarr = tokens.split(',');
-          //  var region = regions.split('-')[2];
-          //  //if (/^\/lapi\/v1\/orgs/.test(config.url)) {
-          //  //    console.log(config.url);
-          //  //}
-          //
-          //  if (/^\/lapi\/v1\/orgs/.test(config.url) || /^\/oapi/.test(config.url) || /^\/api/.test(config.url) || /^\/payment/.test(config.url) || /^\/v1\/repos/.test(config.url)) {
-          //
-          //    token = tokenarr[region - 1];
-          //  } else {
-          //    token = tokenarr[0];
-          //  }
-          //
-          //  //console.log('tokenarr', tokenarr[region-1]);
-          //} else {
-          //  //console.log('token错误');
-          //}
-          //console.log(tokens,token, regions);
-          var tenantId = Cookie.get("tenantId");
-          var username = Cookie.get("username");
-          //console.log('username', username);
+          let tenantId = Cookie.get("tenantId");
+          let username = Cookie.get("username");
           if (config.headers) {
             config.headers.tenantId = tenantId;
             config.headers.username = username;
@@ -73,25 +44,9 @@ angular.module('basic.services', ['ngResource'])
             config.headers["http_x_proxy_cas_loginname"] = "like";
             config.headers["http_x_proxy_cas_username"] = "like";
           }
-          //console.log('config', config);
           if (config.headers) {
             config.headers["token"] = Cookie.get('token');
           }
-          //if (config.headers) {
-          //  config.headers["Authorization"] = "Bearer " + token;
-          //}
-          //
-          //if (/^\/hawkular/.test(config.url)) {
-          //  config.headers["Hawkular-Tenant"] = $rootScope.namespace;
-          //}
-          //if (/^\/registry/.test(config.url)) {
-          //  var Auth = localStorage.getItem("Auth")
-          //  config.headers["Authorization"] = "Basic " + Auth;
-          //}
-          //if (config.method == 'PATCH') {
-          //  config.headers["Content-Type"] = "application/merge-patch+json";
-          //}
-          //console.log('config.url', config.url);
           $rootScope.loading = true;
           return config;
         },
@@ -104,9 +59,8 @@ angular.module('basic.services', ['ngResource'])
           return res;
         },
         responseError: function (response) {
-          //alert(11)
           $rootScope.loading = false;
-          var val = CODE_MAPPING[response.status];
+          let val = CODE_MAPPING[response.status];
           if (val) {
             $rootScope.$broadcast(val, response);
           }
@@ -121,38 +75,26 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/tenant_del_Confirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', 'deletetenantapi', function ($scope, $uibModalInstance, deletetenantapi) {
-
-
           $scope.con = '确认删除' + name;
-          var closeConf = function () {
+          let closeConf = function () {
             $uibModalInstance.close()
           }
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
-            console.log('id', id);
             deletetenantapi.delete({id: id}, function () {
               $scope.con = '删除成功';
               window.setTimeout(closeConf, 1500);
             }, function (res) {
-              // console.log('111',res);
-              //if (res.data.resCodel == 4001) {
-              //  $scope.con = '该用户并非由您创建，您无权删除该用户!';
-              //} else if (res.data.resCodel == 4002) {
-              //  $scope.con = '该用户已被绑定角色，请解绑后再进行删除!';
-              //} else {
               $scope.con = '删除失败!';
-              //}
               window.setTimeout(closeConf, 2000);
             });
-
           };
         }]
       }).result;
     };
   }])
-
   .service('Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (userList, roleList, nameobj) {
       return $uibModal.open({
@@ -163,18 +105,13 @@ angular.module('basic.services', ['ngResource'])
             $scope.userList = userList;
             $scope.roleList = roleList;
             $scope.newUser = {}
-            //console.log(userList, roleList, nameobj);
             $scope.newUser.name = nameobj.oldUser;
             $scope.newRole = nameobj.oldRole;
             $scope.newUserId = nameobj.oldUserId;
             $scope.description = nameobj.description;
             $scope.isAdd = nameobj.isAdd;
             $scope.isUserOk = false;
-            console.log('$scope.isopen', $scope.noResults);
-
             $scope.change = function () {
-              //alert(1)
-              console.log('noResults', $scope.noResults);
               $scope.noResults = true;
             }
             $scope.ok = function () {
@@ -182,11 +119,10 @@ angular.module('basic.services', ['ngResource'])
                 return;
               }
               $scope.isUserOk = true;
-              var closeConf = function () {
+              let closeConf = function () {
                 $uibModalInstance.close();
               }
               if ($scope.isAdd) {
-                console.log('nameobj.newUser', $scope.newUser.name);
                 cGtenantuser.post({id: nameobj.nodeId}, {
                   "userId": $scope.newUserId,
                   "roleId": $scope.newRole
@@ -213,21 +149,16 @@ angular.module('basic.services', ['ngResource'])
                 return
               }
               if (n) {
-                console.log('n', n);
               }
             })
             $scope.xuanze = function (a, b, c, d) {
-              //console.log(a, b, c, d);
               $scope.newUser.name = b;
               $scope.newUserId = a.id;
             };
-            // 选择用户
             $scope.changeUser = function (item, e) {
-              //console.log('item.username', item);
               $scope.newUser.name = item;
               $scope.newUserId = e;
             };
-            // 选择角色
             $scope.changeRole = function (id) {
               $scope.newRole = id;
             };
@@ -245,13 +176,10 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/newconfirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-
-
           $scope.con = datacon;
           if (status) {
             $scope.status = status;
           }
-
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
@@ -269,11 +197,7 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/infoconfirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-
-
           $scope.con = datacon;
-
-
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
@@ -286,35 +210,24 @@ angular.module('basic.services', ['ngResource'])
   }])
   .service('uuid', ['$uibModal', function ($uibModal) {
     this.num = function (len, radix) {
-      var CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-      var chars = CHARS, uuid = [], i;
+      let CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+      let chars = CHARS, uuid = [], i;
       radix = radix || chars.length;
-
       if (len) {
-        // Compact form
         for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
       } else {
-        // rfc4122, version 4 form
-        var r;
-
-        // rfc4122 requires these characters
+        let r;
         uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
         uuid[14] = '4';
-
-        // Fill in random data.  At i==19 set the high bits of clock sequence as
-        // per rfc4122, sec. 4.1.5
         for (i = 0; i < 36; i++) {
           if (!uuid[i]) {
             r = 0 | Math.random() * 16;
-            uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+            uuid[i] = chars[(i === 19) ? (r & 0x3) | 0x8 : r];
           }
         }
       }
-
       return uuid.join('');
     };
-
-
   }])
   .service('delconfirm', ['$uibModal', function ($uibModal) {
     this.open = function (title, roleId, userId, username) {
@@ -323,12 +236,9 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/delConfirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', 'deltenantuser', function ($scope, $uibModalInstance, deltenantuser) {
-
-
           $scope.title = title;
           $scope.userId = userId;
           $scope.username = username;
-
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
             $scope.delfail = false;
@@ -363,7 +273,6 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
-  //用户管理 -  添加用户
   .service('user_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (item, userArr) {
       return $uibModal.open({
@@ -390,8 +299,6 @@ angular.module('basic.services', ['ngResource'])
                 description: ''
               };
               authctype.get({}, function (type) {
-                //console.log('type', type);
-                //type.type=1
                 if (!type.type) {
                   $scope.isladp = true;
                   ladptype.query({}, function (data) {
@@ -399,20 +306,13 @@ angular.module('basic.services', ['ngResource'])
                     $scope.input.username = data[0];
                     angular.forEach(data, function (name, i) {
                       $scope.ladpname.push({name: name})
-
                     })
-                    //
-                    //console.log('data', data);
-
-
                   })
                 } else {
                   $scope.isladp = false
                 }
-
               })
             }
-
             $scope.error = {
               namenull: false,
               emailnull: false,
@@ -423,7 +323,7 @@ angular.module('basic.services', ['ngResource'])
               status: false
             }
             $scope.checkEmail = function (email) {
-              var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+              let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
               if (!email) {
                 $scope.emailErrInfo = '邮箱不能为空';
                 $scope.error.emailnull = true;
@@ -435,7 +335,6 @@ angular.module('basic.services', ['ngResource'])
               } else {
                 return true;
               }
-
             }
             $scope.$watch('input', function (n, o) {
               if (n === o) {
@@ -456,31 +355,25 @@ angular.module('basic.services', ['ngResource'])
                 $scope.userErrInfo = '用户名不能为空';
               }
               if (n.email && n.email.length > 0) {
-                //console.log('n', n);
                 $scope.error.emailnull = false;
               }
               if (!$scope.isupdata && !$scope.isladp) {
                 if (n.password && n.password.length > 0) {
-                  //console.log('n', n);
                   $scope.error.passwordnull = false;
                 }
               }
-
             }, true);
-
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
             $scope.isOk = false;
-            var closeConf = function () {
+            let closeConf = function () {
               $uibModalInstance.close();
             }
             $scope.ok = function () {
-
               if ($scope.isOk === true) {
                 return;
               }
-
               if ($scope.input.username === '') {
                 $scope.error.namenull = true;
                 $scope.userErrInfo = '用户名不能为空';
@@ -499,13 +392,9 @@ angular.module('basic.services', ['ngResource'])
                 $scope.isOk = false;
                 return;
               }
-
-
               if ($scope.error.namenull || $scope.error.emailnull || $scope.error.passwordnull || !$scope.checkEmail($scope.input.email)) {
                 return;
               }
-
-              //console.log('$scope.input', $scope.input);
               $scope.isOk = true;
               if ($scope.isupdata) {
                 $scope.putapi = angular.copy($scope.input);
@@ -523,8 +412,6 @@ angular.module('basic.services', ['ngResource'])
                   $scope.isOk = false;
                 });
               } else {
-                //console.log('111');
-
                 user.create($scope.input, function () {
                   $uibModalInstance.close(true);
                 }, function (res) {
@@ -536,7 +423,6 @@ angular.module('basic.services', ['ngResource'])
                   $scope.resErr.status = true;
                   window.setTimeout(closeConf, 2000);
                   $scope.isOk = false;
-
                 });
               }
             };
@@ -544,7 +430,6 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
-  //用户管理 -  修改
   .service('user_change_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (item, userArr) {
       return $uibModal.open({
@@ -552,24 +437,19 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/user_change_Confirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-
-          //console.log('item', item);
           $scope.username = item.username;
           $scope.email = item.email;
           $scope.description = item.description;
-
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
-
             $uibModalInstance.close(true);
           };
         }]
       }).result;
     };
   }])
-  //用户管理 -  删除
   .service('user_del_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (name, id) {
       return $uibModal.open({
@@ -577,39 +457,32 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/user_del_Confirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', 'user', function ($scope, $uibModalInstance, user) {
-
-
           $scope.con = '确认删除' + name;
-          var closeConf = function () {
+          let closeConf = function () {
             $uibModalInstance.close()
           }
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
-            console.log('id', id);
             user.delete({id: id}, function () {
               $scope.con = '删除成功';
               window.setTimeout(closeConf, 1500);
             }, function (res) {
-              // console.log('111',res);
-              if (res.data.resCodel == 4001) {
+              if (res.data.resCodel === 4001) {
                 $scope.con = '该用户并非由您创建，您无权删除该用户!';
-              } else if (res.data.resCodel == 4002) {
+              } else if (res.data.resCodel === 4002) {
                 $scope.con = '该用户已被绑定角色，请解绑后再进行删除!';
               } else {
                 $scope.con = '删除失败!';
               }
               window.setTimeout(closeConf, 2000);
             });
-
           };
         }]
       }).result;
     };
   }])
-
-  //服务管理 -  添加
   .service('service_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (datacon) {
       return $uibModal.open({
@@ -622,7 +495,6 @@ angular.module('basic.services', ['ngResource'])
             serviceuser: '',
             servicepassword: '',
             serviceurl: ''
-
           };
           $scope.error = {
             servicenamenull: false,
@@ -630,31 +502,24 @@ angular.module('basic.services', ['ngResource'])
             servicepasswordnull: false,
             serviceurlnull: false
           };
-
           $scope.con = datacon;
           $scope.$watch('input', function (n, o) {
             if (n === o) {
               return;
             }
             if (n.servicename && n.servicename.length > 0) {
-              console.log('n', n);
               $scope.error.servicenamenull = false;
             }
             if (n.serviceuser && n.serviceuser.length > 0) {
-              console.log('n', n);
               $scope.error.serviceusernull = false;
             }
             if (n.servicepassword && n.servicepassword.length > 0) {
-              console.log('n', n);
               $scope.error.servicepasswordnull = false;
             }
             if (n.serviceurl && n.serviceurl.length > 0) {
-              console.log('n', n);
               $scope.error.serviceurlnull = false;
             }
-
           }, true);
-
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
@@ -683,17 +548,11 @@ angular.module('basic.services', ['ngResource'])
               return;
             }
             $uibModalInstance.close(true);
-
-
           };
-
-
         }]
       }).result;
     };
   }])
-
-  //服务管理 -  修改
   .service('service_change_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (datacon) {
       return $uibModal.open({
@@ -701,10 +560,7 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/service_change_Confirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-
-
           $scope.con = datacon;
-
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
@@ -715,8 +571,6 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
-
-  //服务管理 -  删除
   .service('service_del_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (datacon) {
       return $uibModal.open({
@@ -724,10 +578,7 @@ angular.module('basic.services', ['ngResource'])
         templateUrl: 'views/tpl/service_del_Confirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-
-
           $scope.con = datacon;
-
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
@@ -746,13 +597,9 @@ angular.module('basic.services', ['ngResource'])
         size: 'default',
         controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie', 'getdfbs',
           function ($scope, $uibModalInstance, addtenantapi, Cookie, getdfbs) {
-            var timestamp = Date.parse(new Date());
+            let timestamp = Date.parse(new Date());
             timestamp = timestamp / 1000;
-            //var newid = id;
-            var username = Cookie.get("username")
-            //if (id.indexOf(username)) {
-            //  newid=newid.split(username)[0]
-            //}
+            let username = Cookie.get("username")
             $scope.isbs = false;
             $scope.nextDiv = function () {
               $scope.isbs = true;
@@ -762,12 +609,11 @@ angular.module('basic.services', ['ngResource'])
               name: '',
               description: '',
               parentId: id,
-              quota:{}
+              quota: {}
             };
-            //var cancreat=["HBase","hbase","hive","mapreduce","spark","kafka"]
-            function isEmptyObject(obj) {
 
-              for (var key in obj) {
+            function isEmptyObject(obj) {
+              for (let key in obj) {
                 return false
               }
               ;
@@ -779,98 +625,75 @@ angular.module('basic.services', ['ngResource'])
               $scope.newbsobj = {};
               angular.forEach(data.items, function (bs, i) {
                 if (isEmptyObject(bs.spec.plans[0].metadata.customize)) {
-                }else {
-                  var atson = {
+                } else {
+                  let atson = {
                     name: bs.metadata.name,
                     quota: []
                   };
-
                   $scope.bsList[bs.metadata.name] = {};
-                  $scope.bslength+=1
+                  $scope.bslength += 1
                   angular.forEach(bs.spec.plans[0].metadata.customize, function (ct, y) {
-                    var obj = {
+                    let obj = {
                       key: y,
                       val: 0
                     }
                     $scope.bsList[bs.metadata.name][y] = 0;
                     atson.quota.push(obj);
                   });
-                  $scope.newbsobj[bs.metadata.name]=atson.quota
-                  //$scope.newbsobj.push(atson);
+                  $scope.newbsobj[bs.metadata.name] = atson.quota
                 }
-
-
               });
-              //$scope.newbsobj=angular.copy($scope.bsList)
-              //console.log('$scope.bsList', $scope.newbsobj);
             })
-
             $scope.changeList =
-            {}
-
-
+              {}
             $scope.changeBs = function (bskey, bsval) {
-
               $scope.changeList[bskey] = bsval;
-              angular.forEach($scope.bsList, function (bs,i) {
-                angular.forEach($scope.changeList, function (clickbs,k) {
-                  //console.log(i, k);
+              angular.forEach($scope.bsList, function (bs, i) {
+                angular.forEach($scope.changeList, function (clickbs, k) {
                   if (i === k) {
-                    $scope.bslength=$scope.bslength-1
+                    $scope.bslength = $scope.bslength - 1
                     delete $scope.bsList[k];
                   }
-
                 })
               })
-
             }
             $scope.delbsList = function (val, idx) {
               delete $scope.changeList[val];
-              $scope.bslength+=1;
-              //console.log('$scope.newbsobj[idx]', $scope.newbsobj[idx]);
-              angular.forEach($scope.newbsobj, function (bs,k) {
-                angular.forEach(bs, function (bsquo,k) {
-                  bsquo.val=0;
+              $scope.bslength += 1;
+              angular.forEach($scope.newbsobj, function (bs, k) {
+                angular.forEach(bs, function (bsquo, k) {
+                  bsquo.val = 0;
                 })
                 if (k === val) {
-                  $scope.bsList[k]=bs;
-                  console.log($scope.bsList);
+                  $scope.bsList[k] = bs;
                 }
               })
-
             }
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
             $scope.set_use = false;
             $scope.ok = function () {
-              var postobj = {};
-              angular.forEach($scope.newbsobj, function (bs,i) {
-                postobj[i.toLowerCase()]={}
-                angular.forEach(bs, function (item,k) {
-                  postobj[i.toLowerCase()][item.key]=item.val-0;
+              let postobj = {};
+              angular.forEach($scope.newbsobj, function (bs, i) {
+                postobj[i.toLowerCase()] = {}
+                angular.forEach(bs, function (item, k) {
+                  postobj[i.toLowerCase()][item.key] = item.val - 0;
                 })
               })
-
-              $scope.message.quota=JSON.stringify(postobj);
-              //console.log('bibibibibi', postobj);
-               addtenantapi.post($scope.message, function (data) {
-              //alert(data)
-              console.log('data111', data);
-
-               $uibModalInstance.close(data);
-               },function(error){
-                 if(error.data && error.data.resCodel===4061){
-                   $scope.set_use = true;
-                 }
-               });
-
+              $scope.message.quota = JSON.stringify(postobj);
+              addtenantapi.post($scope.message, function (data) {
+                $uibModalInstance.close(data);
+              }, function (error) {
+                if (error.data && error.data.resCodel === 4061) {
+                  $scope.set_use = true;
+                }
+              });
             };
           }]
       }).result;
     };
   }])
-  //添加服务
   .service('addserve_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (data, id) {
       return $uibModal.open({
@@ -897,21 +720,14 @@ angular.module('basic.services', ['ngResource'])
             };
             $scope.set_use = false;
             $scope.ok = function () {
-              //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
-              //console.log('bsid', data[$scope.svActive].spec.plans[0].id);
-              var obj = {}
-
+              let obj = {}
               if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
-                for (var k in data[$scope.svActive].spec.plans[0].metadata.customize) {
-                  // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+                for (let k in data[$scope.svActive].spec.plans[0].metadata.customize) {
                   obj[k] = data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString()
                 }
               }
-              //var timestamp = Date.parse(new Date());
-              //timestamp = timestamp / 1000;
-              //var newid = id;
-              var username = Cookie.get("username")
-              var bsiobj = {
+              let username = Cookie.get("username")
+              let bsiobj = {
                 "kind": "BackingServiceInstance",
                 "apiVersion": "v1",
                 "metadata": {
@@ -927,20 +743,17 @@ angular.module('basic.services', ['ngResource'])
               }
               bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.bsiurl
               creatbsi.post({id: id}, bsiobj, function (data) {
-                console.log('data', data);
                 $uibModalInstance.close(true);
-              },function(error){
-                if(error.data && error.data.resCodel===4061){
+              }, function (error) {
+                if (error.data && error.data.resCodel === 4061) {
                   $scope.set_use = true;
                 }
               })
-
             };
           }]
       }).result;
     };
   }])
-
   .service('updatepwd', ['$uibModal', function ($uibModal) {
     this.open = function (name) {
       return $uibModal.open({
@@ -953,20 +766,17 @@ angular.module('basic.services', ['ngResource'])
               $uibModalInstance.dismiss();
             };
             $scope.ok = function () {
-              var putobj = {
+              let putobj = {
                 password: $scope.password
               }
               putuser.updata({name: name}, putobj, function (data) {
-                console.log('data', data);
                 $uibModalInstance.close(true);
               })
-
             };
           }]
       }).result;
     };
   }])
-  //添加实例
   .service('addBsi', ['$uibModal', function ($uibModal) {
     this.open = function (name, item, id) {
       return $uibModal.open({
@@ -989,20 +799,16 @@ angular.module('basic.services', ['ngResource'])
               }
             }
             $scope.tenurl = ''
-
             getdfbs.get(function (data) {
-              //data.items
               angular.forEach(data.items, function (bs, i) {
                 if (bs.metadata.name === name) {
-                  var obj = {}
-
+                  let obj = {}
                   if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
-                    for (var k in bs.spec.plans[0].metadata.customize) {
-                      // console.log(k, data[$scope.svActive].spec.plans[0].metadata.customize[k]);
+                    for (let k in bs.spec.plans[0].metadata.customize) {
                       obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString()
                     }
                   }
-                  var username = Cookie.get("username")
+                  let username = Cookie.get("username")
                   $scope.bsiobj.spec.provisioning = {
                     "backingservice_name": bs.metadata.name,
                     "backingservice_plan_guid": bs.spec.plans[0].id,
@@ -1014,11 +820,8 @@ angular.module('basic.services', ['ngResource'])
             $scope.ok = function () {
               $scope.bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.tenurl;
               creatbsi.post({id: id}, $scope.bsiobj, function (data) {
-                console.log('data', data);
-
                 $uibModalInstance.close(data);
               })
-
             };
           }]
       }).result;
@@ -1032,16 +835,10 @@ angular.module('basic.services', ['ngResource'])
         size: 'default small_alert',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
           $scope.con = con;
-          var closeConf = function () {
+          let closeConf = function () {
             $uibModalInstance.close();
           }
           window.setTimeout(closeConf, 1500);
-          // $scope.cancel = function () {
-          //   $uibModalInstance.dismiss();
-          // };
-          // $scope.ok = function () {
-          //   $uibModalInstance.dismiss();
-          // };
         }]
       }).result;
     };
@@ -1052,21 +849,20 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/bs_limit.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance','getdfbs', function ($scope, $uibModalInstance,getdfbs) {
+        controller: ['$scope', '$uibModalInstance', 'getdfbs', function ($scope, $uibModalInstance, getdfbs) {
           getdfbs.get(function (data) {
             $scope.bsList = {};
             $scope.newbsobj = [];
-            angular.forEach(data.items,function(bs,i){
-              var atson = {
-                name:bs.metadata.name,
-                quota:[]
+            angular.forEach(data.items, function (bs, i) {
+              let atson = {
+                name: bs.metadata.name,
+                quota: []
               };
               $scope.bsList[bs.metadata.name] = {};
-
-              angular.forEach(bs.spec.plans[0].metadata.customize,function(ct,y){
-                var obj = {
-                  key:y,
-                  val:0
+              angular.forEach(bs.spec.plans[0].metadata.customize, function (ct, y) {
+                let obj = {
+                  key: y,
+                  val: 0
                 }
                 $scope.bsList[bs.metadata.name][y] = 0;
                 atson.quota.push(obj);
@@ -1074,41 +870,34 @@ angular.module('basic.services', ['ngResource'])
               $scope.newbsobj.push(atson);
             });
           })
-
           $scope.changeList =
-            {
-
-            }
-
-
-          $scope.changeBs = function(bskey,bsval){
+            {}
+          $scope.changeBs = function (bskey, bsval) {
             $scope.changeList[bskey] = bsval;
           }
-          $scope.delbsList = function (val,idx) {
+          $scope.delbsList = function (val, idx) {
             delete $scope.changeList[val];
-            angular.forEach($scope.newbsobj[idx].quota,function(ct,y){
-              ct.val=0;
+            angular.forEach($scope.newbsobj[idx].quota, function (ct, y) {
+              ct.val = 0;
             });
           }
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
-            angular.forEach($scope.changeList,function(ct,i){
-              var qa = {};
-              angular.forEach($scope.newbsobj,function(arr,y){
-                if(i === arr.name){
-                  angular.forEach(arr.quota,function(quota,z){
+            angular.forEach($scope.changeList, function (ct, i) {
+              let qa = {};
+              angular.forEach($scope.newbsobj, function (arr, y) {
+                if (i === arr.name) {
+                  angular.forEach(arr.quota, function (quota, z) {
                     qa[quota.key] = quota.val;
                   });
                 }
               });
               $scope.changeList[i] = qa;
             });
-            console.log('bibibibibi',$scope.changeList);
           };
-
         }]
       }).result;
     };
-  }])
+  }]);

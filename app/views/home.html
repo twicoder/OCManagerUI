@@ -1,5 +1,4 @@
 <div class="header">
-  <span us-spinner spinner-key="spinner"></span>
   <div class="navbar navbar-oc" role="navigation" data-spy="affix">
     <div class="container-fluid">
       <div class="col-lg-12">
@@ -7,7 +6,6 @@
           <a ui-sref="console.tenant" class="navbar-brand logo">
             <img src="./images/logo-white.png" style="height: 41px;width:41px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
             <img src="./images/logo.png" style="height: 41px;width:282px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
-            <!--<span class="brand">橘云多租户管控平台</span>-->
           </a>
 
         </div>
@@ -15,13 +13,8 @@
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
           <form class="navbar-form navbar-right" ng-if="username !== null" style="border-left:0;">
-            <!--<button class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"-->
-            <!--aria-expanded="false">-->
-            <!--admin-->
-            <!--</button>-->
             <div class="console_name">
               <p class="set_text_ellipsis" title={{loginname}}>{{loginname}}</p>
-              <!--<p class="set_text_ellipsis" title={{loginname}}>joisdf</p>-->
             </div>
             <ul class="dropdown-menu">
               <li><a href="" ng-click="logout()">登出</a></li>

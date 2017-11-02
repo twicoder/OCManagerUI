@@ -177,6 +177,10 @@ body {
   padding-top:30px;padding-bottom:25px;padding-left:20px;padding-right:20px;
 }
 
+.nav>li :hover {
+  cursor: pointer;
+}
+
 //.navbar-oc .navbar-nav > li > a:hover {
 //  color:#666;
 //  background:none;

@@ -1,5 +1,4 @@
 <div class="header">
-  <span us-spinner spinner-key="spinner"></span>
   <div class="navbar navbar-oc" role="navigation" data-spy="affix">
     <div class="container-fluid">
       <div class="col-lg-12">
@@ -7,71 +6,35 @@
           <a ui-sref="console.tenant" class="navbar-brand logo">
             <img src="./images/logo-white.png" style="height: 41px;width:41px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
             <img src="./images/logo.png" style="height: 41px;width:282px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
-            <!--<span class="brand">橘云多租户管控平台</span>-->
           </a>
-          <!--<button type="button" class="navbar-toggle" data-toggle="sidebar" data-target=".sidebar">-->
-          <!--<span class="sr-only">Toggle navigation</span>-->
-          <!--<span class="icon-bar"></span>-->
-          <!--<span class="icon-bar"></span>-->
-          <!--<span class="icon-bar"></span>-->
-          <!--</button>-->
         </div>
 
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
           <form style="margin-bottom: 0;padding-bottom: 0;padding-top: 18px;" class="navbar-form navbar-right">
-            <button  style="color: #0a0a0a;box-shadow:none;outline: none" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"
+            <button style="color: #0a0a0a;box-shadow:none;outline: none" class="dropdown-toggle btn btn-default"
+                    data-toggle="dropdown" role="button" aria-haspopup="true"
                     aria-expanded="false">
               <span>{{loginname}}</span>
             </button>
-            <!--<div class="console_name">-->
-              <!--<p class="set_text_ellipsis" title={{loginname}}>{{loginname||''}}</p>-->
-            <!--</div>-->
             <ul class="dropdown-menu">
               <li><a href="" ng-click="logout()">登出</a></li>
             </ul>
           </form>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a ng-click="download()"  target="_self">
-                <!--<span class="glyphicon glyphicon-picture"></span>-->
+              <a ng-click="download()" target="_self">
                 <span>下载keytab文件</span>
               </a>
             </li>
-            <li ng-repeat="item in navArr" ng-class="{'bdb':item.bdb,'active':idx == $index}"
+            <li ng-repeat="item in naletr" ng-class="{'bdb':item.bdb,'active':idx == $index}"
                 ng-click="changeUrl(item.url,$index)"
                 ng-mouseover="addBdb($index)"
                 ng-mouseleave="removeBdb($index)"
             >
-              <a >
-                <!--<span class="glyphicon glyphicon-picture"></span>-->
+              <a>
                 <span>{{item.name}}</span>
               </a>
             </li>
-            <!--<li ng-class="{true:'active'}[tab === 'console.user']">-->
-
-              <!--<a  ui-sref="console.user">-->
-                <!--&lt;!&ndash;<span class="glyphicon glyphicon-list"></span>&ndash;&gt;-->
-                <!--<span>用户管理</span>-->
-              <!--</a>-->
-            <!--</li>-->
-            <!--<li ng-class="{true:'active'}[tab === 'console.role']">-->
-
-
-              <!--<a  ui-sref="console.role">-->
-
-                <!--&lt;!&ndash;<span class="glyphicon glyphicon-list"></span>&ndash;&gt;-->
-                <!--<span>角色管理</span>-->
-              <!--</a>-->
-            <!--</li>-->
-            <!--<li ng-class="{true:'active'}[tab === 'console.service']">-->
-              <!--<a  ui-sref="console.service">-->
-                <!--&lt;!&ndash;<span class="glyphicon glyphicon-cog"></span>&ndash;&gt;-->
-                <!--<span>服务管理</span>-->
-              <!--</a>-->
-            <!--</li>-->
-
-
           </ul>
         </div>
       </div>
@@ -80,15 +43,5 @@
 </div>
 
 <div class="container-fluid" style="padding-top:40px;background:#fafafa;">
-  <!--<div class="col-xs-7 col-sm-3 col-md-2 sidebar sidebar-left sidebar-animate">-->
-  <!--<ul class="nav navbar-stacked">-->
-  <!--<li><a href="#/job_management">{{'job_manage' | translate}}</a></li>-->
-  <!--<li><a href="#/label_management">{{'label_manage' | translate}}</a></li>-->
-  <!--<li><a ng-href="#/system_management">{{'system_manage' | translate}}</a></li>-->
-  <!--<li><a ng-href="#/">{{'user_manage' | translate}}</a></li>-->
-  <!--</ul>-->
-  <!--</div>-->
-  <!--<div class="col-lg-10 col-lg-offset-1">-->
-    <div ui-view></div>
-  <!--</div>-->
+  <div ui-view></div>
 </div>

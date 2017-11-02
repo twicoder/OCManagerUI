@@ -4,12 +4,12 @@
   <table style="width: 100%;height: 100%;">
     <tr>
       <td class="leftBox" style="width: 20%;background: #ebebe9;vertical-align:top;">
-        <div  treecontrol class="tree-classic"
-              tree-model="dataForTheTree"
-              options="treeOptions"
-              on-selection="showSelected(node)"
-              selected-node="selected"
-              style="margin-top:-2px;">
+        <div treecontrol class="tree-classic"
+             tree-model="dataForTheTree"
+             options="treeOptions"
+             on-selection="showSelected(node)"
+             selected-node="selected"
+             style="margin-top:-2px;">
           {{node.name}}
           <span ng-click="deltenan($event, node)" class="ta-cd del-ten" ng-show="node.parentId"></span>
         </div>
@@ -61,8 +61,8 @@
                   <div>{{nodeIf.description}}</div>
                 </li>
                 <!--<li>-->
-                  <!--<div>租户其他信息</div>-->
-                  <!--<div>{{nodeIf.description}}</div>-->
+                <!--<div>租户其他信息</div>-->
+                <!--<div>{{nodeIf.description}}</div>-->
                 <!--</li>-->
               </ul>
 
@@ -76,12 +76,14 @@
                   <div class="col-md-3 lscn" uib-tooltip="{{bsi.instanceName}}"><span>服务名</span>&nbsp;&nbsp;{{bsi.instanceName}}
                   </div>
                   <!--<div class="col-md-3"><span>用户容量</span>&nbsp;&nbsp;路径&nbsp;:&nbsp;/usr/zhongxin/balbala;</div>-->
-                  <div class="col-md-6" style="line-height: 17px;margin-top:12px;color: #999;overflow: hidden;text-overflow:ellipsis;">
+                  <div class="col-md-6"
+                       style="line-height: 17px;margin-top:12px;color: #999;overflow: hidden;text-overflow:ellipsis;">
                     <!--<p>instance_id&nbsp;:&nbsp;{{bsi.instance_id}}</p>-->
                     <!--<label ng-repeat="(key,val) in bsi.quota">{{key+'&nbsp;:&nbsp;'+val}}&nbsp;&nbsp;</label>-->
                   </div>
                   <!--<div class="col-md-2">{{}}</div>-->
-                  <div class="col-md-2 lscn" style="text-align: right"><a style="margin-right: 15px;"ng-click="checkInfo(bsi.tenantId,bsi.instanceName)"
+                  <div class="col-md-2 lscn" style="text-align: right"><a style="margin-right: 15px;"
+                                                                          ng-click="checkInfo(bsi.tenantId,bsi.instanceName)"
                                                                           href="javascript:void(0);">访问信息</a></div>
                 </li>
               </ul>
@@ -137,14 +139,14 @@
                         </div>
                       </div>
                       <div class="list-con" ng-show="arr.isshow">
-                          <div class="row add-myserve" ng-repeat="ziyuan in arr.ziyuan" >
-                              <div class="col-md-2">{{ziyuan.key}}</div>
-                              <div class="col-md-10">
-                                <div class="use-num-wrop">
-                                  <input class="no-monetary" ng-model="ziyuan.value" type="text" ng-disabled="!arr.isde">
-                                </div>
-                              </div>
+                        <div class="row add-myserve" ng-repeat="ziyuan in arr.ziyuan">
+                          <div class="col-md-2">{{ziyuan.key}}</div>
+                          <div class="col-md-10">
+                            <div class="use-num-wrop">
+                              <input class="no-monetary" ng-model="ziyuan.value" type="text" ng-disabled="!arr.isde">
+                            </div>
                           </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -200,7 +202,6 @@
             <li>
 
 
-
               <div class="user-authorize">
                 <!--<span ng-click="addBsLimit()">添加服务限定</span>-->
               </div>
@@ -219,10 +220,10 @@
                       <sapn ng-if="item.zt.isde" class="editSv" ng-click="saveBsLimit(timeIndex,item)">保存</sapn>
                     </div>
                   </div>
-                  <div class="resource-list"  ng-if="item.zt.isshow">
+                  <div class="resource-list" ng-if="item.zt.isshow">
                     <div>
                       <div class="list-con">
-                        <div class="row add-myserve" ng-repeat="bs in item" >
+                        <div class="row add-myserve" ng-repeat="bs in item">
                           <div class="col-md-2">{{bs.key}}</div>
                           <div class="col-md-10">
                             <div class="use-num-wrop">
@@ -235,8 +236,6 @@
                   </div>
                 </div>
               </div>
-
-
 
 
             </li>
@@ -252,8 +251,10 @@
                   </div>
 
                   <div class="col-md-3" ng-show="item.userName!=='admin'">
-                    <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'" ng-click="looklog(item.userName)">日志</a>
-                    <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'" ng-click="updataUser(item)">修改</a>
+                    <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'"
+                       ng-click="looklog(item.userName)">日志</a>
+                    <a href="javascript:void(0);" ng-show="item.roleId!=='a10170cb-524a-11e7-9dbb-fa163ed7d0ae'"
+                       ng-click="updataUser(item)">修改</a>
                     <a href="javascript:void(0);" ng-click="delUser(item.userId,item.userName)">删除</a>
                   </div>
 
