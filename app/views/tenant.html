@@ -111,13 +111,13 @@
                   <div class="row resource-top">
                     <div class="col-md-10"
                          style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;padding:0;">
-                      <sapn ng-class="{'rotate':!item.isshow, 'check-btn': item.isshow}"
-                            ng-click="bsiToggle($index)" style="float: left;margin-right:10px;"></sapn>
+                      <span ng-class="{'rotate':!item.isshow, 'check-btn': item.isshow}"
+                            ng-click="bsiToggle($index)" style="float: left;margin-right:10px;"></span>
                       {{item.serviceTypeName}}
                     </div>
                     <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                      <sapn class="close-btn"
-                            ng-click=""></sapn>
+                      <span class="close-btn"
+                            ng-click=""></span>
                     </div>
                   </div>
                   <div class="resource-list" ng-repeat="arr in item.servesList" ng-if="item.isshow">
@@ -125,16 +125,16 @@
                       <div class="row resource-top" style="padding:10px;">
                         <div class="col-md-10"
                              style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;">
-                          <sapn ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
+                          <span ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
                                 ng-click="svToggle(timeIndex,$index,arr)" style="float: left;margin-right:10px;">
 
-                          </sapn>
+                          </span>
                           {{arr.instanceName}}
                         </div>
                         <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                          <sapn style="" class="delbsi" ng-click="delbsied(arr.instanceName)">删除</sapn>
-                          <sapn ng-if="!arr.isde" style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</sapn>
-                          <sapn ng-if="arr.isde" class="editSv" ng-click="saveSv(timeIndex,$index,arr)">保存</sapn>
+                          <span style="" class="delbsi" ng-click="delbsied(arr.instanceName)">删除</span>
+                          <span ng-if="!arr.isde" style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</span>
+                          <span ng-if="arr.isde" class="editSv" ng-click="saveSv(timeIndex,$index,arr)">保存</span>
 
                         </div>
                       </div>
@@ -168,8 +168,8 @@
                       {{item.serviceTypeName}}
                     </div>
                     <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                      <sapn ng-class="{'rotate':!item.isshow, 'check-btn': item.isshow}"
-                            ng-click="toggleServe($index)"></sapn>
+                      <span ng-class="{'rotate':!item.isshow, 'check-btn': item.isshow}"
+                            ng-click="toggleServe($index)"></span>
                     </div>
                   </div>
                   <div class="resource-list" ng-repeat="arr in item.servesList" ng-if="item.isshow">
@@ -180,10 +180,10 @@
                           {{arr.instanceName}}
                         </div>
                         <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                          <sapn ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
+                          <span ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
                                 ng-click="toggleServeList(timeIndex,$index,arr)">
 
-                          </sapn>
+                          </span>
                         </div>
                       </div>
                       <div class="list-con" ng-show="arr.isshow">
@@ -210,14 +210,13 @@
                   <div class="row resource-top">
                     <div class="col-md-10"
                          style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;padding:0;">
-                      <sapn ng-class="{'rotate':!item.zt.isshow, 'check-btn': item.zt.isshow}"
-                            ng-click="limitToggle(timeIndex)" style="float: left;margin-right:10px;"></sapn>
+                      <span ng-class="{'rotate':!item.zt.isshow, 'check-btn': item.zt.isshow}"
+                            ng-click="limitToggle(timeIndex)" style="float: left;margin-right:10px;"></span>
                       {{timeIndex}}
                     </div>
                     <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                      <!--<sapn style="" class="delbsi" ng-click="delBsLimit()">删除</sapn>-->
-                      <sapn ng-if="!item.zt.isde" style="" class="editSv" ng-click="editBsLimit(timeIndex)">编辑</sapn>
-                      <sapn ng-if="item.zt.isde" class="editSv" ng-click="saveBsLimit(timeIndex,item)">保存</sapn>
+                      <span ng-if="!item.zt.isde" style="" class="editSv" ng-click="editBsLimit(timeIndex)">编辑</span>
+                      <span ng-if="item.zt.isde" class="editSv" ng-click="saveBsLimit(timeIndex,item)">保存</span>
                     </div>
                   </div>
                   <div class="resource-list" ng-if="item.zt.isshow">

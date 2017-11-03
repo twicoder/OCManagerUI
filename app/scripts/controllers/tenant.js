@@ -3,8 +3,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'uuid', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
-    function (addtenantapi, bsLimit, smallAlert, addBsi, uuid, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
+  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
+    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
       Array.prototype.unique = function () {
         let res = [this[0]];
         for (let i = 1; i < this.length; i++) {
@@ -580,18 +580,10 @@ angular.module('basic')
         });
       };
       $scope.bsiToggle = function (idx) {
-        if ($scope.sletr[idx].isshow) {
-          $scope.sletr[idx].isshow = false;
-        } else {
-          $scope.sletr[idx].isshow = true;
-        }
+        $scope.sletr[idx].isshow = !$scope.sletr[idx].isshow;
       };
       $scope.svToggle = function (pIdx, idx) {
-        if ($scope.sletr[pIdx].servesList[idx].isshow) {
-          $scope.sletr[pIdx].servesList[idx].isshow = false;
-        } else {
-          $scope.sletr[pIdx].servesList[idx].isshow = true;
-        }
+        $scope.sletr[pIdx].servesList[idx].isshow = !$scope.sletr[pIdx].servesList[idx].isshow;
       };
       $scope.addServe = function () {
         getdfbs.get(function (data) {
@@ -656,9 +648,6 @@ angular.module('basic')
       };
       $scope.editBsLimit = function (idx) {
         $scope.bsLimit[idx].zt.isde = true;
-      };
-      $scope.delBsLimit = function () {
-        alert('删除成功');
       };
       $scope.saveBsLimit = function (idx, item) {
         $scope.bsLimit[idx].zt.isde = false;

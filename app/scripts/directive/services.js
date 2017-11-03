@@ -41,11 +41,11 @@ angular.module('basic.services', ['ngResource'])
             config.headers.username = username;
           }
           if (config.headers) {
-            config.headers["http_x_proxy_cas_loginname"] = "like";
-            config.headers["http_x_proxy_cas_username"] = "like";
+            config.headers.http_x_proxy_cas_loginname = "like";
+            config.headers.http_x_proxy_cas_username = "like";
           }
           if (config.headers) {
-            config.headers["token"] = Cookie.get('token');
+            config.headers.token = Cookie.get('token');
           }
           $rootScope.loading = true;
           return config;
@@ -68,6 +68,10 @@ angular.module('basic.services', ['ngResource'])
         }
       };
     }])
+  /*
+   * This file is mainly for modal dialog popup window, return $uibModal.open().result promise for next operation
+   * TODO: merge all the services into one, use functions to do route.
+   */
   .service('tenant_del_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (name, id) {
       return $uibModal.open({
@@ -77,8 +81,8 @@ angular.module('basic.services', ['ngResource'])
         controller: ['$scope', '$uibModalInstance', 'deletetenantapi', function ($scope, $uibModalInstance, deletetenantapi) {
           $scope.con = '确认删除' + name;
           let closeConf = function () {
-            $uibModalInstance.close()
-          }
+            $uibModalInstance.close();
+          };
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
@@ -86,7 +90,7 @@ angular.module('basic.services', ['ngResource'])
             deletetenantapi.delete({id: id}, function () {
               $scope.con = '删除成功';
               window.setTimeout(closeConf, 1500);
-            }, function (res) {
+            }, function () {
               $scope.con = '删除失败!';
               window.setTimeout(closeConf, 2000);
             });
@@ -104,7 +108,7 @@ angular.module('basic.services', ['ngResource'])
           function ($scope, $uibModalInstance, cGtenantuser) {
             $scope.userList = userList;
             $scope.roleList = roleList;
-            $scope.newUser = {}
+            $scope.newUser = {};
             $scope.newUser.name = nameobj.oldUser;
             $scope.newRole = nameobj.oldRole;
             $scope.newUserId = nameobj.oldUserId;
@@ -113,7 +117,7 @@ angular.module('basic.services', ['ngResource'])
             $scope.isUserOk = false;
             $scope.change = function () {
               $scope.noResults = true;
-            }
+            };
             $scope.ok = function () {
               if ($scope.isUserOk === true) {
                 return;
@@ -121,7 +125,7 @@ angular.module('basic.services', ['ngResource'])
               $scope.isUserOk = true;
               let closeConf = function () {
                 $uibModalInstance.close();
-              }
+              };
               if ($scope.isAdd) {
                 cGtenantuser.post({id: nameobj.nodeId}, {
                   "userId": $scope.newUserId,
@@ -144,14 +148,7 @@ angular.module('basic.services', ['ngResource'])
                 });
               }
             };
-            $scope.$watch('newUser', function (n, o) {
-              if (n === o) {
-                return
-              }
-              if (n) {
-              }
-            })
-            $scope.xuanze = function (a, b, c, d) {
+            $scope.xuanze = function (a, b) {
               $scope.newUser.name = b;
               $scope.newUserId = a.id;
             };
@@ -206,27 +203,6 @@ angular.module('basic.services', ['ngResource'])
           };
         }]
       }).result;
-    };
-  }])
-  .service('uuid', ['$uibModal', function ($uibModal) {
-    this.num = function (len, radix) {
-      let CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
-      let chars = CHARS, uuid = [], i;
-      radix = radix || chars.length;
-      if (len) {
-        for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random() * radix];
-      } else {
-        let r;
-        uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
-        uuid[14] = '4';
-        for (i = 0; i < 36; i++) {
-          if (!uuid[i]) {
-            r = 0 | Math.random() * 16;
-            uuid[i] = chars[(i === 19) ? (r & 0x3) | 0x8 : r];
-          }
-        }
-      }
-      return uuid.join('');
     };
   }])
   .service('delconfirm', ['$uibModal', function ($uibModal) {
@@ -304,14 +280,14 @@ angular.module('basic.services', ['ngResource'])
                   ladptype.query({}, function (data) {
                     $scope.ladpname = [];
                     $scope.input.username = data[0];
-                    angular.forEach(data, function (name, i) {
-                      $scope.ladpname.push({name: name})
-                    })
-                  })
+                    angular.forEach(data, function (name) {
+                      $scope.ladpname.push({name: name});
+                    });
+                  });
                 } else {
-                  $scope.isladp = false
+                  $scope.isladp = false;
                 }
-              })
+              });
             }
             $scope.error = {
               namenull: false,
@@ -321,7 +297,7 @@ angular.module('basic.services', ['ngResource'])
             $scope.resErr = {
               info: '',
               status: false
-            }
+            };
             $scope.checkEmail = function (email) {
               let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
               if (!email) {
@@ -335,7 +311,7 @@ angular.module('basic.services', ['ngResource'])
               } else {
                 return true;
               }
-            }
+            };
             $scope.$watch('input', function (n, o) {
               if (n === o) {
                 return;
@@ -343,12 +319,12 @@ angular.module('basic.services', ['ngResource'])
               if (n.username && n.username.length > 0) {
                 $scope.error.namenull = false;
                 if ($scope.userArr) {
-                  angular.forEach($scope.userArr, function (user, i) {
+                  angular.forEach($scope.userArr, function (user) {
                     if (user.username === n.username) {
                       $scope.error.namenull = true;
                       $scope.userErrInfo = '用户名已存在';
                     }
-                  })
+                  });
                 }
               } else {
                 $scope.error.namenull = true;
@@ -369,7 +345,7 @@ angular.module('basic.services', ['ngResource'])
             $scope.isOk = false;
             let closeConf = function () {
               $uibModalInstance.close();
-            }
+            };
             $scope.ok = function () {
               if ($scope.isOk === true) {
                 return;
@@ -398,11 +374,11 @@ angular.module('basic.services', ['ngResource'])
               $scope.isOk = true;
               if ($scope.isupdata) {
                 $scope.putapi = angular.copy($scope.input);
-                delete $scope.putapi.password
+                delete $scope.putapi.password;
                 putuser.updata({name: $scope.putapi.username}, $scope.putapi, function () {
                   $uibModalInstance.close(true);
                 }, function (res) {
-                  if (res.data.resCodel == 4004) {
+                  if (res.data.resCodel === 4004) {
                     $scope.resErr.info = '该用户并非由您创建，您无权编辑该用户信息';
                   } else {
                     $scope.resErr.info = '修改失败！';
@@ -415,7 +391,7 @@ angular.module('basic.services', ['ngResource'])
                 user.create($scope.input, function () {
                   $uibModalInstance.close(true);
                 }, function (res) {
-                  if (res.data.resCodel == 4003) {
+                  if (res.data.resCodel === 4003) {
                     $scope.resErr.info = '您没有权限添加用户！';
                   } else {
                     $scope.resErr.info = '添加失败！';
@@ -431,7 +407,7 @@ angular.module('basic.services', ['ngResource'])
     };
   }])
   .service('user_change_Confirm', ['$uibModal', function ($uibModal) {
-    this.open = function (item, userArr) {
+    this.open = function (item) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/user_change_Confirm.html',
@@ -459,8 +435,8 @@ angular.module('basic.services', ['ngResource'])
         controller: ['$scope', '$uibModalInstance', 'user', function ($scope, $uibModalInstance, user) {
           $scope.con = '确认删除' + name;
           let closeConf = function () {
-            $uibModalInstance.close()
-          }
+            $uibModalInstance.close();
+          };
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
@@ -595,15 +571,15 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addTenant.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie', 'getdfbs',
-          function ($scope, $uibModalInstance, addtenantapi, Cookie, getdfbs) {
+        controller: ['$scope', '$uibModalInstance', 'addtenantapi', 'Cookie', 'getdfbs', '_',
+          function ($scope, $uibModalInstance, addtenantapi, Cookie, getdfbs, _) {
             let timestamp = Date.parse(new Date());
             timestamp = timestamp / 1000;
-            let username = Cookie.get("username")
+            let username = Cookie.get("username");
             $scope.isbs = false;
             $scope.nextDiv = function () {
               $scope.isbs = true;
-            }
+            };
             $scope.message = {
               id: username + '-' + timestamp,
               name: '',
@@ -612,63 +588,55 @@ angular.module('basic.services', ['ngResource'])
               quota: {}
             };
 
-            function isEmptyObject(obj) {
-              for (let key in obj) {
-                return false
-              }
-              ;
-              return true
-            };
             $scope.bslength = 0;
             getdfbs.get(function (data) {
               $scope.bsList = {};
               $scope.newbsobj = {};
-              angular.forEach(data.items, function (bs, i) {
-                if (isEmptyObject(bs.spec.plans[0].metadata.customize)) {
+              angular.forEach(data.items, function (bs) {
+                if (_.isEmpty(bs.spec.plans[0].metadata.customize)) {
                 } else {
                   let atson = {
                     name: bs.metadata.name,
                     quota: []
                   };
                   $scope.bsList[bs.metadata.name] = {};
-                  $scope.bslength += 1
+                  $scope.bslength += 1;
                   angular.forEach(bs.spec.plans[0].metadata.customize, function (ct, y) {
                     let obj = {
                       key: y,
                       val: 0
-                    }
+                    };
                     $scope.bsList[bs.metadata.name][y] = 0;
                     atson.quota.push(obj);
                   });
-                  $scope.newbsobj[bs.metadata.name] = atson.quota
+                  $scope.newbsobj[bs.metadata.name] = atson.quota;
                 }
               });
-            })
-            $scope.changeList =
-              {}
+            });
+            $scope.changeList = {};
             $scope.changeBs = function (bskey, bsval) {
               $scope.changeList[bskey] = bsval;
               angular.forEach($scope.bsList, function (bs, i) {
                 angular.forEach($scope.changeList, function (clickbs, k) {
                   if (i === k) {
-                    $scope.bslength = $scope.bslength - 1
+                    $scope.bslength = $scope.bslength - 1;
                     delete $scope.bsList[k];
                   }
-                })
-              })
-            }
-            $scope.delbsList = function (val, idx) {
+                });
+              });
+            };
+            $scope.delbsList = function (val) {
               delete $scope.changeList[val];
               $scope.bslength += 1;
               angular.forEach($scope.newbsobj, function (bs, k) {
-                angular.forEach(bs, function (bsquo, k) {
+                angular.forEach(bs, function (bsquo) {
                   bsquo.val = 0;
-                })
+                });
                 if (k === val) {
                   $scope.bsList[k] = bs;
                 }
-              })
-            }
+              });
+            };
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
@@ -676,11 +644,11 @@ angular.module('basic.services', ['ngResource'])
             $scope.ok = function () {
               let postobj = {};
               angular.forEach($scope.newbsobj, function (bs, i) {
-                postobj[i.toLowerCase()] = {}
-                angular.forEach(bs, function (item, k) {
+                postobj[i.toLowerCase()] = {};
+                angular.forEach(bs, function (item) {
                   postobj[i.toLowerCase()][item.key] = item.val - 0;
-                })
-              })
+                });
+              });
               $scope.message.quota = JSON.stringify(postobj);
               addtenantapi.post($scope.message, function (data) {
                 $uibModalInstance.close(data);
@@ -700,19 +668,19 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
         size: 'default',
-        controller: ['uuid', '$scope', '$uibModalInstance', 'creatbsi', 'Cookie',
-          function (uuid, $scope, $uibModalInstance, creatbsi, Cookie) {
+        controller: ['$scope', '$uibModalInstance', 'creatbsi',
+          function ($scope, $uibModalInstance, creatbsi) {
             $scope.data = data;
             $scope.svList = true;
             $scope.svName = 'HBase';
             $scope.svActive = 0;
             $scope.nextDiv = function () {
               $scope.svList = false;
-            }
+            };
             $scope.checkSv = function (val, idx) {
               $scope.svName = val;
               $scope.svActive = idx;
-            }
+            };
             $scope.bsiname = '';
             $scope.bsiurl = '';
             $scope.cancel = function () {
@@ -720,13 +688,12 @@ angular.module('basic.services', ['ngResource'])
             };
             $scope.set_use = false;
             $scope.ok = function () {
-              let obj = {}
+              let obj = {};
               if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
                 for (let k in data[$scope.svActive].spec.plans[0].metadata.customize) {
-                  obj[k] = data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString()
+                  obj[k] = data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString();
                 }
               }
-              let username = Cookie.get("username")
               let bsiobj = {
                 "kind": "BackingServiceInstance",
                 "apiVersion": "v1",
@@ -740,15 +707,15 @@ angular.module('basic.services', ['ngResource'])
                     "parameters": obj
                   }
                 }
-              }
-              bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.bsiurl
-              creatbsi.post({id: id}, bsiobj, function (data) {
+              };
+              bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.bsiurl;
+              creatbsi.post({id: id}, bsiobj, function () {
                 $uibModalInstance.close(true);
               }, function (error) {
                 if (error.data && error.data.resCodel === 4061) {
                   $scope.set_use = true;
                 }
-              })
+              });
             };
           }]
       }).result;
@@ -768,10 +735,10 @@ angular.module('basic.services', ['ngResource'])
             $scope.ok = function () {
               let putobj = {
                 password: $scope.password
-              }
-              putuser.updata({name: name}, putobj, function (data) {
+              };
+              putuser.updata({name: name}, putobj, function () {
                 $uibModalInstance.close(true);
-              })
+              });
             };
           }]
       }).result;
@@ -797,31 +764,31 @@ angular.module('basic.services', ['ngResource'])
               "spec": {
                 "provisioning": {}
               }
-            }
-            $scope.tenurl = ''
+            };
+            $scope.tenurl = '';
             getdfbs.get(function (data) {
-              angular.forEach(data.items, function (bs, i) {
+              console.log(data);
+              angular.forEach(data.items, function (bs) {
                 if (bs.metadata.name === name) {
-                  let obj = {}
+                  let obj = {};
                   if (bs.spec.plans[0] && bs.spec.plans[0].metadata.customize) {
                     for (let k in bs.spec.plans[0].metadata.customize) {
-                      obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString()
+                      obj[k] = bs.spec.plans[0].metadata.customize[k].default.toString();
                     }
                   }
-                  let username = Cookie.get("username")
                   $scope.bsiobj.spec.provisioning = {
                     "backingservice_name": bs.metadata.name,
                     "backingservice_plan_guid": bs.spec.plans[0].id,
                     "parameters": obj
-                  }
+                  };
                 }
-              })
-            })
+              });
+            });
             $scope.ok = function () {
               $scope.bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.tenurl;
               creatbsi.post({id: id}, $scope.bsiobj, function (data) {
                 $uibModalInstance.close(data);
-              })
+              });
             };
           }]
       }).result;
@@ -837,7 +804,7 @@ angular.module('basic.services', ['ngResource'])
           $scope.con = con;
           let closeConf = function () {
             $uibModalInstance.close();
-          }
+          };
           window.setTimeout(closeConf, 1500);
         }]
       }).result;
@@ -853,7 +820,7 @@ angular.module('basic.services', ['ngResource'])
           getdfbs.get(function (data) {
             $scope.bsList = {};
             $scope.newbsobj = [];
-            angular.forEach(data.items, function (bs, i) {
+            angular.forEach(data.items, function (bs) {
               let atson = {
                 name: bs.metadata.name,
                 quota: []
@@ -863,33 +830,32 @@ angular.module('basic.services', ['ngResource'])
                 let obj = {
                   key: y,
                   val: 0
-                }
+                };
                 $scope.bsList[bs.metadata.name][y] = 0;
                 atson.quota.push(obj);
               });
               $scope.newbsobj.push(atson);
             });
-          })
-          $scope.changeList =
-            {}
+          });
+          $scope.changeList = {};
           $scope.changeBs = function (bskey, bsval) {
             $scope.changeList[bskey] = bsval;
-          }
+          };
           $scope.delbsList = function (val, idx) {
             delete $scope.changeList[val];
-            angular.forEach($scope.newbsobj[idx].quota, function (ct, y) {
+            angular.forEach($scope.newbsobj[idx].quota, function (ct) {
               ct.val = 0;
             });
-          }
+          };
           $scope.cancel = function () {
             $uibModalInstance.dismiss();
           };
           $scope.ok = function () {
             angular.forEach($scope.changeList, function (ct, i) {
               let qa = {};
-              angular.forEach($scope.newbsobj, function (arr, y) {
+              angular.forEach($scope.newbsobj, function (arr) {
                 if (i === arr.name) {
-                  angular.forEach(arr.quota, function (quota, z) {
+                  angular.forEach(arr.quota, function (quota) {
                     qa[quota.key] = quota.val;
                   });
                 }
