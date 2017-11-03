@@ -668,21 +668,27 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
         size: 'default',
-        controller: ['$scope', '$uibModalInstance', 'creatbsi',
-          function ($scope, $uibModalInstance, creatbsi) {
+        controller: ['$scope', '$uibModalInstance', 'creatbsi', 'INSTANCES', '_',
+          function ($scope, $uibModalInstance, creatbsi, INSTANCES, _) {
             $scope.data = data;
             $scope.svList = true;
             $scope.svName = 'HBase';
             $scope.svActive = 0;
+            $scope.instancesList = INSTANCES.hbase;
             $scope.nextDiv = function () {
-              $scope.svList = false;
+              $scope.svList = !$scope.svList;
             };
             $scope.checkSv = function (val, idx) {
               $scope.svName = val;
               $scope.svActive = idx;
+              let lowerCaseName = val.toLowerCase();
+              if(_.isEmpty(INSTANCES[lowerCaseName])){
+                $scope.instancesList = INSTANCES.default;
+              }else{
+                $scope.instancesList = INSTANCES[lowerCaseName];
+              }
             };
             $scope.bsiname = '';
-            $scope.bsiurl = '';
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
@@ -708,7 +714,10 @@ angular.module('basic.services', ['ngResource'])
                   }
                 }
               };
-              bsiobj.spec.provisioning.parameters.cuzBsiName = $scope.bsiurl;
+              for(let i = 0 ; i < $scope.instancesList.keys.length; i++){
+                let item = $scope.instancesList.keys[i];
+                bsiobj.spec.provisioning.parameters[item] = $scope.instancesList[item].value;
+              }
               creatbsi.post({id: id}, bsiobj, function () {
                 $uibModalInstance.close(true);
               }, function (error) {
@@ -767,7 +776,6 @@ angular.module('basic.services', ['ngResource'])
             };
             $scope.tenurl = '';
             getdfbs.get(function (data) {
-              console.log(data);
               angular.forEach(data.items, function (bs) {
                 if (bs.metadata.name === name) {
                   let obj = {};

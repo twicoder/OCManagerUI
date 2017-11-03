@@ -3,8 +3,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
-    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
+  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
+    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
       Array.prototype.unique = function () {
         let res = [this[0]];
         for (let i = 1; i < this.length; i++) {
@@ -521,7 +521,7 @@ angular.module('basic')
         $scope.grid.showbsi = node.children.length <= 0;
       };
 
-      function creattree(trees) {
+      function createTree(trees) {
         $scope.dataForTheTree = [];
         $scope.treemap = {};
         angular.forEach(trees, function (item) {
@@ -563,12 +563,12 @@ angular.module('basic')
           fristLoad($scope.dataForTheTree[0].id, $scope.dataForTheTree[0]);
         }
       }
-      creattree(tree);
+      createTree(tree);
       $scope.deltenan = function (e, node) {
         e.stopPropagation();
         tenant_del_Confirm.open(node.name, node.id).then(function () {
           tenantname.query({name: Cookie.get('username')}, function (tree) {
-            creattree(tree);
+            createTree(tree);
           });
         });
       };
@@ -587,21 +587,10 @@ angular.module('basic')
       };
       $scope.addServe = function () {
         getdfbs.get(function (data) {
-          let newItem = [];
-          angular.forEach(data.items, function (bsi) {
-            let iscustomize = bsi.spec.plans[0].metadata.customize;
-            if (!_.isEmpty(iscustomize)) {
-              newItem.push(bsi);
-            }
-          });
+          let newItem = [...data.items];
           addserve_Confirm.open(newItem, $scope.nodeId).then(function () {
             tenantbsi.query({id: $scope.nodeId}, function (bsis) {
-              let bsitems = [];
-              angular.forEach(bsis, function (bsi) {
-                bsitems.push(bsi);
-              });
-              bsis = angular.copy(bsitems);
-              classify(bsis);
+              classify([...bsis]);
             });
           });
         });

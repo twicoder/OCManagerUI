@@ -63,7 +63,25 @@ angular.module('basic', [
   httpForbidden: 'auth-http-forbidden'
 }).constant('_',
   window._
-).config(['$httpProvider', 'GLOBAL', function ($httpProvider) {
+).constant('INSTANCES', {
+  "hbase": {
+    "name": "实例名称",
+    "keys" : ['cuzBsiName', 'test'],
+    "cuzBsiName": {
+      "name": "HBase"
+    },
+    "test": {
+      "name": "test"
+    }
+  },
+  "default": {
+    "name": "实例名称",
+    "keys" : ['cuzBsiName'],
+    "cuzBsiName": {
+      "name": "实例路径"
+    }
+  }
+}).config(['$httpProvider', 'GLOBAL', function ($httpProvider) {
   $httpProvider.interceptors.push(['$injector',
     function ($injector) {
       return $injector.get('AuthInterceptor');
