@@ -667,7 +667,7 @@ angular.module('basic.services', ['ngResource'])
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
-        size: 'default',
+        size: 'lg',
         controller: ['$scope', '$uibModalInstance', 'creatbsi', 'INSTANCES', '_',
           function ($scope, $uibModalInstance, creatbsi, INSTANCES, _) {
             $scope.data = data;

@@ -74,6 +74,31 @@ angular.module('basic', [
       "name": "test"
     }
   },
+  "hive": {
+    "name": "实例名称",
+    "keys" : ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_DATABASE', 'MYSQL_UNAME', 'MYSQL_PWD', 'OCSP_USER', 'CODIS_ADDR'],
+    "MYSQL_HOST": {
+      "name": "MYSQL_HOST"
+    },
+    "MYSQL_PORT": {
+      "name": "MYSQL_PORT"
+    },
+    "MYSQL_DATABASE": {
+      "name": "MYSQL_DATABASE"
+    },
+    "MYSQL_UNAME": {
+      "name": "MYSQL_UNAME"
+    },
+    "MYSQL_PWD": {
+      "name": "MYSQL_PWD"
+    },
+    "OCSP_USER": {
+      "name": "OCSP_USER"
+    },
+    "CODIS_ADDR": {
+      "name": "CODIS_ADDR"
+    }
+  },
   "default": {
     "name": "实例名称",
     "keys" : ['cuzBsiName'],

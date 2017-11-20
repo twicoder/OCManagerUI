@@ -6,8 +6,8 @@
   </h5>
 </div>
 <form name="frm">
-  <div class="modal-body confirm-con">
-    <ul class="sv-wrop" style="height: 245px;" ng-show="svList">
+  <div class="modal-body">
+    <ul class="sv-wrop" ng-show="svList">
       <li class="sv-list" ng-class="{'svActive':svActive == $index}" ng-repeat="item in data"
           ng-click="checkSv(item.metadata.name,$index)">
         <img src="./images/serviceList/{{item.metadata.name | lowerCase}}.png">
@@ -15,32 +15,44 @@
       </li>
     </ul>
     <div ng-show="!svList">
-      <div class="con-wrop">
-        <label>{{instancesList.name}}<i class="modal_red">*</i></label>
-        <div class="confirm-select modal_select">
-          <input type="text"
-                 name="bsiname"
-                 onkeypress="if((event.keyCode > 31 && event.keyCode < 44) || (event.keyCode > 46 && event.keyCode < 48) || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97))event.returnValue = false;"
-                 ng-pattern="/^[a-zA-Z0-9]{1,28}$/"
-                 class="modal_input"
-                 ng-model="bsiname"
-                 required>
-        </div>
-        <div class="error_block_tit" ng-if="frm.bsiname.$dirty && frm.bsiname.$invalid">
-          <p style="margin:0;">{{instancesList.name}}不合法</p>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-3">
+            <label class="control-label">{{instancesList.name}}<i class="modal_red">*</i></label>
+          </div>
+          <div class="col-md-6">
+            <input type="text"
+                   name="bsiname"
+                   onkeypress="if((event.keyCode > 31 && event.keyCode < 44) || (event.keyCode > 46 && event.keyCode < 48) || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97))event.returnValue = false;"
+                   ng-pattern="/^[a-zA-Z0-9]{1,28}$/"
+                   class="form-control"
+                   ng-model="bsiname"
+                   required>
+          </div>
+          <div class="col-md-3">
+            <div class="error_block_tit" ng-if="frm.bsiname.$dirty && frm.bsiname.$invalid">
+              <p style="margin:0;">{{instancesList.name}}不合法</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="con-wrop" ng-repeat="item in instancesList.keys">
-        <label>{{instancesList[item].name}}<i class="modal_red">*</i></label>
-        <div class="confirm-select modal_select">
-          <input type="text" name="bsiurl_{{$index}}"
-                 ng-pattern="/^[a-zA-Z0-9\/]{1,28}$/"
-                 class="modal_input"
-                 ng-model="instancesList[item].value"
-                 required>
-        </div>
-        <div class="error_block_tit" ng-if="frm.bsiurl.$dirty && frm['bsiurl_' + $index].$invalid">
-          <p style="margin:0;">{{instancesList[item].name}}不合法</p>
+      <div class="form-group" ng-repeat="item in instancesList.keys">
+        <div class="row">
+          <div class="col-md-3">
+            <label class="control-label">{{instancesList[item].name}}<i class="modal_red">*</i></label>
+          </div>
+          <div class="col-md-6">
+            <input type="text" name="bsiurl_{{$index}}"
+                   ng-pattern="/^[a-zA-Z0-9\/]{1,28}$/"
+                   class="form-control"
+                   ng-model="instancesList[item].value"
+                   required>
+          </div>
+          <div class="col-md-3">
+            <div class="error_block_tit" ng-if="frm.bsiurl.$dirty && frm['bsiurl_' + $index].$invalid">
+              <p style="margin:0;">{{instancesList[item].name}}不合法</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
