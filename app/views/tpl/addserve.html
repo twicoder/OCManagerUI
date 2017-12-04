@@ -37,7 +37,26 @@
         </div>
       </div>
       <div class="form-group" ng-repeat="item in instancesList.keys">
-        <div class="row">
+        <div class="row" ng-if="instancesList[item].type === 'inputGroup'">
+          <div class="col-md-3">
+            <label class="control-label">{{instancesList[item].name}}<i class="modal_red">*</i></label>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="number" class="form-control" ng-model="instancesList[item].value" required>
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  {{instancesList[item].unit}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li ng-repeat="unit in instancesList[item].typeInputs"><a href="" ng-click="changeUnit(instancesList[item], unit)">{{unit}}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-if="!!instancesList[item].type=== false">
           <div class="col-md-3">
             <label class="control-label">{{instancesList[item].name}}<i class="modal_red">*</i></label>
           </div>

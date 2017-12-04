@@ -692,6 +692,9 @@ angular.module('basic.services', ['ngResource'])
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
             };
+            $scope.changeUnit = function(item, value){
+              item.unit = value;
+            };
             $scope.set_use = false;
             $scope.ok = function () {
               let obj = {};
@@ -716,7 +719,11 @@ angular.module('basic.services', ['ngResource'])
               };
               for(let i = 0 ; i < $scope.instancesList.keys.length; i++){
                 let item = $scope.instancesList.keys[i];
-                bsiobj.spec.provisioning.parameters[item] = $scope.instancesList[item].value;
+                if($scope.instancesList[item].type === "inputGroup"){
+                  bsiobj.spec.provisioning.parameters[item] = `${$scope.instancesList[item].value} / ${$scope.instancesList[item].unit}`;
+                }else {
+                  bsiobj.spec.provisioning.parameters[item] = $scope.instancesList[item].value;
+                }
               }
               creatbsi.post({id: id}, bsiobj, function () {
                 $uibModalInstance.close(true);

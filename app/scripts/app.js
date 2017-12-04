@@ -66,12 +66,25 @@ angular.module('basic', [
 ).constant('INSTANCES', {
   "hbase": {
     "name": "实例名称",
-    "keys" : ['cuzBsiName', 'test'],
+    "keys" : ['cuzBsiName', 'REQUEST_SIZE', 'REQUEST_NUMBER'],
     "cuzBsiName": {
-      "name": "HBase"
+      "name": "Namespace名称"
     },
-    "test": {
-      "name": "test"
+    "REQUEST_SIZE": {
+      "name": "REQUEST_SIZE",
+      "type": "inputGroup",
+      "unit": "DAYS",
+      "typeInputs": [
+        "DAYS"," HOURS", "MINUTES", "SECONDS","MILLISECONDS","MICROSECONDS","NANOSECONDS"
+      ]
+    },
+    "REQUEST_NUMBER": {
+      "name": "REQUEST_NUMBER",
+      "type": "inputGroup",
+      "unit": "DAYS",
+      "typeInputs": [
+        "DAYS"," HOURS", "MINUTES", "SECONDS","MILLISECONDS","MICROSECONDS","NANOSECONDS"
+      ]
     }
   },
   "hive": {
