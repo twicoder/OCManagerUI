@@ -89,27 +89,27 @@ angular.module('basic', [
   },
   "ocsp": {
     "name": "实例名称",
-    "keys" : ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_DATABASE', 'MYSQL_UNAME', 'MYSQL_PWD', 'OCSP_USER', 'CODIS_ADDR'],
-    "MYSQL_HOST": {
-      "name": "MYSQL_HOST"
+    "keys" : ['mysql_host', 'mysql_port', 'mysql_database', 'mysql_user', 'mysql_pass', 'ocsp_user', 'codis_addr'],
+    "mysql_host": {
+      "name": "mysql_host"
     },
-    "MYSQL_PORT": {
-      "name": "MYSQL_PORT"
+    "mysql_port": {
+      "name": "mysql_port"
     },
-    "MYSQL_DATABASE": {
-      "name": "MYSQL_DATABASE"
+    "mysql_database": {
+      "name": "mysql_database"
     },
-    "MYSQL_UNAME": {
-      "name": "MYSQL_UNAME"
+    "mysql_user": {
+      "name": "mysql_user"
     },
-    "MYSQL_PWD": {
-      "name": "MYSQL_PWD"
+    "mysql_pass": {
+      "name": "mysql_pass"
     },
-    "OCSP_USER": {
-      "name": "OCSP_USER"
+    "ocsp_user": {
+      "name": "ocsp_user"
     },
-    "CODIS_ADDR": {
-      "name": "CODIS_ADDR"
+    "codis_addr": {
+      "name": "codis_addr"
     }
   },
   "default": {
