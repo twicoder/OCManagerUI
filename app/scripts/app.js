@@ -87,7 +87,7 @@ angular.module('basic', [
       ]
     }
   },
-  "hive": {
+  "ocsp": {
     "name": "实例名称",
     "keys" : ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_DATABASE', 'MYSQL_UNAME', 'MYSQL_PWD', 'OCSP_USER', 'CODIS_ADDR'],
     "MYSQL_HOST": {
