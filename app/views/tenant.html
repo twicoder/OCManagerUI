@@ -135,15 +135,28 @@
                           <span style="" class="delbsi" ng-click="delbsied(arr.instanceName)">删除</span>
                           <span ng-if="!arr.isde" style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</span>
                           <span ng-if="arr.isde" class="editSv" ng-click="saveSv(timeIndex,$index,arr)">保存</span>
-
                         </div>
                       </div>
                       <div class="list-con" ng-show="arr.isshow">
-                        <div class="row add-myserve" ng-repeat="ziyuan in arr.ziyuan">
-                          <div class="col-md-2">{{ziyuan.key}}</div>
-                          <div class="col-md-10">
-                            <div class="use-num-wrop">
-                              <input class="no-monetary" ng-model="ziyuan.value" type="text" ng-disabled="!arr.isde">
+                        <div class="row" ng-if="arr._attrs.length > 0" style="margin-bottom: 30px;">
+                          <label>属性:</label>
+                          <div class="row add-myserve" ng-repeat="attr in arr._attrs">
+                            <div class="col-md-2">{{attr.key}}</div>
+                            <div class="col-md-10">
+                              <div class="use-num-wrop">
+                                <input class="no-monetary" ng-model="attr.value" type="text" ng-disabled="!arr.isde">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" ng-if="arr.ziyuan.length > 0">
+                          <label>配额:</label>
+                          <div class="row add-myserve" ng-repeat="ziyuan in arr.ziyuan">
+                            <div class="col-md-2">{{ziyuan.key}}</div>
+                            <div class="col-md-10">
+                              <div class="use-num-wrop">
+                                <input class="no-monetary" ng-model="ziyuan.value" type="text" ng-disabled="!arr.isde">
+                              </div>
                             </div>
                           </div>
                         </div>

@@ -3,8 +3,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs',
-    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs) {
+  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
+    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
       Array.prototype.unique = function () {
         let res = [this[0]];
         for (let i = 1; i < this.length; i++) {
@@ -422,11 +422,21 @@ angular.module('basic')
           angular.forEach($scope.sletr, function (items) {
             angular.forEach(items.servesList, function (item) {
               item.ziyuan = [];
+              item._attrs = [];
               if (item.quota) {
                 let obj = JSON.parse(item.quota);
                 angular.forEach(obj, function (quota, j) {
                   if (j !== "instance_id" && j !== "cuzBsiName") {
                     item.ziyuan.push({key: j, value: quota});
+                  }
+                });
+              }
+              if(item.attributes){
+                let obj = JSON.parse(item.attributes);
+                angular.forEach(obj, function (attr, j) {
+                  if(_.startsWith(j, "ATTR_")) {
+                    let k = j.substring(5);
+                    item._attrs.push({key: k, value: attr});
                   }
                 });
               }
@@ -604,6 +614,9 @@ angular.module('basic')
         };
         angular.forEach(bsi.ziyuan, function (item) {
           putobj.parameters[item.key] = item.value;
+        });
+        angular.forEach(bsi._attrs, function (item) {
+          putobj.parameters["ATTR_" + item.key] = item.value;
         });
         updateinstance.put({id: $scope.nodeId, instanceName: bsi.instanceName}, putobj, function () {
             tenantbsi.query({id: $scope.nodeId}, function (bsis) {
