@@ -36,6 +36,31 @@
           </div>
         </div>
       </div>
+
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-3">
+            <label class="control-label">{{instancesList.planName}}<i class="modal_red">*</i></label>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  {{data[svActive].spec.plans[planIdIndex].name}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li ng-repeat="(index, plan) in data[svActive].spec.plans"><a href="" ng-click="changePlan(index)">{{plan.name}}</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
       <div class="form-group" ng-repeat="item in instancesList.keys">
         <div class="row" ng-if="instancesList[item].type === 'inputGroup'">
           <div class="col-md-3">

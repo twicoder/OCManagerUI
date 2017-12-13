@@ -152,7 +152,7 @@
                         <div class="row" ng-if="arr.ziyuan.length > 0">
                           <label>配额:</label>
                           <div class="row add-myserve" ng-repeat="ziyuan in arr.ziyuan">
-                            <div class="col-md-2">{{ziyuan.key}}</div>
+                            <div class="col-md-2" uib-tooltip={{ziyuan.tool}}>{{ziyuan.key}}</div>
                             <div class="col-md-10">
                               <div class="use-num-wrop">
                                 <input class="no-monetary" ng-model="ziyuan.value" type="text" ng-disabled="!arr.isde">
