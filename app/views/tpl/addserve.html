@@ -45,11 +45,11 @@
           </div>
           <div class="col-md-6">
             <div class="input-group">
+              <input ng-model="data[svActive].spec.plans[planIdIndex].name" type="text" class="form-control">
               <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  {{data[svActive].spec.plans[planIdIndex].name}}
+                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="">
                   <span class="caret"></span>
-                </button>
+                </a>
                 <ul class="dropdown-menu">
                   <li ng-repeat="(index, plan) in data[svActive].spec.plans"><a href="" ng-click="changePlan(index)">{{plan.name}}</a></li>
                 </ul>
