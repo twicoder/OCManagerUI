@@ -576,6 +576,31 @@ angular.module('basic.services', ['ngResource'])
             let timestamp = Date.parse(new Date());
             timestamp = timestamp / 1000;
             let username = Cookie.get("username");
+            var bsmap = {
+              HBase:{
+                maximumRegionsQuota: 'HBase命名空间允许的最大的region数目(单位：个)',
+                maximumTablesQuota: 'HBase命名空间允许的最大的表数目(单位：个)',
+              },
+              HDFS:{
+                nameSpaceQuota:'HDFS目录允许创建的最大文件数目(单位：个)',
+                storageSpaceQuota:'HDFS目录的最大存储容量(单位：GB)',
+              },
+              Hive:{
+                storageSpaceQuota:'Hive数据库的最大存储容量(单位：GB)',
+                yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
+              },
+              Kafka:{
+                topicTTL:'Kafka Topic 的最大存活时间(单位：ms)',
+                topicQuota:'Kafka Topic 的分区数(单位：个)',
+                partitionSize:'Kafka Topic 的每一个分区最大存储容量(单位：Bytes)'
+              },
+              MapReduce:{
+                yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
+              },
+              Spark:{
+                yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
+              }
+            };
             $scope.isbs = false;
             $scope.nextDiv = function () {
               $scope.isbs = true;
@@ -604,7 +629,8 @@ angular.module('basic.services', ['ngResource'])
                   angular.forEach(bs.spec.plans[0].metadata.customize, function (ct, y) {
                     let obj = {
                       key: y,
-                      val: 0
+                      val: 0,
+                      tool:bsmap[bs.metadata.name][y]
                     };
                     $scope.bsList[bs.metadata.name][y] = 0;
                     atson.quota.push(obj);
@@ -674,6 +700,7 @@ angular.module('basic.services', ['ngResource'])
             $scope.svList = true;
             $scope.svName = 'HBase';
             $scope.svActive = 0;
+            $scope.planIdIndex = 0;
             $scope.instancesList = INSTANCES.hbase;
             $scope.nextDiv = function () {
               $scope.svList = !$scope.svList;
@@ -688,6 +715,11 @@ angular.module('basic.services', ['ngResource'])
                 $scope.instancesList = INSTANCES[lowerCaseName];
               }
             };
+
+            $scope.changePlan = function(index){
+              $scope.planIdIndex = index;
+            };
+
             $scope.bsiname = '';
             $scope.cancel = function () {
               $uibModalInstance.dismiss();
@@ -712,17 +744,19 @@ angular.module('basic.services', ['ngResource'])
                 "spec": {
                   "provisioning": {
                     "backingservice_name": data[$scope.svActive].metadata.name,
-                    "backingservice_plan_guid": data[$scope.svActive].spec.plans[0].id,
+                    "backingservice_plan_guid": data[$scope.svActive].spec.plans[$scope.planIdIndex].id,
                     "parameters": obj
                   }
                 }
               };
-              for(let i = 0 ; i < $scope.instancesList.keys.length; i++){
-                let item = $scope.instancesList.keys[i];
-                if($scope.instancesList[item].type === "inputGroup"){
-                  bsiobj.spec.provisioning.parameters[item] = `${$scope.instancesList[item].value} / ${$scope.instancesList[item].unit}`;
-                }else {
-                  bsiobj.spec.provisioning.parameters[item] = $scope.instancesList[item].value;
+              if(typeof($scope.instancesList.keys) !== "undefined"){
+                for(let i = 0 ; i < $scope.instancesList.keys.length; i++){
+                  let item = $scope.instancesList.keys[i];
+                  if($scope.instancesList[item].type === "inputGroup"){
+                    bsiobj.spec.provisioning.parameters[item] = `${$scope.instancesList[item].value}/${$scope.instancesList[item].unit}`;
+                  }else {
+                    bsiobj.spec.provisioning.parameters[item] = $scope.instancesList[item].value;
+                  }
                 }
               }
               creatbsi.post({id: id}, bsiobj, function () {

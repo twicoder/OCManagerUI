@@ -70,6 +70,7 @@ angular.module('basic', [
     "cuzBsiName": {
       "name": "Namespace名称"
     },
+    "planName": "实例类型",
     "REQUEST_SIZE": {
       "name": "REQUEST_SIZE",
       "type": "inputGroup",
@@ -87,8 +88,17 @@ angular.module('basic', [
       ]
     }
   },
+  "redis": {
+    "name": "实例名称",
+    "planName": "实例类型"
+  },
+  "storm": {
+    "name": "实例名称",
+    "planName": "实例类型"
+  },
   "ocsp": {
     "name": "实例名称",
+    "planName": "实例类型",
     "keys" : ['ATTR_mysql_host', 'ATTR_mysql_port', 'ATTR_mysql_database', 'ATTR_mysql_user', 'ATTR_mysql_pass', 'ATTR_ocsp_user', 'ATTR_codis_addr'],
     "ATTR_mysql_host": {
       "name": "mysql_host"
@@ -117,7 +127,8 @@ angular.module('basic', [
     "keys" : ['cuzBsiName'],
     "cuzBsiName": {
       "name": "实例路径"
-    }
+    },
+    "planName": "实例类型"
   }
 }).config(['$httpProvider', 'GLOBAL', function ($httpProvider) {
   $httpProvider.interceptors.push(['$injector',

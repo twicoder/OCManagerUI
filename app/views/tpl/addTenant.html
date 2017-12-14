@@ -44,7 +44,7 @@
             </div>
             <div style="border-top:1px solid #eaeaea;">
               <div ng-repeat="newval in newbsobj[index]" class="row" style="margin:8px 0px;">
-                <div class="col-md-7">{{newval.key}}</div>
+                <div class="col-md-7" uib-tooltip={{newval.tool}}>{{newval.key}}</div>
                 <div class="col-md-5"><input type="text" ng-model="newval.val" class="bsinput"></div>
               </div>
             </div>
