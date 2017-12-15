@@ -701,11 +701,13 @@ angular.module('basic.services', ['ngResource'])
             $scope.svName = 'HBase';
             $scope.svActive = 0;
             $scope.planIdIndex = 0;
+            $scope.planCustomizes = [];
             $scope.instancesList = INSTANCES.hbase;
             $scope.nextDiv = function () {
               $scope.svList = !$scope.svList;
             };
             $scope.checkSv = function (val, idx) {
+              $scope.planCustomizes = [];
               $scope.svName = val;
               $scope.svActive = idx;
               let lowerCaseName = val.toLowerCase();
@@ -714,10 +716,28 @@ angular.module('basic.services', ['ngResource'])
               }else{
                 $scope.instancesList = INSTANCES[lowerCaseName];
               }
+
+              let initCustomize = $scope.data[idx].spec.plans[0].metadata.customize;
+
+              for (let key in initCustomize) {
+                let elem = {"name": key, "value": ""};
+                $scope.planCustomizes.push(elem);
+              }
+
             };
 
             $scope.changePlan = function(index){
               $scope.planIdIndex = index;
+              $scope.planCustomizes = [];
+
+              let serviceIndex = $scope.svActive;
+              let customize = $scope.data[serviceIndex].spec.plans[index].metadata.customize;
+
+              for (let key in customize) {
+                let elem = {"name": key, "value": ""};
+                $scope.planCustomizes.push(elem);
+              }
+
             };
 
             $scope.bsiname = '';
@@ -730,11 +750,36 @@ angular.module('basic.services', ['ngResource'])
             $scope.set_use = false;
             $scope.ok = function () {
               let obj = {};
-              if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
-                for (let k in data[$scope.svActive].spec.plans[0].metadata.customize) {
-                  obj[k] = data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString();
+
+              let useDefault = true;
+
+              if ($scope.planCustomizes.length === 0){
+                useDefault = true;
+              } else {
+                for(let i in $scope.planCustomizes){
+                  if($scope.planCustomizes[i] === ""){
+                    useDefault = true;
+                  } else {
+                    useDefault = false;
+                  }
                 }
               }
+
+              if (useDefault){
+                if (data[$scope.svActive].spec.plans[0] && data[$scope.svActive].spec.plans[0].metadata.customize) {
+                  for (let k in data[$scope.svActive].spec.plans[0].metadata.customize) {
+                    obj[k] = data[$scope.svActive].spec.plans[0].metadata.customize[k].default.toString();
+                  }
+                }
+              } else {
+                  let a = $scope.planCustomizes.length;
+                  for (var kk=0; kk<$scope.planCustomizes.length; kk++) {
+                    var name = $scope.planCustomizes[kk].name;
+                    var value = $scope.planCustomizes[kk].value;
+                    obj[name] = value;
+                  }
+              }
+
               let bsiobj = {
                 "kind": "BackingServiceInstance",
                 "apiVersion": "v1",

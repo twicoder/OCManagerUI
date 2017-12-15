@@ -72,7 +72,7 @@ angular.module('basic', [
     },
     "planName": "实例类型",
     "REQUEST_SIZE": {
-      "name": "REQUEST_SIZE",
+      "name": "请求大小",
       "type": "inputGroup",
       "unit": "DAYS",
       "typeInputs": [
@@ -80,7 +80,7 @@ angular.module('basic', [
       ]
     },
     "REQUEST_NUMBER": {
-      "name": "REQUEST_NUMBER",
+      "name": "请求个数",
       "type": "inputGroup",
       "unit": "DAYS",
       "typeInputs": [
