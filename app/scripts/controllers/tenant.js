@@ -454,8 +454,8 @@ angular.module('basic')
                 let obj = JSON.parse(item.quota);
                 angular.forEach(obj, function (quota, j) {
                   if (j !== "instance_id" && j !== "cuzBsiName") {
-//                    item.ziyuan.push({key: j, value: quota});
-                    item.ziyuan.push({key: j, value: quota,tool:$scope.bsmap[items.serviceTypeName.toLowerCase()][j]});
+                    item.ziyuan.push({key: j, value: quota});
+//                    item.ziyuan.push({key: j, value: quota,tool:$scope.bsmap[items.serviceTypeName.toLowerCase()][j]});
                   }
                 });
               }
