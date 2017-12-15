@@ -618,7 +618,9 @@ angular.module('basic.services', ['ngResource'])
               $scope.bsList = {};
               $scope.newbsobj = {};
               angular.forEach(data.items, function (bs) {
-                if (_.isEmpty(bs.spec.plans[0].metadata.customize)) {
+
+              for(var idx=0; idx<bs.spec.plans.length; idx++){
+                if (_.isEmpty(bs.spec.plans[idx].metadata.customize)) {
                 } else {
                   let atson = {
                     name: bs.metadata.name,
@@ -626,17 +628,20 @@ angular.module('basic.services', ['ngResource'])
                   };
                   $scope.bsList[bs.metadata.name] = {};
                   $scope.bslength += 1;
-                  angular.forEach(bs.spec.plans[0].metadata.customize, function (ct, y) {
+                  angular.forEach(bs.spec.plans[idx].metadata.customize, function (ct, y) {
                     let obj = {
                       key: y,
-                      val: 0,
-                      tool:bsmap[bs.metadata.name][y]
+                      val: 0//,
+//                      tool:bsmap[bs.metadata.name][y]
                     };
                     $scope.bsList[bs.metadata.name][y] = 0;
                     atson.quota.push(obj);
                   });
                   $scope.newbsobj[bs.metadata.name] = atson.quota;
                 }
+              }
+
+
               });
             });
             $scope.changeList = {};
@@ -772,7 +777,6 @@ angular.module('basic.services', ['ngResource'])
                   }
                 }
               } else {
-                  let a = $scope.planCustomizes.length;
                   for (var kk=0; kk<$scope.planCustomizes.length; kk++) {
                     var name = $scope.planCustomizes[kk].name;
                     var value = $scope.planCustomizes[kk].value;
