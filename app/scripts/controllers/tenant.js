@@ -22,32 +22,6 @@ angular.module('basic')
         return res;
       };
 
-//      $scope.bsmap = {
-//        hbase:{
-//          maximumRegionsQuota: 'HBase命名空间允许的最大的region数目(单位：个)',
-//          maximumTablesQuota: 'HBase命名空间允许的最大的表数目(单位：个)',
-//        },
-//        hdfs:{
-//          nameSpaceQuota:'HDFS目录允许创建的最大文件数目(单位：个)',
-//          storageSpaceQuota:'HDFS目录的最大存储容量(单位：GB)',
-//        },
-//        hive:{
-//          storageSpaceQuota:'Hive数据库的最大存储容量(单位：GB)',
-//          yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
-//        },
-//        kafka:{
-//          topicTTL:'Kafka Topic 的最大存活时间(单位：ms)',
-//          topicQuota:'Kafka Topic 的分区数(单位：个)',
-//          partitionSize:'Kafka Topic 的每一个分区最大存储容量(单位：Bytes)'
-//        },
-//        mapreduce:{
-//          yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
-//        },
-//        spark:{
-//          yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
-//        }
-//      };
-
       let left_by_block = function () {
         let thisheight = $(window).height() - 80;
         $('.tree-classic').css('min-height', thisheight);
