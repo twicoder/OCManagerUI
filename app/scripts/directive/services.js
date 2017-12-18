@@ -576,31 +576,6 @@ angular.module('basic.services', ['ngResource'])
             let timestamp = Date.parse(new Date());
             timestamp = timestamp / 1000;
             let username = Cookie.get("username");
-            var bsmap = {
-              HBase:{
-                maximumRegionsQuota: 'HBase命名空间允许的最大的region数目(单位：个)',
-                maximumTablesQuota: 'HBase命名空间允许的最大的表数目(单位：个)',
-              },
-              HDFS:{
-                nameSpaceQuota:'HDFS目录允许创建的最大文件数目(单位：个)',
-                storageSpaceQuota:'HDFS目录的最大存储容量(单位：GB)',
-              },
-              Hive:{
-                storageSpaceQuota:'Hive数据库的最大存储容量(单位：GB)',
-                yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
-              },
-              Kafka:{
-                topicTTL:'Kafka Topic 的最大存活时间(单位：ms)',
-                topicQuota:'Kafka Topic 的分区数(单位：个)',
-                partitionSize:'Kafka Topic 的每一个分区最大存储容量(单位：Bytes)'
-              },
-              MapReduce:{
-                yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
-              },
-              Spark:{
-                yarnQueueQuota:'Yarn队列的最大容量(单位：GB)'
-              }
-            };
             $scope.isbs = false;
             $scope.nextDiv = function () {
               $scope.isbs = true;
@@ -631,8 +606,8 @@ angular.module('basic.services', ['ngResource'])
                   angular.forEach(bs.spec.plans[idx].metadata.customize, function (ct, y) {
                     let obj = {
                       key: y,
-                      val: 0//,
-//                      tool:bsmap[bs.metadata.name][y]
+                      val: 0,
+                      tool: ct.desc + " 单位: " + ((typeof(ct.unit)=== "undefined") ? "个" : ct.unit)
                     };
                     $scope.bsList[bs.metadata.name][y] = 0;
                     atson.quota.push(obj);
@@ -725,7 +700,7 @@ angular.module('basic.services', ['ngResource'])
               let initCustomize = $scope.data[idx].spec.plans[0].metadata.customize;
 
               for (let key in initCustomize) {
-                let elem = {"name": key, "value": ""};
+                let elem = {"name": key, "value": initCustomize[key].default, "customizeValue": initCustomize[key]};
                 $scope.planCustomizes.push(elem);
               }
 
@@ -739,7 +714,7 @@ angular.module('basic.services', ['ngResource'])
               let customize = $scope.data[serviceIndex].spec.plans[index].metadata.customize;
 
               for (let key in customize) {
-                let elem = {"name": key, "value": ""};
+                let elem = {"name": key, "value": customize[key].default, "customizeValue": customize[key]};
                 $scope.planCustomizes.push(elem);
               }
 
