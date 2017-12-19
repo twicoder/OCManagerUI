@@ -700,7 +700,7 @@ angular.module('basic.services', ['ngResource'])
               let initCustomize = $scope.data[idx].spec.plans[0].metadata.customize;
 
               for (let key in initCustomize) {
-                let elem = {"name": key, "value": initCustomize[key].default, "customizeValue": initCustomize[key]};
+                let elem = {"name": key, "value": initCustomize[key].default.toString(), "customizeValue": initCustomize[key]};
                 $scope.planCustomizes.push(elem);
               }
 
@@ -714,7 +714,7 @@ angular.module('basic.services', ['ngResource'])
               let customize = $scope.data[serviceIndex].spec.plans[index].metadata.customize;
 
               for (let key in customize) {
-                let elem = {"name": key, "value": customize[key].default, "customizeValue": customize[key]};
+                let elem = {"name": key, "value": customize[key].default.toString(), "customizeValue": customize[key]};
                 $scope.planCustomizes.push(elem);
               }
 
@@ -755,7 +755,7 @@ angular.module('basic.services', ['ngResource'])
                   for (var kk=0; kk<$scope.planCustomizes.length; kk++) {
                     var name = $scope.planCustomizes[kk].name;
                     var value = $scope.planCustomizes[kk].value;
-                    obj[name] = value;
+                    obj[name] = value.toString();
                   }
               }
 
