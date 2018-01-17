@@ -696,6 +696,7 @@ angular.module('basic.services', ['ngResource'])
               }else{
                 $scope.instancesList = INSTANCES[lowerCaseName];
               }
+              $scope.instancesList['cuzBsiName'].value = '';
 
               let initCustomize = $scope.data[idx].spec.plans[0].metadata.customize;
 
