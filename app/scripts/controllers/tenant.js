@@ -3,8 +3,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
-    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
+  .controller('TenantCtrl', ['ocdpservices', 'addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
+    function (ocdpservices, addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
       Array.prototype.unique = function () {
         let res = [this[0]];
         for (let i = 1; i < this.length; i++) {
@@ -34,7 +34,12 @@ angular.module('basic')
       $(window).resize(function () {
         left_by_block();
       });
-      let out = ["hdfs", "hbase", "hive", "mapreduce", "spark", "kafka"];
+//      let out = ["hdfs", "hbase", "hive", "mapreduce", "spark", "kafka"];
+      let out = [];
+      ocdpservices.query({}, function (res) {
+        out = res;
+      });
+
       $(function () {
         left_by_block();
       });

@@ -70,7 +70,7 @@
             <li ng-show="bsis.length">
               <ul class="tenant-serve-list">
                 <li class="row" ng-repeat="bsi in bsisitem">
-                  <div class="col-md-1 lscn"><img src="./images/serviceimg/{{bsi.serviceTypeName | lowerCase}}.png"
+                  <div class="col-md-1 lscn"><img src="./images/serviceimg/{{bsi.serviceType | lowerCase}}.png"
                                                   onerror="javascript:this.src='./images/serviceimg/default.png'"
                                                   alt=""></div>
                   <div class="col-md-3 lscn" uib-tooltip="{{bsi.instanceName}}"><span>服务名</span>&nbsp;&nbsp;{{bsi.instanceName}}
