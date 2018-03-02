@@ -131,4 +131,6 @@ angular.module('basic.resource', ['ngResource']).factory('role', ['$resource', '
     tenantId: '@tenantId',
     serviceInstanceName: '@serviceInstanceName'
   }, {});
+}]).factory('ocdpservices', ['$resource', 'GLOBAL', function ($resource, GLOBAL) {
+     return $resource(GLOBAL.host + '/ocdp/services', {}, {});
 }]);

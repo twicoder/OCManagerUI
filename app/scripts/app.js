@@ -66,7 +66,7 @@ angular.module('basic', [
 ).constant('INSTANCES', {
   "hbase": {
     "name": "实例名称",
-    "keys" : ['cuzBsiName'], 'REQUEST_SIZE', 'REQUEST_NUMBER'],
+    "keys" : ['cuzBsiName','REQUEST_SIZE','REQUEST_NUMBER'],
     "cuzBsiName": {
       "name": "Namespace名称"
     },
@@ -76,7 +76,7 @@ angular.module('basic', [
       "type": "inputGroup",
       "unit": "DAYS",
       "typeInputs": [
-        "DAYS"," HOURS", "MINUTES", "SECONDS","MILLISECONDS","MICROSECONDS","NANOSECONDS"
+        "DAYS"," HOURS","MINUTES","SECONDS","MILLISECONDS","MICROSECONDS","NANOSECONDS"
       ]
     },
     "REQUEST_NUMBER": {
@@ -84,7 +84,7 @@ angular.module('basic', [
       "type": "inputGroup",
       "unit": "DAYS",
       "typeInputs": [
-        "DAYS"," HOURS", "MINUTES", "SECONDS","MILLISECONDS","MICROSECONDS","NANOSECONDS"
+        "DAYS"," HOURS","MINUTES","SECONDS","MILLISECONDS","MICROSECONDS","NANOSECONDS"
       ]
     }
   },
