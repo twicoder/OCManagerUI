@@ -147,7 +147,7 @@ angular.module('basic')
             item.servesList = [];
           }
           angular.forEach(onlyserve, function (list) {
-            if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
+            if (item.serviceName.toUpperCase() === list.serviceName.toUpperCase()) {
               item.servesList.push(list);
             }
           });
@@ -170,7 +170,7 @@ angular.module('basic')
         service.query(function (data) {
           $scope.servesArr = [];
           angular.forEach(data, function (item) {
-            let thisobj = {serviceTypeName: item.servicename, servesList: []};
+            let thisobj = {serviceName: item.servicename, servesList: []};
             $scope.servesArr.push(thisobj);
           });
           getTenantServe(node);
@@ -379,7 +379,7 @@ angular.module('basic')
           $scope.servesArrs = [];
           $scope.newServeArrs = [];
           angular.forEach(data, function (item) {
-            let thisobj = {serviceTypeName: item.servicename, servesList: [], isshow: false};
+            let thisobj = {serviceName: item.servicename, servesList: [], isshow: false};
             $scope.servesArrs.push(thisobj);
           });
           angular.forEach($scope.servesArrs, function (item) {
@@ -387,7 +387,7 @@ angular.module('basic')
               item.servesList = [];
             }
             angular.forEach(bsis, function (list) {
-              if (item.serviceTypeName.toUpperCase() === list.serviceTypeName.toUpperCase()) {
+              if (item.serviceName.toUpperCase() === list.serviceName.toUpperCase()) {
                 item.servesList.push(list);
               }
             });
@@ -407,20 +407,20 @@ angular.module('basic')
           $scope.sletr = [];
           let servicenames = [];
           angular.forEach(bsis, function (bsi) {
-            servicenames.push(bsi.serviceTypeName);
+            servicenames.push(bsi.serviceName);
             bsi.isshow = false;
           });
           servicenames = servicenames.unique();
           angular.forEach(servicenames, function (servicename) {
             $scope.sletr.push({
-              serviceTypeName: servicename,
+              serviceName: servicename,
               isshow: false,
               servesList: []
             });
           });
           angular.forEach(bsis, function (bsi) {
             angular.forEach($scope.sletr, function (serve) {
-              if (serve.serviceTypeName === bsi.serviceTypeName) {
+              if (serve.serviceName === bsi.serviceName) {
                 serve.servesList.push(bsi);
               }
             });
@@ -447,10 +447,10 @@ angular.module('basic')
                         }
                         bsmap[bs.spec.name] = planInfo;
                        });
-                       item.ziyuan.push({key: j, value: quota, tool:bsmap[items.serviceTypeName][j]});
+                       item.ziyuan.push({key: j, value: quota, tool:bsmap[items.serviceName][j]});
                     });
 //                    item.ziyuan.push({key: j, value: quota});
-//                    item.ziyuan.push({key: j, value: quota,tool:$scope.bsmap[items.serviceTypeName.toLowerCase()][j]});
+//                    item.ziyuan.push({key: j, value: quota,tool:$scope.bsmap[items.serviceName.toLowerCase()][j]});
                   }
                 });
               }
