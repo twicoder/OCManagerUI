@@ -10,7 +10,9 @@
     <ul class="sv-wrop" ng-show="svList">
       <li class="sv-list" ng-class="{'svActive':svActive == $index}" ng-repeat="item in data"
           ng-click="checkSv(item.metadata.name,$index)">
-        <img ng-src="./images/serviceList/{{item.spec.metadata.type | lowerCase}}.png" err-src="./images/serviceList/{{item.metadata.name | lowerCase}}.png ">
+        <!--<img ng-src="./images/serviceList/{{item.spec.metadata.type | lowerCase}}.png" err-src="./images/serviceList/{{item.metadata.name | lowerCase}}.png ">-->
+        <img ng-if="!item.spec.metadata.type" src="./images/serviceList/{{item.metadata.name | lowerCase}}.png" >
+        <img ng-if="item.spec.metadata.type" src="./images/serviceList/{{item.spec.metadata.type | lowerCase}}.png" >
         <div class="sv-name">{{item.metadata.name}}</div>
       </li>
     </ul>
