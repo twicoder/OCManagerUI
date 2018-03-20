@@ -121,7 +121,7 @@
             <div class="col-md-6">
               <input type="text"
                      onkeypress="if((event.keyCode > 31 && event.keyCode < 44) || (event.keyCode > 46 && event.keyCode < 48) || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97))event.returnValue = false;"
-                     ng-pattern="/^[a-zA-Z0-9]{1,28}$/"
+                     ng-pattern="/^[a-zA-Z0-9@\-\.]{1,28}$/"
                      class="form-control"
                      ng-model="stormConfig.name"
                      required>
@@ -133,8 +133,7 @@
             </div>
             <div class="col-md-6">
               <input type="text"
-                     onkeypress="if((event.keyCode > 31 && event.keyCode < 44) || (event.keyCode > 46 && event.keyCode < 48) || (event.keyCode > 57 && event.keyCode < 65) || (event.keyCode > 90 && event.keyCode < 97))event.returnValue = false;"
-                     ng-pattern="/^[a-zA-Z0-9]{1,28}$/"
+                     ng-pattern="/^[a-zA-Z0-9@\-\.]{1,28}$/"
                      class="form-control"
                      ng-model="stormConfig.principal"
                      required>
