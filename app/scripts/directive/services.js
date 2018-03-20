@@ -795,10 +795,10 @@ angular.module('basic.services', ['ngResource'])
                 }
               }
               if($scope.stormConfig && $scope.stormConfig.stormEnable){
-                bsiobj.spec.provisioning.parameters['kafkaclient-service-name'] = $scope.stormConfig.name;
-                bsiobj.spec.provisioning.parameters['kafkaclient-principal'] = $scope.stormConfig.principal;
-                bsiobj.spec.provisioning.parameters['kafkaclient-keytab'] = $scope.stormConfig.keytab?$window.btoa($scope.stormConfig.keytab):undefined;
-                bsiobj.spec.provisioning.parameters['kafkaclient-krb5conf'] = $scope.stormConfig.krb5conf?$window.btoa($scope.stormConfig.krb5conf):undefined;
+                bsiobj.spec.provisioning.parameters['ATTR_kafkaclient-service-name'] = $scope.stormConfig.name;
+                bsiobj.spec.provisioning.parameters['ATTR_kafkaclient-principal'] = $scope.stormConfig.principal;
+                bsiobj.spec.provisioning.parameters['ATTR_kafkaclient-keytab'] = $scope.stormConfig.keytab?$window.btoa(unescape(encodeURIComponent($scope.stormConfig.keytab))):undefined;
+                bsiobj.spec.provisioning.parameters['ATTR_kafkaclient-krb5conf'] = $scope.stormConfig.krb5conf?$window.btoa($scope.stormConfig.krb5conf):undefined;
               }
               creatbsi.post({id: id}, bsiobj, function () {
                 $uibModalInstance.close(true);
