@@ -674,8 +674,8 @@ angular.module('basic.services', ['ngResource'])
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
         size: 'lg',
-        controller: ['$scope', '$uibModalInstance', 'creatbsi', 'INSTANCES', '_',
-          function ($scope, $uibModalInstance, creatbsi, INSTANCES, _) {
+        controller: ['$scope', '$uibModalInstance', 'creatbsi', 'INSTANCES', '_', '$window',
+          function ($scope, $uibModalInstance, creatbsi, INSTANCES, _, $window) {
             $scope.data = data;
             $scope.svList = true;
             $scope.svName = 'HBase';
@@ -683,6 +683,9 @@ angular.module('basic.services', ['ngResource'])
             $scope.planIdIndex = 0;
             $scope.planCustomizes = [];
             $scope.instancesList = INSTANCES.hbase;
+            $scope.stormConfig = {
+              stormEnable : 0
+            };
             $scope.nextDiv = function () {
               $scope.svList = !$scope.svList;
             };
@@ -729,6 +732,13 @@ angular.module('basic.services', ['ngResource'])
               item.unit = value;
             };
             $scope.set_use = false;
+            $scope.upload = function(file, name){
+              let reader = new FileReader();
+              reader.onload = function(){
+                $scope.stormConfig[name] = reader.result;
+              };
+              reader.readAsText(file);
+            };
             $scope.ok = function () {
               let obj = {};
 
@@ -783,6 +793,12 @@ angular.module('basic.services', ['ngResource'])
                     bsiobj.spec.provisioning.parameters[item] = $scope.instancesList[item].value;
                   }
                 }
+              }
+              if($scope.stormConfig && $scope.stormConfig.stormEnable){
+                bsiobj.spec.provisioning.parameters['kafkaclient-service-name'] = $scope.stormConfig.name;
+                bsiobj.spec.provisioning.parameters['kafkaclient-principal'] = $scope.stormConfig.principal;
+                bsiobj.spec.provisioning.parameters['kafkaclient-keytab'] = $scope.stormConfig.keytab?$window.btoa($scope.stormConfig.keytab):undefined;
+                bsiobj.spec.provisioning.parameters['kafkaclient-krb5conf'] = $scope.stormConfig.krb5conf?$window.btoa($scope.stormConfig.krb5conf):undefined;
               }
               creatbsi.post({id: id}, bsiobj, function () {
                 $uibModalInstance.close(true);
