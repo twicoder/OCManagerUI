@@ -142,7 +142,13 @@
                           <label>属性:</label>
                           <div class="row add-myserve" ng-repeat="attr in arr._attrs">
                             <div class="col-md-2">{{attr.key}}</div>
-                            <div class="col-md-10">
+                            <div class="col-md-10" ng-if="attr.key === 'kafkaclient-keytab' || attr.key === 'kafkaclient-krb5conf'">
+                              <div class="use-num-wrop">
+                                <input class="no-monetary" type="file" ngf-select="upload($file, 'keytab', attr)" ng-if="arr.isde">
+                                <input class="no-monetary" ng-model="attr.value" ng-if="!arr.isde" disabled>
+                              </div>
+                            </div>
+                            <div class="col-md-10" ng-if="attr.key !== 'kafkaclient-keytab' && attr.key !== 'kafkaclient-krb5conf'">
                               <div class="use-num-wrop">
                                 <input class="no-monetary" ng-model="attr.value" type="text" ng-disabled="!arr.isde">
                               </div>
