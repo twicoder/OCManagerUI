@@ -454,9 +454,19 @@ angular.module('basic')
                 angular.forEach(obj, function (attr, j) {
                   if(_.startsWith(j, "ATTR_")) {
                     let k = j.substring(5);
+                    if(_.startsWith(k, "kafkaclient")){
+                      item.enableKerberos = 1;
+                    }
                     item._attrs.push({key: k, value: attr});
                   }
                 });
+                if(!item.enableKerberos && item.serviceTypeName.toLowerCase() === 'storm'){
+                  item.enableKerberos = 0;
+                  item._attrs.push({key: 'kafkaclient-service-name', value: undefined});
+                  item._attrs.push({key: 'kafkaclient-principal', value: undefined});
+                  item._attrs.push({key: 'kafkaclient-keytab', value: undefined});
+                  item._attrs.push({key: 'kafkaclient-krb5conf', value: undefined});
+                }
               }
             });
           });
@@ -647,7 +657,12 @@ angular.module('basic')
         });
         angular.forEach(bsi._attrs, function (item) {
           putobj.parameters["ATTR_" + item.key] = item.value;
+          if(_.startsWith(item.key, 'kafkaclient') && bsi.enableKerberos === 0){
+            delete putobj.parameters["ATTR_" + item.key];
+            item.value = '';
+          }
         });
+
         updateinstance.put({id: $scope.nodeId, instanceName: bsi.instanceName}, putobj, function () {
             tenantbsi.query({id: $scope.nodeId}, function (bsis) {
               let bsitems = [];
