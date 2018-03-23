@@ -121,34 +121,58 @@
                     </div>
                   </div>
                   <div class="resource-list" ng-repeat="arr in item.servesList" ng-if="item.isshow">
-                    <div>
+                    <ng-form name="myForm">
                       <div class="row resource-top" style="padding:10px;">
                         <div class="col-md-10"
                              style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;">
-                          <span ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
-                                ng-click="svToggle(timeIndex,$index,arr)" style="float: left;margin-right:10px;">
+                            <span ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
+                                  ng-click="svToggle(timeIndex,$index,arr)" style="float: left;margin-right:10px;">
 
-                          </span>
+                            </span>
                           {{arr.instanceName}}
                         </div>
                         <div class="col-md-2" style="text-align: right;font-size: 16px;">
                           <span style="" class="delbsi" ng-click="delbsied(arr.instanceName)">删除</span>
                           <span ng-if="!arr.isde" style="" class="editSv" ng-click="editSv(timeIndex,$index)">编辑</span>
-                          <span ng-if="arr.isde" class="editSv" ng-click="saveSv(timeIndex,$index,arr)">保存</span>
+                          <span ng-if="arr.isde" class="editSv"
+                                ng-click = "myForm.$valid && saveSv(timeIndex,$index,arr)">保存</span>
                         </div>
                       </div>
                       <div class="list-con" ng-show="arr.isshow">
-                        <div class="row" ng-if="arr._attrs.length > 0" style="margin-bottom: 30px;">
+                        <div class="row" ng-if="arr.serviceTypeName.toLowerCase() === 'storm'"
+                             style="margin-bottom: 30px;">
+                          <label>属性:</label>
+                          <div class="row" style="margin-top: 20px;">
+                            <div style="margin-left: 10px;">
+                              <input type="checkbox" ng-model="arr.enableKerberos" ng-true-value="1" ng-false-value="0"
+                                     ng-disabled="!arr.isde"> 配置Kerberos
+                            </div>
+                          </div>
+                          <div class="row add-myserve" ng-repeat="attr in arr._attrs" ng-if="!!arr.enableKerberos">
+                            <div class="col-md-2">{{attr.key}}<i class="modal_red">*</i></div>
+                            <div class="col-md-10"
+                                 ng-if="attr.key === 'kafkaclient-keytab' || attr.key === 'kafkaclient-krb5conf'">
+                              <div class="use-num-wrop">
+                                <input class="no-monetary part-input" ng-model="attr.value" ng-show="!arr.isde" required disabled>
+                                <input class="no-monetary" type="file" ngf-select="upload($file, 'keytab', attr)"
+                                       ng-show="arr.isde">
+                              </div>
+                            </div>
+                            <div class="col-md-10"
+                                 ng-if="attr.key !== 'kafkaclient-keytab' && attr.key !== 'kafkaclient-krb5conf'">
+                              <div class="use-num-wrop">
+                                <input class="no-monetary" ng-model="attr.value" type="text" ng-disabled="!arr.isde"
+                                       ng-pattern="/^[a-zA-Z0-9@\-\.]{1,28}$/" required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row" ng-if="arr._attrs.length > 0 && arr.serviceTypeName.toLowerCase() !== 'storm'"
+                             style="margin-bottom: 30px;">
                           <label>属性:</label>
                           <div class="row add-myserve" ng-repeat="attr in arr._attrs">
                             <div class="col-md-2">{{attr.key}}</div>
-                            <div class="col-md-10" ng-if="attr.key === 'kafkaclient-keytab' || attr.key === 'kafkaclient-krb5conf'">
-                              <div class="use-num-wrop">
-                                <input class="no-monetary" type="file" ngf-select="upload($file, 'keytab', attr)" ng-if="arr.isde">
-                                <input class="no-monetary" ng-model="attr.value" ng-if="!arr.isde" disabled>
-                              </div>
-                            </div>
-                            <div class="col-md-10" ng-if="attr.key !== 'kafkaclient-keytab' && attr.key !== 'kafkaclient-krb5conf'">
+                            <div class="col-md-10">
                               <div class="use-num-wrop">
                                 <input class="no-monetary" ng-model="attr.value" type="text" ng-disabled="!arr.isde">
                               </div>
@@ -166,8 +190,11 @@
                             </div>
                           </div>
                         </div>
+                        <div class="row" ng-if="!myForm.$valid && myForm.$dirty" style="margin-top: 20px;color: red;margin-left: 10px;">
+                          表单检查错误
+                        </div>
                       </div>
-                    </div>
+                    </ng-form>
                   </div>
                 </div>
                 <div style="margin:20px 0px;">
