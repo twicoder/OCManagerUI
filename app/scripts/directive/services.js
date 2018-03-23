@@ -699,13 +699,15 @@ angular.module('basic.services', ['ngResource'])
               }else{
                 $scope.instancesList = INSTANCES[lowerCaseName];
               }
-              $scope.instancesList['cuzBsiName'].value = '';
 
-              let initCustomize = $scope.data[idx].spec.plans[0].metadata.customize;
+              if(typeof($scope.instancesList['cuzBsiName']) !== "undefined"){
+                $scope.instancesList['cuzBsiName'].value = '';
+                let initCustomize = $scope.data[idx].spec.plans[0].metadata.customize;
 
-              for (let key in initCustomize) {
-                let elem = {"name": key, "value": initCustomize[key].default.toString(), "customizeValue": initCustomize[key]};
-                $scope.planCustomizes.push(elem);
+                for (let key in initCustomize) {
+                  let elem = {"name": key, "value": initCustomize[key].default.toString(), "customizeValue": initCustomize[key]};
+                  $scope.planCustomizes.push(elem);
+                }
               }
 
             };
