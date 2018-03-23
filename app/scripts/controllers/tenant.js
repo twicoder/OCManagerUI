@@ -3,8 +3,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
-    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
+  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_', '$window',
+    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _, $window) {
       Array.prototype.unique = function () {
         let res = [this[0]];
         for (let i = 1; i < this.length; i++) {
@@ -489,6 +489,18 @@ angular.module('basic')
             classify(bsis);
           });
         });
+      };
+      $scope.upload = function(file, name, attr){
+        let reader = new FileReader();
+        reader.onload = function(){
+          let result = reader.result + '';
+          if(attr.key === 'kafkaclient-keytab'){
+            attr.value = result ? $window.btoa(unescape(encodeURIComponent(result))) : undefined;
+          }else if(attr.key === 'kafkaclient-krb5conf') {
+            attr.value = result ? $window.btoa(result) : undefined;
+          }
+        };
+        reader.readAsText(file);
       };
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
