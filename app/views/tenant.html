@@ -151,7 +151,7 @@
                           <div class="row add-myserve" ng-repeat="attr in arr._attrs" ng-if="!!arr.enableKerberos">
                             <div class="col-md-2">{{attr.key}}<i class="modal_red">*</i></div>
                             <div class="col-md-10"
-                                 ng-if="attr.key === 'kafkaclient-keytab' || attr.key === 'kafkaclient-krb5conf'">
+                                 ng-if="attr.key === 'kafkaclient-keytab' || attr.key === 'krb5conf'">
                               <div class="use-num-wrop">
                                 <input class="no-monetary part-input" ng-model="attr.value" ng-show="!arr.isde" required disabled>
                                 <input class="no-monetary" type="file" ngf-select="upload($file, 'keytab', attr)"
@@ -159,7 +159,7 @@
                               </div>
                             </div>
                             <div class="col-md-10"
-                                 ng-if="attr.key !== 'kafkaclient-keytab' && attr.key !== 'kafkaclient-krb5conf'">
+                                 ng-if="attr.key !== 'kafkaclient-keytab' && attr.key !== 'krb5conf'">
                               <div class="use-num-wrop">
                                 <input class="no-monetary" ng-model="attr.value" type="text" ng-disabled="!arr.isde"
                                        ng-pattern="/^[a-zA-Z0-9@\-\.]{1,28}$/" required>
