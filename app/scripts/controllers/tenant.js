@@ -465,7 +465,7 @@ angular.module('basic')
                   item._attrs.push({key: 'kafkaclient-service-name', value: undefined});
                   item._attrs.push({key: 'kafkaclient-principal', value: undefined});
                   item._attrs.push({key: 'kafkaclient-keytab', value: undefined});
-                  item._attrs.push({key: 'kafkaclient-krb5conf', value: undefined});
+                  item._attrs.push({key: 'krb5conf', value: undefined});
                 }
               }
             });
@@ -505,12 +505,12 @@ angular.module('basic')
         reader.onload = function(){
           let result = reader.result + '';
           if(attr.key === 'kafkaclient-keytab'){
-            attr.value = result ? $window.btoa(unescape(encodeURIComponent(result))) : undefined;
-          }else if(attr.key === 'kafkaclient-krb5conf') {
+            attr.value = result ? $window.btoa(result) : undefined;
+          }else if(attr.key === 'krb5conf') {
             attr.value = result ? $window.btoa(result) : undefined;
           }
         };
-        reader.readAsText(file);
+        reader.readAsBinaryString(file);
       };
       $scope.showSelected = function (node) {
         ischengyuan(node.id);
