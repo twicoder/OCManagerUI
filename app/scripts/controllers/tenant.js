@@ -657,7 +657,7 @@ angular.module('basic')
         });
         angular.forEach(bsi._attrs, function (item) {
           putobj.parameters["ATTR_" + item.key] = item.value;
-          if(_.startsWith(item.key, 'kafkaclient') && bsi.enableKerberos === 0){
+          if((_.startsWith(item.key, 'kafkaclient') || item.key === 'krb5conf') && bsi.enableKerberos === 0){
             delete putobj.parameters["ATTR_" + item.key];
             item.value = '';
           }
