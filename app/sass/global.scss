@@ -1,0 +1,79 @@
+// Global colors
+$color-main: #47B2FB;
+$color-green: #00CF9B;
+$color-yellow: #F8A900;
+$color-red: #FB6362;
+// Font
+$title-size-default: 16px;
+$title-color-default: #475669;
+$font-size-default: 14px;
+$font-color-default: #475669;
+$font-color-lightgrey: #A2B0C4;
+$font-color-black: #1F2D3D;
+$font-color-darkgrey: #475669;
+$font-color-white: #FFFFFF;
+// Background & border color
+$background-color: #F9FAFC;
+$border-color: #E0E6ED;
+// Navbar
+$navbar-background-color: #303643;
+@mixin navbar-font {
+  font-family: MicrosoftYaHei;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+@mixin navbar-active {
+  background: #242A39;
+  box-shadow: inset 0 0 2px 0 #1C212E;
+}
+// Sidebar
+$sidebar-background-color: #EBEDF3;
+// Input
+@mixin input-default {
+  background: #FFFFFF;
+  border: 1px solid #CCD5E0;
+  border-radius: 4px;
+}
+@mixin input-hover {
+  background: #FFFFFF;
+  border: 1px solid #47B2FB;
+  border-radius: 4px;
+}
+@mixin input-active {
+  background: #FFFFFF;
+  border: 1px solid #47B2FB;
+  box-shadow: 0 0 2px 0 #47B2FB;
+  border-radius: 4px;
+}
+// Checkbox
+@mixin checkbox-default {
+  width: 14px;
+  height: 14px;
+  background: #FFFFFF;
+  border: 1px solid #CCD5E0;
+  border-radius: 2px;
+}
+@mixin checkbox-hover {
+  width: 14px;
+  height: 14px;
+  background: #FFFFFF;
+  border: 1px solid #47B2FB;
+  border-radius: 2px;
+}
+@mixin checkbox-actived {
+  width: 14px;
+  height: 14px;
+  font-family: uex-icon;
+  font-size: 10px;
+  color: #FFFFFF;
+  letter-spacing: 0;
+}
+// Button
+@mixin button-default {
+  background: #47B2FB;
+  border-radius: 4px;
+}
+@mixin button-hover {
+  background: #98D4FD;
+  border-radius: 4px;
+}

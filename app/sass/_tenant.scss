@@ -1,6 +1,118 @@
+@import "global.scss";
 $smbg: #c256fc !default;
 
 .nav-tenant {
+  padding: 0;
+  margin: 0;
+  table {
+    width: 100%;
+    height: 100%;
+    border: none;
+    tr {
+      padding: 0;
+      margin: 0;
+      border: none;
+    }
+    tr td {
+      padding: 0;
+      margin: 0;
+      border: none;
+    }
+    td.sidebar {
+      width: 20%;
+      background: $sidebar-background-color;
+      vertical-align: top;
+      margin-top: 4px;
+      .tree-classic {
+        background: $sidebar-background-color;
+        font-size: $title-size-default;
+        padding: 0;
+        li {
+          position: relative;
+          i {
+            position: absolute;
+            top: 18px;
+            left: 30px;
+            z-index: 100;
+            width: 20px;
+            height: 20px;
+          }
+          i.tree-branch-head {
+            -webkit-background-size: 20px !important;
+            background-size: 20px !important;
+            background-position: 0px 0px !important;
+          }
+          div {
+            display: block;
+            width: 100%;
+            height: 100%;
+            padding-left: 60px;
+            border-left:4px solid #ebebe9;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+          div:hover {
+            color: #ce1515;
+              .del-ten{
+                display:inline-block;
+              }
+          }
+          div.tree-selected {
+            background: #fff;
+            font-weight: normal;
+            border-left: 4px solid #f39c12;
+          }
+          padding: 0;
+          line-height: 50px;
+          ul {
+            font-size: 14px;
+            background: #f3f3f2;
+            li {
+              div {
+                padding-left: 90px !important;
+
+              }
+              i {
+                left: 55px !important;
+                top: 16px !important;
+              }
+              ul {
+                li {
+                  div {
+                    padding-left: 120px !important;
+
+                  }
+                  i {
+                    left: 85px !important;
+                    top: 18px !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+        li.tree-expanded {
+          i.tree-branch-head {
+            background-image: url('../images/folder.png');
+          }
+        }
+        li.tree-collapsed {
+          i.tree-branch-head {
+            background-image: url('../images/folder-closed.png');
+          }
+        }
+        li.tree-leaf {
+          i.tree-leaf-head {
+            background: none;
+          }
+        }
+      }
+    }
+    td.main {
+      width: 80%;
+      vertical-align: top;
+    }
+  }
   :focus {
     outline: none;
   }
@@ -47,111 +159,6 @@ $smbg: #c256fc !default;
     > div:nth-child(4n+1) {
       //padding-left:0;
     }
-  }
-
-  padding: 0;
-  margin: 0;
-  .tree-classic {
-    background: #ebebe9;
-    font-size: 16px;
-    padding: 0;
-    li {
-      position: relative;
-      i {
-        position: absolute;
-        top: 18px;
-        left: 30px;
-        z-index: 100;
-        width: 20px;
-        height: 20px;
-      }
-      i.tree-branch-head {
-        -webkit-background-size: 20px !important;
-        background-size: 20px !important;
-        background-position: 0px -2px !important;
-      }
-      div {
-        display: block;
-        width: 100%;
-        height: 100%;
-        padding-left: 60px;
-        border-left:4px solid #ebebe9;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-      div:hover {
-        color: #ce1515;
-          .del-ten{
-             display:inline-block;
-          }
-      }
-      div.tree-selected {
-        background: #fff;
-        font-weight: normal;
-        border-left: 4px solid #f39c12;
-      }
-      padding: 0;
-      line-height: 50px;
-      ul {
-        font-size: 14px;
-        background: #f3f3f2;
-        li {
-          div {
-            padding-left: 90px !important;
-
-          }
-          i {
-            left: 55px !important;
-            top: 16px !important;
-          }
-          ul {
-            li {
-              div {
-                padding-left: 120px !important;
-
-              }
-              i {
-                left: 85px !important;
-                top: 18px !important;
-              }
-              ul {
-                li {
-                  div {
-                    //padding-left: 120px !important;
-
-                  }
-                  i {
-                    //left: 85px !important;
-                    //top: 18px !important;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    li.tree-expanded {
-      i.tree-branch-head {
-        background-image: url('../images/folder.png');
-      }
-    }
-    li.tree-collapsed {
-      i.tree-branch-head {
-        background-image: url('../images/folder-closed.png');
-      }
-    }
-    li.tree-leaf {
-      i.tree-leaf-head {
-        //background-image: url('../images/file.png');
-        //-webkit-background-size: 20px !important;
-        //background-size: 20px !important;
-        //background-position: 0px -2px !important;
-        background: none;
-      }
-    }
-
   }
 
   .right-top {

@@ -21,9 +21,7 @@
         <div><input ng-model="usermessage.password" name="password" type="password" class="login-input mgt" required>
         </div>
         <div class="mgt rem-me">
-          <span ng-if="!me" class="ta-cd no-me " ng-click="mark(2)"></span>
-          <span ng-if="me" class="ta-cd yes-me" ng-click="mark(1)"></span>
-          记住用户名
+          <input type="checkbox" class="rem-me-ckbox" ng-model="me" ng-click="mark()"></input>&nbsp;记住用户名
         </div>
         <button class="login-btn mgt" ng-click="frm.$valid && gologin()">登录</button>
       </div>

@@ -12,9 +12,12 @@ angular.module('basic')
       } else {
         $scope.me = false;
       }
-      $scope.mark = function (res) {
-        $scope.me = res !== 1;
-        Cookie.set('jizhu', 'true', 24 * 3600 * 1000 * 30);
+      $scope.mark = function () {
+        if (angular.isDefined($scope.me) && $scope.me) {
+          Cookie.set('jizhu', 'true', 24 * 3600 * 1000 * 30);
+        } else {
+          Cookie.set('jizhu', 'false', 24 * 3600 * 1000 * 30);
+        }
       };
       $scope.loginerr = false;
       $scope.$watch('usermessage', function (n, o) {
