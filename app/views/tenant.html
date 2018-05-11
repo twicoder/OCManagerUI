@@ -28,7 +28,7 @@
               <div class="row project-list">
                 <div class="col-md-3" ng-repeat="child in childrens">
                   <div>
-                    <img src="./images/role_company.png" alt="">
+                    <img src="./images/user-listicon.png" alt="">
                     <p>{{child.name}}</p>
                   </div>
                 </div>
@@ -39,14 +39,14 @@
               <div class="row project-list">
                 <div class="col-md-3" ng-repeat="child in childrens">
                   <div>
-                    <img src="./images/role_company.png" alt="">
+                    <img src="./images/user-listicon.png" alt="">
                     <p>{{child.name}}</p>
                   </div>
                 </div>
               </div>
             </li>
             <li>
-              <ul class="tenant-serve-list basic_block">
+              <ul class="basic_block">
                 <li>
                   <div>租户名称</div>
                   <div>{{nodeIf.name}}</div>
@@ -55,12 +55,7 @@
                   <div>租户描述</div>
                   <div>{{nodeIf.description}}</div>
                 </li>
-                <!--<li>-->
-                <!--<div>租户其他信息</div>-->
-                <!--<div>{{nodeIf.description}}</div>-->
-                <!--</li>-->
               </ul>
-
             </li>
             <li ng-show="bsis.length">
               <ul class="tenant-serve-list">
@@ -161,10 +156,8 @@
                 </div>
                 <div style="margin:20px 0px;">
                   <botton class="add-instance" ng-click="addser(item.serviceTypeName,item)">添加实例</botton>
-
                 </div>
               </div>
-
               <!--资源管理资源管理资源管理-->
             </li>
             <li>
@@ -181,12 +174,11 @@
                   </div>
                   <div class="resource-list" ng-repeat="arr in item.servesList" ng-if="item.isshow">
                     <div>
-                      <div class="row resource-top" style="padding:20px;">
-                        <div class="col-md-10"
-                             style="text-align: left;font-size: 16px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;">
+                      <div class="row resource-top">
+                        <div class="col-md-10">
                           {{arr.instanceName}}
                         </div>
-                        <div class="col-md-2" style="text-align: right;font-size: 16px;">
+                        <div class="col-md-2" style="text-align: right;">
                           <span ng-class="{'rotate':!arr.isshow, 'check-btn': arr.isshow}"
                                 ng-click="toggleServeList(timeIndex,$index,arr)">
 
@@ -207,8 +199,6 @@
               </div>
             </li>
             <li>
-
-
               <div class="user-authorize">
                 <!--<span ng-click="addBsLimit()">添加服务限定</span>-->
               </div>
@@ -222,7 +212,7 @@
                       {{timeIndex}}
                     </div>
                     <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                      <span ng-if="!item.zt.isde" style="" class="editSv" ng-click="editBsLimit(timeIndex)">编辑</span>
+                      <span ng-if="!item.zt.isde" class="editSv" ng-click="editBsLimit(timeIndex)">编辑</span>
                       <span ng-if="item.zt.isde" class="editSv" ng-click="saveBsLimit(timeIndex,item)">保存</span>
                     </div>
                   </div>
@@ -242,8 +232,6 @@
                   </div>
                 </div>
               </div>
-
-
             </li>
             <li ng-show="isrold">
               <div class="user-authorize" ng-if="!ismember"><span ng-click="userAuthorize()">用户授权</span></div>
@@ -263,7 +251,6 @@
                        ng-click="updataUser(item)">修改</a>
                     <a href="javascript:void(0);" ng-click="delUser(item.userId,item.userName)">删除</a>
                   </div>
-
                 </li>
               </ul>
               <div class="page-style" ng-if="grid.usertotal>10">

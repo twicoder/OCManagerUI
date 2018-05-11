@@ -103,8 +103,8 @@ $panel-header-color: #CCD5E0;
 }
 // Collapse
 @mixin collapse-default {
-  background: #FFFFFF;
-  border: 1px solid $font-color-lightgrey;
+  background: #F5F6F9;
+  border: 1px solid #CCD5E0;
   color: $font-color-black;
   font-size: $title-size-default;
   border-radius: 4px;
