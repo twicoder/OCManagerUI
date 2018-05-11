@@ -645,12 +645,20 @@ table a{
   line-height: 30px;
   text-align: center;
   color: #fff;
-  background: $smbg;
-  cursor: pointer;
+  @include button-default;
   margin-right:20px;
+  cursor: pointer;
+  &:hover {
+    @include button-hover;
+  }
 }
 .modal-footer .btn-error{
-  color:#f00;font-size:14px;display:inline-block;margin-right:20px;
+  color: $color-red;
+  font-size: $font-size-default;
+  display: inline-block;
+  margin-right: 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 .confirm-select{
   width: 75%;
@@ -774,6 +782,7 @@ table a{
 }
 .del-ten:hover{
   background:url("../images/images_12.png") no-repeat;
+  cursor: pointer;
 
 }
 /*错误提示*/
