@@ -4,20 +4,17 @@
       <div class="col-lg-12">
         <div class="navbar-header">
           <a ui-sref="console.tenant" class="navbar-brand logo">
-            <img src="./images/logo-white.png" style="height: 41px;width:41px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
-            <img src="./images/logo.png" style="height: 41px;width:282px" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
+            <img src="./images/logo-white.png" alt="橘云 多租户管控平台" title="橘云 多租户管控平台">
+            <font>多租户管控平台</font>
           </a>
         </div>
-
         <div class="collapse navbar-collapse" id="js-navbar-collapse">
-          <form style="margin-bottom: 0;padding-bottom: 0;padding-top: 18px;" class="navbar-form navbar-right">
-            <button style="color: #0a0a0a;box-shadow:none;outline: none" class="dropdown-toggle btn btn-default-tmp"
-                    data-toggle="dropdown" role="button" aria-haspopup="true"
-                    aria-expanded="false">
+          <form class="navbar-form navbar-right">
+            <button class="dropdown-toggle btn btn-default-tmp" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <span>{{loginname}}</span>
             </button>
             <ul class="dropdown-menu">
-              <li><a href="" ng-click="logout()">登出</a></li>
+              <li><a href="javascript:void(0)" ng-click="logout()">登出</a></li>
             </ul>
           </form>
           <ul class="nav navbar-nav navbar-right">
@@ -26,11 +23,10 @@
                 <span>下载keytab文件</span>
               </a>
             </li>
-            <li ng-repeat="item in naletr" ng-class="{'bdb':item.bdb,'active':idx == $index}"
+            <li ng-repeat="item in naletr" ng-class="{'bdb':item.bdb,'active':idx === $index}"
                 ng-click="changeUrl(item.url,$index)"
                 ng-mouseover="addBdb($index)"
-                ng-mouseleave="removeBdb($index)"
-            >
+                ng-mouseleave="removeBdb($index)">
               <a>
                 <span>{{item.name}}</span>
               </a>
@@ -42,6 +38,6 @@
   </div>
 </div>
 
-<div class="container-fluid" style="padding-top:40px;background:#fafafa;">
+<div class="container-fluid view-container">
   <div ui-view></div>
 </div>

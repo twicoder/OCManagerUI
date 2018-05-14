@@ -434,7 +434,7 @@ angular.module('basic')
                 angular.forEach(obj, function (quota, j) {
                   if (j !== "instance_id" && j !== "cuzBsiName") {
                     // build tool tips form df automatically
-                    let bsmap = {}
+                    let bsmap = {};
                     getdfbs.get(function (data) {
                       angular.forEach(data.items, function (bs) {
                         let planInfo = {};

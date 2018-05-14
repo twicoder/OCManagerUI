@@ -1,13 +1,108 @@
 // bower:scss
 // endbower
-//@import "role";
+@import "global.scss";
 @import "service";
 @import "tenant";
 @import "user";
 @import "login";
-//卡片标题颜色、textarea字体颜色
-$titcolor:#333 !default;//定义全局变量
-$smbg:#c256fc!default;
+// 局部变量
+$titcolor: #333 !default;
+$smbg: #c256fc!default;
+
+/*
+ * ** Header Navbar ------------------------------------------------------------------------------ 
+ */
+
+.header {
+  padding: 0!important;
+  margin: 0!important;
+  .navbar-oc {
+    background: $navbar-background-color;
+    height: 55px;
+    margin-bottom: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    .navbar-nav {
+      li {
+        a {
+          @include navbar-font;
+          background-color: $navbar-background-color;
+          &:hover {
+            @include navbar-active;
+            color: $font-color-lightgrey;
+          }
+        }
+      }
+      li.active {
+        a {
+          @include navbar-active;
+        }
+      }
+      li.bdb {
+        border-bottom: 4px solid $color-main;
+      }
+    }
+    .nav {
+      li {
+        &:hover {
+          cursor: pointer;
+        } 
+      }
+    }
+    .navbar-form {
+      border-left: 1px solid #E0E6ED;
+      margin: 0;
+      padding: {
+        top: 10px;
+        bottom: 10px;
+        left: 14px;
+        right: 14px;
+      }
+      margin: {
+        left: 40px;
+      }
+      button {
+        color: $font-color-white;
+        box-shadow: none;
+        outline: none;
+      }
+    }
+  } // End of navbar-oc
+  .navbar-brand.logo {
+    overflow: hidden;
+    margin-left: 0!important;
+    padding: 8px 15px 5px;
+    height: auto;
+    img {
+      width: 40px;
+      height: auto;
+    }
+    font {
+      padding-left: 8px;
+      font-family: MicrosoftYaHei;
+      font-size: 16px;
+      color: #FFF;
+      letter-spacing: 0;
+      line-height: 36px;
+    }
+  }
+}
+/* ------------------------------------------- End of Navbar ------------------------------------------ */
+/*
+ * ** View Container ------------------------------------------------------------------------------------- 
+ */
+
+.view-container {
+  margin: {
+    top: 0;
+  }
+  font-size: $font-size-default;
+  color: $font-color-default;
+  background: $background-color;
+}
+/* ------------------------------------------- End of View Container ------------------------------------ */
+
 .set_top_tu{width:146px;height:146px;position:absolute;top:50%;left:50%;margin-left:-72px;margin-top:-72px;}
 body{font-family:"微软雅黑",Helvetica;}
 body{font-family:"微软雅黑",Helvetica;}
@@ -16,13 +111,12 @@ body{font-family:"微软雅黑",Helvetica;}
     background: none !important;
     border: none;
   }
-    .modal-close {
-      float: right;
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      background: url(../images/closenew2.png) no-repeat center;
-    }
+  .modal-close {
+    float: right;
+    width: 15px;
+    height: 15px;
+    background: url(../images/closenew2.png) no-repeat center;
+  }
 
 }
 
@@ -68,7 +162,8 @@ body{font-family:"微软雅黑",Helvetica;}
   padding:0;
 }
 body {
-  padding: 0;background:#fafafa;
+  padding: 0;
+  background: #F9FAFC;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -80,24 +175,13 @@ body {
 }
 
 /* Custom page header */
-.header {
-  //border-bottom: 1px solid #e5e5e5;
-  margin-bottom:0px!important;
 
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
-}
 
 /* Custom page footer */
 .footer {
   padding-top: 19px;
   color: #777;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #E0E6ED;
 }
 
 .container-narrow > hr {
@@ -107,7 +191,7 @@ body {
 /* Main marketing message and sign up button */
 .jumbotron {
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #E0E6ED;
 }
 
 /* Supporting marketing content */
@@ -145,9 +229,9 @@ body {
 
 /* Custom css*/
 .sidebar {
-  background-color: #f5f5f5;
-  border-top: 1px solid #e5e5e5;
-  border-right: 1px solid #e5e5e5;
+  background-color: #F9FAFC;
+  border-top: 1px solid #E0E6ED;
+  border-right: 1px solid #E0E6ED;
   padding: 20px;
 }
 
@@ -156,7 +240,7 @@ body {
 }
 
 .panel-oc {
-  border-color: #FFFFFF;
+  border-color: #E0E6ED;
 }
 
 .panel-oc > .panel-heading {
@@ -164,51 +248,19 @@ body {
   background-image: linear-gradient(to bottom, #f68b3e, #F68b3e);
 }
 /****************头部********************/
-.navbar-oc {
-  background:#f2f2f1;
-  height: 80px;
-  margin-bottom: 0px;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;
-}
 
-.navbar-oc .navbar-nav > li > a{
-  color: #666;
-  font-size: 16px;
-  font-weight: normal;
-  padding-top:30px;padding-bottom:25px;padding-left:20px;padding-right:20px;
-}
-
-.nav>li :hover {
-  cursor: pointer;
-}
-
-//.navbar-oc .navbar-nav > li > a:hover {
-//  color:#666;
-//  background:none;
-//  border-bottom:2px solid #f39c12;
-//}
-.bdb{
-  border-bottom:2px solid #f39c12;
-}
-
-.navbar-oc .navbar-nav > li.active{
-  background:none;
-
-  a{
-    color: #333;
-  }
-}
 .btn-default-tmp{background:none;color:#d5d5d5;border:0;padding:8px 12px;}
 .btn-default-tmp:hover, .btn-default-tmp:focus, .btn-default-tmp:active, .btn-default-tmp.active, .open .dropdown-toggle.btn-default-tmp{
   background:none;color:#d5d5d5;border:0;
 }
 
-.navbar-form{border-left:1px solid #dfdfdf;margin:0;padding-top:28px;padding-bottom:26px;margin-left:40px;padding-left:30px;margin-top:1px;margin-bottom:1px;}
+
 
 .set_text_ellipsis{white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;overflow: hidden;}
 .console_name p{margin-bottom:0;font-size:16px;color:$titcolor;display:block;width:100px;}
 /****************头部********************/
 .navbar-header .brand{
-  color: #666;
+  color: #FFFFFF;
   font-size: 16px;
 
 }
@@ -261,8 +313,8 @@ ul[dnd-list] .dndPlaceholder {
  * browsers we can use event.offsetY for this.
  */
 ul[dnd-list] li {
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: #F9FAFC;
+  border: 1px solid #E0E6ED;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
   display: block;
@@ -378,17 +430,17 @@ table a{
   background-color: #a00;
   box-shadow: 0 0 10px #888;
   left: -4.6em;
-  moz-box-shadow: 0 0 10px #888;
-  moz-transform: rotate(-45deg);
-  ms-transform: rotate(-45deg);
-  o-transform: rotate(-45deg);
+  -moz-box-shadow: 0 0 10px #888;
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
   overflow: hidden;
   position: absolute;
   top: 46px;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  webkit-box-shadow: 0 0 10px #888;
-  webkit-transform: rotate(-45deg);
+  -webkit-box-shadow: 0 0 10px #888;
+  -webkit-transform: rotate(-45deg);
   white-space: nowrap;
   width: 19em;
   z-index: 9999;
@@ -425,9 +477,7 @@ table a{
 }
 .container-fluid{padding-left:0;padding-right:0;min-width:1200px;}
 
-.navbar-brand.logo {
-  padding: 20px 15px;height:auto;overflow:hidden;margin-left:0px!important;
-}
+
 
 /* enable absolute positioning */
 .inner-addon {
@@ -489,17 +539,17 @@ table a{
   cursor: pointer;
   width: 92%;
   height: 100%;
-  background-color: #ffffff;
+  background-color: #F9FAFC;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  border: 1px solid #d2d9dd;
+  border: 1px solid #E0E6ED;
   font-size: 11px;
   outline: none;
 }
 
 .version-slider .flow-element .version-box .box:hover, .version-slider .flow-element .version-box .box.active{
-  background-color: #e6f1f6;
+  background-color: #F9FAFC;
 }
 
 .version-slider .flow-element .version-box .box .top-label {
@@ -584,7 +634,7 @@ table a{
   border-top: none;
   text-align: center;
   padding: 20px 0px ;
-  background: #f6f6f5;
+  background: #F9FAFC;
   margin:0px;
 }
 
@@ -595,12 +645,20 @@ table a{
   line-height: 30px;
   text-align: center;
   color: #fff;
-  background: $smbg;
-  cursor: pointer;
+  @include button-default;
   margin-right:20px;
+  cursor: pointer;
+  &:hover {
+    @include button-hover;
+  }
 }
 .modal-footer .btn-error{
-  color:#f00;font-size:14px;display:inline-block;margin-right:20px;
+  color: $color-red;
+  font-size: $font-size-default;
+  display: inline-block;
+  margin-right: 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 .confirm-select{
   width: 75%;
@@ -631,12 +689,12 @@ table a{
    font-size: 14px;
    color: #333;
    padding-left: 9px;
-   background: #fff;
+   background: #F9FAFC;
    line-height: 28px;
    position: relative;
    .del-bslist{
      float: right;
-     display: inline-block;
+     // display: inline-block;
      width: 15px;
      height: 15px;
      background: url(../images/closenew2.png) no-repeat center;
@@ -652,7 +710,7 @@ table a{
       margin-top:15px;
     .select-title{
       width: 100%;
-      display: inline-block;font-size:14px;color:$titcolor;padding-left:9px;background:#fff;
+      display: inline-block;font-size:14px;color:$titcolor;padding-left:9px;background:#F9FAFC;
     }
     .dropdown{
       height: 28px;
@@ -666,7 +724,7 @@ table a{
     }
     label{
       width: 80px;
-      display: inline-block;
+      // display: inline-block;
       float: left;
       color:#999;line-height:30px;font-weight:normal;font-size:14px;
     }
@@ -676,12 +734,11 @@ table a{
     textarea{
       width: 475px;
       height: 60px;
-      border-color:#eaeaea;
       color:$titcolor;
       padding:10px;
       font-size:14px;
       word-break:break-all;
-      border:1px solid #eaeaea;
+      border:1px solid #E0E6ED;
       overflow-y: auto;
     }
     .error_block_tit p{
@@ -725,6 +782,7 @@ table a{
 }
 .del-ten:hover{
   background:url("../images/images_12.png") no-repeat;
+  cursor: pointer;
 
 }
 /*错误提示*/
@@ -804,12 +862,12 @@ cursor:pointer;padding:14px;}
 .modal_name{font-size:16px;color:$titcolor;}
 .confirm-con .con-wrop .modal_input{width:100%;padding:4px 9px;border:0;font-size:14px;color:$titcolor;}
 .modal_select{width:58%;}
-.confirm-select{border:1px solid #eaeaea;}
+.confirm-select{border:1px solid #E0E6ED;}
 .modal_red{color:#fa273f;display:inline-block;vertical-align:middle;}
 
 .service_drop .dropdown-menu>li>a{padding:8px 9px;}
 .modal_select_red{border:1px solid #ff2c44;}
-.confirm-select .service_drop{border-radius:0;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;top:27px;border:1px solid #eaeaea;border-top:0;
+.confirm-select .service_drop{border-radius:0;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;top:27px;border:1px solid #E0E6ED;border-top:0;
 margin:0;padding:0;max-height:145px;overflow-x:hidden;}
 .dropdown-menu>li>a{padding:8px 9px;}
 /*输入框获取焦点*/
