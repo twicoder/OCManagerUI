@@ -2,7 +2,7 @@
  * Created by sorcerer on 2017/6/7.
  */
 "use strict";
-angular.module('basic.services', ['ngResource'])
+angular.module('basic.services', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.datetimepicker'])
   .service('Cookie', [function () {
     this.set = function (key, val, expires) {
       let date = new Date();
@@ -585,7 +585,8 @@ angular.module('basic.services', ['ngResource'])
               name: '',
               description: '',
               parentId: id,
-              quota: {}
+              quota: {},
+              dueTime: ''
             };
 
             $scope.bslength = 0;
@@ -619,6 +620,16 @@ angular.module('basic.services', ['ngResource'])
 
               });
             });
+
+            $scope.isOpen = false;
+
+            $scope.openCalendar = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                $scope.isOpen = true;
+            };
+
             $scope.changeList = {};
             $scope.changeBs = function (bskey, bsval) {
               $scope.changeList[bskey] = bsval;
