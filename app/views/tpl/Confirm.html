@@ -34,12 +34,11 @@
         <div uib-dropdown on-toggle="toggled(open)">
           <!--<a href="javascript:void(0);" class="" >-->
           <input type="text"
-
-                 style="border:none;height: 28px;"
+                 style="border:none;height:28px;"
                  ng-model="newUser.name"
                  uib-typeahead="n.username as n.username for n in userList  | filter:{'username':$viewValue}"
                  typeahead-on-select="xuanze($item, $model, $label, $event)"
-                 class="confirm-select select-title">
+                 class="select-title">
           <!--<span class="select-title" title={{newUser}}>{{newUser}}</span>-->
           <div class="ser-btn-wrop" uib-dropdown-toggle><b class="that-btn" style="display: inline-block"></b></div>
           <!--</a>-->

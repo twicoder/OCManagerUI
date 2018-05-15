@@ -10,6 +10,7 @@
     left: 10px;
     right: 10px;
   }
+  ul,li{list-style:none;}
   .topbar {
     margin: {
       left: 15px;
@@ -65,6 +66,26 @@
         position: relative;
       }
     }
+    .set_top {
+      height:200px;
+      background:#fff;
+      position:relative;
+      margin-bottom:30px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+    .set_top_tu{width:146px;height:146px;position:absolute;top:50%;left:50%;margin-left:-72px;margin-top:-72px;}
+    .set_bt {
+      height:102px;
+      margin:0 auto;
+      padding-left:20px;
+      padding-right:20px;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    .set_bt p{font-size:14px;text-align:center;}
+    .set_bt p:nth-child(1){font-size:16px;color:#333;margin-top:6px;}
+    .set_bt p:nth-child(2){color:#999;font-size:14px;}
     .set_top_tuer{
       width: 80px;
       height: 80px;
@@ -93,12 +114,33 @@
       clear: both;
       overflow: hidden;
     }
-    //.role_linew:nth-child(4n){margin-right:0px;}
-    .role_block_hnew{background:rgba(255,255,255,0.92);width:100%;height:240px;position:absolute;z-index:2;padding:40px;top:-24px;opacity:0;
-      -webkit-transition:all 0.2s linear; -moz-transition:all 0.2s linear;transition:all 0.2s linear;
-      -webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;padding-top:60px;padding-bottom:60px;}
-    .role_mange_listnew li:hover{-webkit-box-shadow: -1px 2px 9px #dedede;-moz-box-shadow: -1px 2px 9px #dedede;box-shadow: -1px 2px 9px #dedede;}
-    .role_mange_listnew li:hover .role_block_huser{top:0;opacity: 1;}
+    .role_block_hnew {
+      background:rgba(255,255,255,0.92);
+      width:100%;
+      height:235px;
+      position:absolute;
+      z-index:2;
+      padding:40px;
+      top:-24px;
+      opacity:0;
+      -webkit-transition:all 0.2s linear;
+      -moz-transition:all 0.2s linear;
+      transition:all 0.2s linear;
+      -webkit-border-radius:4px;
+      -moz-border-radius:4px;
+      border-radius:4px;
+      padding-top:60px;
+      padding-bottom:60px;
+    }
+    .role_mange_listnew li:hover {
+      -webkit-box-shadow: -1px 2px 9px #dedede;
+      -moz-box-shadow: -1px 2px 9px #dedede;
+      box-shadow: -1px 2px 9px #dedede;
+    }
+    .role_mange_listnew li:hover .role_block_huser {
+      top:0;
+      opacity: 1;
+    }
     @media screen and (min-width: 1920px) {
       .role_mange_listnew li{width:11%;height:240px;background:#fff;position:relative;margin:0 13px;margin-bottom:30px;}
       .role_linew:nth-child(8n){margin-right:0px;}
@@ -130,4 +172,86 @@
   }
 }
 
+.role_page {
+  background: $background-color;
+  margin: 0;
+  padding: {
+    top: 30px;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
+  }
+  ul,li{list-style:none;}
+  .role_block_h {
+    background: rgba(255,255,255,0.92);
+    width: 100%;
+    height: 335px;
+    position: absolute;
+    z-index: 2;
+    padding: 40px;
+    top: -24px;
+    opacity: 0;
+    transition: all 0.2s linear;
+    border-radius: 4px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .set_mange {
+    padding-left:16px;
+    padding-right:16px;
+    background:#fafafa;
+    height:auto;
+    overflow:hidden;
+  }
+  .role_mange_list {
+    margin:0px;
+    padding:0px;
+  }
+  .role_mange_list li {
+    @include card;
+    width:23%;
+    height:340px;
+    position:relative;
+    margin:0 13px;
+    float:left;
+    margin-bottom:30px;
+    -webkit-transition:all 0.2s linear;
+    -moz-transition:all 0.2s linear;
+    transition:all 0.2s linear;
+    cursor: pointer;
+  }
+  .role_li:nth-child(4n) {
+    margin-right:0px;
+  }
+  .role_mange_list li:hover {
+    -webkit-box-shadow: -1px 2px 9px #dedede;
+    -moz-box-shadow: -1px 2px 9px #dedede;
+    box-shadow: -1px 2px 9px #dedede;
+  }
+  .role_mange_list li:hover .role_block_h {
+    top:0;
+    opacity: 1;
+  }
+  .set_top {
+    height:200px;
+    background:#fff;
+    position:relative;
+    margin-bottom:30px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  .set_top_tu{width:146px;height:146px;position:absolute;top:50%;left:50%;margin-left:-72px;margin-top:-72px;}
+  .set_bt {
+    height:102px;
+    margin:0 auto;
+    padding-left:20px;
+    padding-right:20px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  .set_bt p{font-size:14px;text-align:center;}
+  .set_bt p:nth-child(1){font-size:16px;color:#333;margin-top:6px;}
+  .set_bt p:nth-child(2){color:#999;font-size:14px;}
+}
 
