@@ -150,18 +150,22 @@ $smbg: #c256fc !default;
       > li {
         .basic_block {
           height: auto;
-          border: 1px solid #f0f0f0;
-          margin-top: 30px;
-          border-bottom: 0;
+          margin: {
+            top: 30px;
+            left: 0;
+            right: 0;
+            bottom: 20px;
+          }
+          border: none;
           > li {
             margin-top: 0;
             background: #fff;
             overflow: inherit;
             display: table-row;
-            border-bottom: 1px solid #eaeaea;
             height: 26px;
             > div {
               line-height: 26px;
+              padding: 10px;
             }
             > div:nth-child(1) {
               display: table-cell;
@@ -171,23 +175,21 @@ $smbg: #c256fc !default;
               border-bottom: 1px solid #eaeaea;
               text-align: left;
               text-indent: 20px;
-              color: #999;
-              padding-right: 20px
+              color: $font-color-lightgrey;
+              font-size: $title-size-default;
             }
             > div:nth-child(2) {
               display: table-cell;
               width: 920px;
               text-align: justify;
               border-bottom: 1px solid #eaeaea;
-              padding: 10px;
+              color: $font-color-default;
+              font-size: $font-size-default;
 
             }
           }
           > li:last-child {
             border-bottom: 0;
-          }
-          > li:hover {
-            box-shadow: none;
           }
         }
       }
@@ -197,7 +199,7 @@ $smbg: #c256fc !default;
       margin: 0;
       width: 100%;
       height: auto;
-      > li {
+      >li {
         width: 100%;
         height: auto;
         display: none;
@@ -225,16 +227,17 @@ $smbg: #c256fc !default;
             width: 100%;
             height: 60px;
             line-height: 60px;
-            background: #f7f7f7;
+            @include collapse-default;
+            background: #FFFFFF!important;
             margin-top: 30px;
             .lscn {
               height: 100%;
               line-height: 60px;
               padding: 0;
               padding-left: 10px;
-              white-space:nowrap;
+              white-space: nowrap;
               overflow: hidden;
-              text-overflow:ellipsis;
+              text-overflow: ellipsis;
 
             }
             .tooltip{
@@ -248,12 +251,11 @@ $smbg: #c256fc !default;
             }
             a {
               padding: 5px 15px;
-
-              color: #f39c12;
+              color: $color-red;
             }
             a:hover {
-              background: #f5b041;
-              color: #fff;
+              background: $color-red;
+              color: $font-color-white;
             }
             label {
               color: #999;
@@ -263,35 +265,40 @@ $smbg: #c256fc !default;
           }
           li:hover {
             box-shadow: 0px 0px 4px 2px #dedede;
-            //border-radius: 4px;
+            background: $font-color-lightgrey;
           }
           li div:nth-child(1) {
             img {
               width: 60px;
               height: 60px;
-              //background: red;
             }
           }
         }
         .resource-wrop {
           width: 100%;
           height: auto;
-          @include collapse-default;
           padding: 0;
           margin-top: 30px;
+          @include collapse-default;
           .resource-top {
             line-height: 30px;
             padding: 14px;
             text-align: left;
-            font-size: $title-size-default;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+            border-radius: 4px;
+            background: #FFFFFF;
             &:hover {
+              box-shadow: 0px 0px 4px 2px #dedede;
               background: $font-color-lightgrey;
-              border-radius: 4px;
             }
             > div {
+              text-align: left;
+              font-size: $title-size-default;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
               height: 30px;
               .check-btn {
                 display: inline-block;
@@ -324,8 +331,10 @@ $smbg: #c256fc !default;
             }
           }
           .resource-list {
-            background: #fff;
+            background: #F5F6F9;
             margin-top: 25px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
             .list-con {
               width: 100%;
               border-top: 1px solid #f7f7f7;
@@ -333,7 +342,7 @@ $smbg: #c256fc !default;
               .used {
                 text-align: center;
                 font-size: 40px;
-                color: red
+                color: $color-red;
               }
               .chart-title {
                 color: #999;
@@ -345,7 +354,7 @@ $smbg: #c256fc !default;
               }
               .run-num {
                 font-size: 40px;
-                color: #ff304a;
+                color:  $color-red;
                 height: 150px;
                 line-height: 150px;
                 padding-right: 30px;
@@ -417,10 +426,15 @@ $smbg: #c256fc !default;
   width: 417px;
 }
 .delbsi{
-  float:right;color:#f39c12;cursor: pointer;
+  float: right;
+  color: $color-main;
+  cursor: pointer;
 }
 .editSv{
-  float:right;color:#f39c12;cursor: pointer;margin-right: 15px;
+  float: right;
+  color: $color-main;
+  cursor: pointer;
+  margin-right: 15px;
 }
 .delbsi:hover{
   text-decoration: underline;
@@ -445,9 +459,15 @@ $smbg: #c256fc !default;
     .no-monetary{
       width: 198px;
       line-height: 30px;
-      border:none;
-      margin:0;
-      padding:0;
+      @include input-default;
+      margin: 0;
+      padding: {
+        left: 8px;
+        right: 8px;
+      }
+      &:focus {
+        @include input-active;
+      }
     }
     .monetary{
       width: 30px;
@@ -467,16 +487,17 @@ $smbg: #c256fc !default;
 .add-instance{
   width: 90px;
   height: 30px;
-  line-height:30px;
+  margin-left: 1em;
+  line-height: 30px;
   text-align: center;
-  border:1px solid #f39c12;
-  color:#f5b041;
+  @include button-default;
+  color: $font-color-white;
   display: inline-block;
   cursor: pointer;
 }
 .add-instance:hover{
   color: #fff;
-  background: #f5b041;
+  @include button-hover;
 }
 .add-loading{
   width: 120px;

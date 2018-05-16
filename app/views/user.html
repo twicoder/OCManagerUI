@@ -1,35 +1,22 @@
 <!--用户管理页面-->
-<div class="user_page">
+<div class="user-page">
   <div class="new-loading" ng-show="!items||!isshow">
     <img style="height:60px;width:60px;" src="images/load.png" alt="">
   </div>
-  <div class="set_mange">
-    <div class="set_ser_btn">
-      <div class="row">
-        <div class="col-sm-4">
-          <p ng-click="adduser()" class="">添加用户</p>
-        </div>
-
-        <div class="input-group col-sm-4 col-sm-offset-8">
-          <input type="text"
-                 class="form-control"
-                 placeholder="搜索用户名称"
-                 ng-model="grid.txt">
-          <!--ng-model="txt" ng-focus="showTip=true;" -->
-          <span class="search_public_btn"></span>
-          <!--<span class="input-group-btn">-->
-          <!--<a class="btn" ng-click="buildsearch('search')"></a>-->
-          <!--</span>-->
-        </div>
-      </div>
-
+  <div class="row topbar">
+    <div class="col-sm-4">
+      <button class="user-new-btn" ng-click="adduser()" class="">添加用户</button>
     </div>
-
+    <div class="input-group col-sm-4 col-sm-offset-8">
+      <input type="text" class="form-control" placeholder="搜索用户名称" ng-model="grid.txt">
+    </div>
+  </div>
+  <div class="users-area">
     <ul class="role_mange_listnew" ng-show="items&&isshow">
       <li class="role_linew" ng-repeat="item in items">
         <div class="role_block">
           <div class="set_topuser">
-            <img src="images/user_manage.png" class="set_top_tuer">
+            <img src="images/user-listicon.png" class="set_top_tuer">
           </div>
           <div class="set_bt" style="overflow: hidden;">
             <p>{{item.username}}</p>
@@ -43,14 +30,12 @@
             <p class="serv_tit">&nbsp;</p>
             <p class="serv_detail">&nbsp;</p>
           </div>
-          <!--<div class="h_setuser"></div>-->
           <p ng-if="!userladp" class="servie_change" ng-click="updatepwd(item.username)">修改密码</p>
           <p class="servie_change" ng-click="changeuser(item)">修改用户</p>
         </div>
       </li>
     </ul>
   </div>
-
   <div class="page-style" ng-if="grid.total > 12">
     <div uib-pagination
          ng-model="grid.page"

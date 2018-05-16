@@ -664,7 +664,24 @@ table a{
   width: 75%;
   height: 30px;
   display: inline-block;
-  border:1px solid #ccc;
+  border: 1px solid #CCD5E0!important;
+  border-radius: 4px;
+  input {
+    border-radius: 4px;
+  }
+  .service_drop {
+    border-radius:0;
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+    box-shadow:none;
+    top:27px;
+    border:1px solid #E0E6ED;
+    border-top:0;
+    margin:0;
+    padding:0;
+    max-height:145px;
+    overflow-x:hidden;
+  }
   .ser_bg_btn{position:absolute;right:10px;top:10px;width:6px;height:6px;border:solid #a3a3a4;border-width:1px 1px 0 0;
     -webkit-transform:rotate(135deg);-moz-transform:rotate(135deg);transform:rotate(135deg);-webkit-transition:all 0.3s;-moz-transition:all 0.3s;transition:all 0.3s}
   .open .ser_bg_btn{-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);transform:rotate(-45deg);top:12px;}
@@ -708,9 +725,18 @@ table a{
     .con-wrop{
       width: 100%;
       margin-top:15px;
+      textarea {
+        border: 1px solid #CCD5E0!important;
+        border-radius: 4px;
+      }
     .select-title{
       width: 100%;
-      display: inline-block;font-size:14px;color:$titcolor;padding-left:9px;background:#F9FAFC;
+      display: inline-block;
+      font-size: 14px;
+      color: $titcolor;
+      padding-left: 9px;
+      background:#F9FAFC;
+      border-radius: 4px;
     }
     .dropdown{
       height: 28px;
@@ -862,13 +888,10 @@ cursor:pointer;padding:14px;}
 .modal_name{font-size:16px;color:$titcolor;}
 .confirm-con .con-wrop .modal_input{width:100%;padding:4px 9px;border:0;font-size:14px;color:$titcolor;}
 .modal_select{width:58%;}
-.confirm-select{border:1px solid #E0E6ED;}
 .modal_red{color:#fa273f;display:inline-block;vertical-align:middle;}
 
 .service_drop .dropdown-menu>li>a{padding:8px 9px;}
 .modal_select_red{border:1px solid #ff2c44;}
-.confirm-select .service_drop{border-radius:0;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;top:27px;border:1px solid #E0E6ED;border-top:0;
-margin:0;padding:0;max-height:145px;overflow-x:hidden;}
 .dropdown-menu>li>a{padding:8px 9px;}
 /*输入框获取焦点*/
 input:focus,textarea:focus{}
