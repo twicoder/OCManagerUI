@@ -7,7 +7,7 @@
   </h5>
 </div>
 <form name="frm">
-  <div class="modal-body confirm-con" style="max-height: 360px;overflow-y: auto;height: 213px;">
+  <div class="modal-body confirm-con" style="max-height: 360px;overflow-y: auto;height: 235px;">
 
     <div ng-show="!isbs">
       <div class="con-wrop" style="margin-top:0px;">
@@ -31,6 +31,12 @@
         <label>租户描述</label>
         <textarea cols="60" ng-model="message.description" rows="5" placeholder="描述内容不多于20个字符..." maxlength="20"
                   ng-model="" style="resize: none;"></textarea>
+      </div>
+      <div class="con-wrop">
+        <label>有效日期</label>
+          <!--<input type="text" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="message.dueTime" is-open="isOpen" ng-model-options="{timezone: 'UTC'}" show-meridian="true" />-->
+        <input type="text" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="message.dueTime" is-open="isOpen" />
+        <button type="button" class="btn btn-default" ng-click="openCalendar($event, prop)"><i class="glyphicon glyphicon-calendar"></i></button>
       </div>
     </div>
     <div ng-show="isbs">
