@@ -1,0 +1,16 @@
+<div class="modal-header" style="padding:14px 14px;background: #f2f2f1;border-bottom:0;">
+  <h5 class="modal-title">
+    <span class="modal_name">确认删除{{title}}</span>
+    <a ng-click="cancel()" href="javascript:void(0);" class="modal-close" style="margin-top: 4px;">
+    </a>
+  </h5>
+</div>
+<div class="modal-body">
+  <p ng-show="!delfail"
+     style="font-size:16px;color:#333;margin:0;padding:0;text-align:center;margin-top:20px;margin-bottom:20px;">
+    确认删除{{title}}?</p>
+</div>
+<div class="modal-footer" style="text-align: right">
+  <span class="btn-newst" ng-click="ok()">确认</span>
+  <span class="btn-newst" ng-click="cancel()">取消</span>
+</div>
