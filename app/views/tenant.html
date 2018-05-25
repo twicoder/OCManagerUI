@@ -110,8 +110,6 @@
                       {{item.serviceName}}
                     </div>
                     <div class="col-md-2" style="text-align: right;font-size: 16px;">
-                      <span class="close-btn"
-                            ng-click=""></span>
                     </div>
                   </div>
                   <div class="resource-list" ng-repeat="arr in item.servesList" ng-if="item.isshow">
@@ -157,9 +155,6 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div style="margin:20px 0px;">
-                  <botton class="add-instance" ng-click="addser(item.serviceTypeName,item)">添加实例</botton>
                 </div>
               </div>
               <!--资源管理资源管理资源管理-->
@@ -224,8 +219,8 @@
                     <div>
                       <div class="list-con">
                         <div class="row add-myserve" ng-repeat="bs in item">
-                          <div class="col-md-2">{{bs.key}}</div>
-                          <div class="col-md-10">
+                          <div class="col-md-2" style="width:20%">{{bs.key}}</div>
+                          <div class="col-md-10" style="width:80%">
                             <div class="use-num-wrop">
                               <input class="no-monetary" ng-model="bs.val" type="text" ng-disabled="!item.zt.isde">
                             </div>

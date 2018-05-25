@@ -96,6 +96,10 @@ angular.module('basic', [
     "name": "实例名称",
     "planName": "实例类型"
   },
+  "elasticsearch": {
+    "name": "实例名称",
+    "planName": "实例类型"
+  },
   "ocsp": {
     "name": "实例名称",
     "planName": "实例类型",
