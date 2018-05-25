@@ -3,8 +3,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_', '$window',
-    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _, $window) {
+  .controller('TenantCtrl', ['addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'delbsiconfirm', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_', '$window',
+    function (addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, delbsiconfirm, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _, $window) {
       Array.prototype.unique = function () {
         let res = [this[0]];
         for (let i = 1; i < this.length; i++) {
@@ -429,7 +429,7 @@ angular.module('basic')
                 angular.forEach(obj, function (quota, j) {
                   if (j !== "instance_id" && j !== "cuzBsiName") {
                     // build tool tips form df automatically
-                    let bsmap = {}
+                    let bsmap = {};
                     getdfbs.get(function (data) {
                       angular.forEach(data.items, function (bs) {
                         let planInfo = {};
@@ -489,6 +489,17 @@ angular.module('basic')
       };
 
       $scope.delbsied = function (name) {
+        delbsiconfirm.open($scope.nodeId, name).then(function () {
+          tenantbsi.query({id: $scope.nodeId}, function (bsis) {
+            let bsitems = [];
+            angular.forEach(bsis, function (bsi) {
+              bsitems.push(bsi);
+            });
+            bsis = angular.copy(bsitems);
+            classify(bsis);
+          });
+        })
+        /*
         deletebsi.delete({id: $scope.nodeId, name: name}, function () {
           tenantbsi.query({id: $scope.nodeId}, function (bsis) {
             let bsitems = [];
@@ -499,6 +510,7 @@ angular.module('basic')
             classify(bsis);
           });
         });
+        */
       };
       $scope.upload = function(file, name, attr){
         let reader = new FileReader();

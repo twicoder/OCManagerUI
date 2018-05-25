@@ -231,6 +231,26 @@ angular.module('basic.services', ['ngResource'])
       }).result;
     };
   }])
+  .service('delbsiconfirm', ['$uibModal', function($uibModal) {
+    this.open = function (nodeId, title) {
+      return $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'views/tpl/del_bsi.html',
+        size: 'default',
+        controller: ['$scope', '$uibModalInstance', 'deletebsi', function ($scope, $uibModalInstance, deletebsi) {
+          $scope.title = title;
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+          };
+          $scope.ok = function () {
+            deletebsi.delete({id: nodeId, name: title}, function (res) {
+              $uibModalInstance.close(res);
+            });
+          };
+        }]
+      }).result;
+    };
+  }])
   .service('Alert', ['$uibModal', function ($uibModal) {
     this.open = function (con) {
       return $uibModal.open({
