@@ -6,7 +6,10 @@
       <td class="sidebar">
         <div treecontrol class="tree-classic" tree-model="dataForTheTree" options="treeOptions" on-selection="showSelected(node)" selected-node="selected">
           {{node.name}}
-          <span ng-click="deltenan($event, node)" class="ta-cd del-ten" ng-show="node.parentId"></span>
+          <span class="ta-cd" ng-show="node.parentId">
+            <span ng-click="edittenan($event, node)" class="glyphicon glyphicon-edit edit-ten" aria-hidden="true"></span>
+            <span ng-click="deltenan($event, node)" class="glyphicon glyphicon-trash del-ten" aria-hidden="true"></span>
+          </span>
         </div>
       </td>
       <td class="main">
