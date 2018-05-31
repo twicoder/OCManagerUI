@@ -34,7 +34,7 @@
     </div>
     <div ng-show="isbs">
       <div class="con-wrop row">
-        <div class="col-md-2" style="margin:0;padding:0;"><label>服务限定<i class="modal_red">*</i></label></div>
+        <div class="col-md-2" style="margin:0;padding:0;"><label>服务限定</label></div>
         <div class="col-md-10" style="margin:0;padding:0;">
           <div class="confirm-select" style="height: auto;margin-bottom:15px;" ng-repeat="(index,item) in changeList">
             <div class="bs-list-title">
@@ -67,8 +67,9 @@
     </div>
   </div>
   <div class="modal-footer" style="text-align: right">
+    <span class="btn-error" ng-show="!frm.username.$dirty">请填写用户租户名</span>
     <span class="btn-error" ng-show="set_use">可用容量不足</span>
-    <span class="btn-newst" ng-click="nextDiv()" ng-show="!isbs">下一步</span>
+    <span class="btn-newst" ng-click="frm.username.$valid && nextDiv()" ng-show="!isbs">下一步</span>
     <span class="btn-newst" ng-click="frm.$valid && ok()" ng-show="isbs">确认</span>
 
   </div>
