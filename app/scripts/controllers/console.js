@@ -7,7 +7,9 @@ angular.module('basic')
     function ($rootScope, $scope, sso, Cookie, $state, createkeytab) {
       $scope.loginname = Cookie.get("username");
       $scope.logout = function () {
-        Cookie.clear('username');
+        if (Cookie.get('jizhu') === false) {
+          Cookie.clear('username');
+        }
         Cookie.clear('tenantId');
         Cookie.clear('token');
         $state.go('home.login');

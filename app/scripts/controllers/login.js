@@ -6,6 +6,9 @@ angular.module('basic')
   .controller('loginCtrl', ['$location', 'login', '$scope', 'Cookie', '$state',
     function ($location, login, $scope, Cookie, $state) {
       $scope.usermessage = {};
+      console.log(Cookie.get('jizhu'));
+      console.log(Cookie.get('username'));
+      console.log(Cookie.get('token'));
       if (Cookie.get('jizhu') === 'true') {
         $scope.me = true;
         $scope.usermessage.username = Cookie.get('username');
