@@ -718,7 +718,7 @@ angular.module('basic.services', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.da
     };
   }])
   .service('addserve_Confirm', ['$uibModal', function ($uibModal) {
-    this.open = function (data, id) {
+    this.open = function (data, id, existed_bsis) {
       return $uibModal.open({
         backdrop: 'static',
         templateUrl: 'views/tpl/addserve.html',
@@ -739,7 +739,7 @@ angular.module('basic.services', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.da
               $scope.planCustomizes = [];
               $scope.svName = val;
               $scope.svActive = idx;
-              let lowerCaseName = val.toLowerCase();
+              let lowerCaseName = val ? val.toLowerCase() : val;
               if(_.isEmpty(INSTANCES[lowerCaseName])){
                 $scope.instancesList = INSTANCES.default;
               }else{
@@ -754,6 +754,13 @@ angular.module('basic.services', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.da
                 $scope.planCustomizes.push(elem);
               }
 
+            };
+            $scope.checkServeName = function () {
+              if (existed_bsis.includes($scope.bsiname)) {
+                $scope.frm.bsiname.$setValidity("repeat", false);
+              } else {
+                $scope.frm.bsiname.$setValidity("repeat", true);
+              }
             };
 
             $scope.changePlan = function(index){

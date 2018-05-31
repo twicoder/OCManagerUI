@@ -10,7 +10,6 @@
     <ul class="sv-wrop" ng-show="svList">
       <li class="sv-list" ng-class="{'svActive':svActive == $index}" ng-repeat="item in data"
           ng-click="checkSv(item.spec.metadata.type,$index)">
-        <!--<img ng-src="./images/serviceList/{{item.spec.metadata.type | lowerCase}}.png" err-src="./images/serviceList/{{item.metadata.name | lowerCase}}.png ">-->
         <img ng-if="!item.spec.metadata.type" src="./images/serviceList/{{item.metadata.name | lowerCase}}.png" >
         <img ng-if="item.spec.metadata.type" src="./images/serviceList/{{item.spec.metadata.type | lowerCase}}.png" >
         <div class="sv-name">{{item.metadata.name}}</div>
@@ -29,11 +28,12 @@
                    ng-pattern="/^[a-zA-Z0-9]{1,28}$/"
                    class="form-control"
                    ng-model="bsiname"
+                   ng-change="checkServeName()"
                    required>
           </div>
           <div class="col-md-3">
             <div class="error_block_tit" ng-if="frm.bsiname.$dirty && frm.bsiname.$invalid">
-              <p style="margin:0;">{{instancesList.name}}不合法</p>
+              <p style="margin:0;">{{instancesList.name}}不合法或已存在</p>
             </div>
           </div>
         </div>
