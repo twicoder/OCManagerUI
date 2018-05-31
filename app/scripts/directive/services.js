@@ -173,7 +173,12 @@ angular.module('basic.services', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.da
         templateUrl: 'views/tpl/newconfirm.html',
         size: 'default',
         controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-          $scope.con = datacon;
+          $scope.con = {};
+          for (let key in datacon) {
+            if (datacon[key]) {
+              $scope.con[key] = datacon[key];
+            }
+          }
           if (status) {
             $scope.status = status;
           }
