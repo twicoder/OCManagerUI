@@ -641,7 +641,10 @@ angular.module('basic')
       $scope.addServe = function () {
         getdfbs.get(function (data) {
           let newItem = [...data.items];
-          addserve_Confirm.open(newItem, $scope.nodeId).then(function () {
+          let existed_bsis = $scope.bsis.map(function (bsi) {
+            return bsi.instanceName;
+          });
+          addserve_Confirm.open(newItem, $scope.nodeId, existed_bsis).then(function () {
             tenantbsi.query({id: $scope.nodeId}, function (bsis) {
               classify([...bsis]);
             });
