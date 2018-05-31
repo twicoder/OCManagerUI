@@ -60,6 +60,9 @@ $smbg: #c256fc !default;
             .del-ten {
               display:inline-block;
             }
+            .edit-ten {
+              display: inline-block;
+            }
           }
           div.tree-selected {
             background: $background-color;
@@ -114,7 +117,9 @@ $smbg: #c256fc !default;
     }
     td.main {
       width: 80%;
-      vertical-align: top;
+      margin-top: 55px;
+      display: block;
+      margin-left: 20%;
       .project-list {
         width: 100%;
         overflow: hidden;
@@ -279,6 +284,7 @@ $smbg: #c256fc !default;
           height: auto;
           padding: 0;
           margin-top: 30px;
+          margin-bottom: 10px;
           @include collapse-default;
           .resource-top {
             line-height: 30px;

@@ -16,6 +16,11 @@ $smbg: #c256fc!default;
 .header {
   padding: 0!important;
   margin: 0!important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
   .navbar-oc {
     background: $navbar-background-color;
     height: 55px;
@@ -228,12 +233,6 @@ body {
 }
 
 /* Custom css*/
-.sidebar {
-  background-color: #F9FAFC;
-  border-top: 1px solid #E0E6ED;
-  border-right: 1px solid #E0E6ED;
-  padding: 20px;
-}
 
 .panel {
   margin-top: 10px;
@@ -778,12 +777,11 @@ table a{
 
 }
 .ta-cd{
-  width: 14px;
-  height: 14px;
+  width: 56px;
+  height: 24px;
   margin:0;
   padding:0;
-  display:inline-block;
-  margin-right:8px;
+  float: right;
   cursor: pointer;
 }
 .ta-zg{
@@ -801,15 +799,26 @@ table a{
 .del-ten{
   width: 16px;
   height: 16px;
-  float: right;
   margin-top:18px;
-  background:url("../images/images_10.png") no-repeat;
+  color: lightgrey;
   display: none;
 }
 .del-ten:hover{
-  background:url("../images/images_12.png") no-repeat;
+  color: $color-red;
+  font-weight: 560;
   cursor: pointer;
-
+}
+.edit-ten{
+  width: 16px;
+  height: 16px;
+  margin-top:18px;
+  color: lightgrey;
+  display: none;
+}
+.edit-ten:hover{
+  color: $color-main;
+  font-weight: 560;
+  cursor: pointer;
 }
 /*错误提示*/
 .error_block_tit{display:inline-block;text-align:left;background:#ff304a;text-align:center;color:#fff;font-size:12px;-webkit-transition:all .3s;

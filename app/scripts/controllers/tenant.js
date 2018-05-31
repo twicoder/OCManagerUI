@@ -3,8 +3,8 @@
  * Controller of the dashboard
  */
 angular.module('basic')
-  .controller('TenantCtrl', ['ocdpservices', 'addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'delbsiconfirm', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
-    function (ocdpservices, addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, delbsiconfirm, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
+  .controller('TenantCtrl', ['ocdpservices', 'addtenantapi', 'bsLimit', 'smallAlert', 'addBsi', 'deletebsi', 'delbsiconfirm', 'creatbsi', 'getplan', 'updateinstance', 'addserve_Confirm', 'tenantname', 'tenant_del_Confirm', 'addTenant', 'updateTenant_dialog', '$rootScope', '$scope', 'Confirm', 'newconfirm', 'tenant', 'delconfirm', 'tenantchild', 'tree', 'tenantuser', 'tenantbsi', 'bsidata', 'user', 'serveinfo', 'Alert', 'service', 'absi', 'Cookie', 'userole', '$state', 'userinfo', 'infoconfirm', 'getdfbs', '_',
+    function (ocdpservices, addtenantapi, bsLimit, smallAlert, addBsi, deletebsi, delbsiconfirm, creatbsi, getplan, updateinstance, addserve_Confirm, tenantname, tenant_del_Confirm, addTenant, updateTenant_dialog, $rootScope, $scope, Confirm, newconfirm, tenant, delconfirm, tenantchild, tree, tenantuser, tenantbsi, bsidata, user, serveinfo, Alert, service, absi, Cookie, userole, $state, userinfo, infoconfirm, getdfbs, _) {
       Array.prototype.unique = function () {
         let res = [this[0]];
         for (let i = 1; i < this.length; i++) {
@@ -147,7 +147,7 @@ angular.module('basic')
             item.servesList = [];
           }
           angular.forEach(onlyserve, function (list) {
-            if (item.serviceName.toUpperCase() === list.serviceName.toUpperCase()) {
+            if (item.serviceName && list.serviceName && item.serviceName.toUpperCase() === list.serviceName.toUpperCase()) {
               item.servesList.push(list);
             }
           });
@@ -387,7 +387,7 @@ angular.module('basic')
               item.servesList = [];
             }
             angular.forEach(bsis, function (list) {
-              if (item.serviceName.toUpperCase() === list.serviceName.toUpperCase()) {
+              if (item.serviceName && list.serviceName && item.serviceName.toUpperCase() === list.serviceName.toUpperCase()) {
                 item.servesList.push(list);
               }
             });
@@ -493,7 +493,7 @@ angular.module('basic')
             bsis = angular.copy(bsitems);
             classify(bsis);
           });
-        })
+        });
         /*
         deletebsi.delete({id: $scope.nodeId, name: name}, function () {
           tenantbsi.query({id: $scope.nodeId}, function (bsis) {
@@ -612,6 +612,14 @@ angular.module('basic')
       $scope.deltenan = function (e, node) {
         e.stopPropagation();
         tenant_del_Confirm.open(node.name, node.id).then(function () {
+          tenantname.query({name: Cookie.get('username')}, function (tree) {
+            createTree(tree);
+          });
+        });
+      };
+      $scope.edittenan = function(e, node) {
+        e.stopPropagation();
+        updateTenant_dialog.open(node).then(function() {
           tenantname.query({name: Cookie.get('username')}, function (tree) {
             createTree(tree);
           });

@@ -17,6 +17,6 @@ angular.module('basic.filter', [])
   }])
   .filter('lowerCase', [function () {
     return function (res) {
-      return res.toLowerCase();
+      return res ? res.toLowerCase() : res;
     };
   }]);

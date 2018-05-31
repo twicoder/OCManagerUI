@@ -679,6 +679,44 @@ angular.module('basic.services', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.da
       }).result;
     };
   }])
+  .service('updateTenant_dialog', ['$uibModal', function ($uibModal) {
+    this.open = function (node) {
+      return $uibModal.open({
+        backdrop: 'static',
+        templateUrl: 'views/tpl/updateTenant.html',
+        size: 'default',
+        controller: ['$scope', '$uibModalInstance', 'updatetenantapi', function ($scope, $uibModalInstance, updatetenantapi) {
+          $scope.message = {
+            id: node.id,
+            name: node.name,
+            description: node.description,
+            parentId: node.parentId,
+            quota: node.quota,
+            dueTime: ''
+          };
+          $scope.set_use = false;
+          $scope.isOpen = false;
+          $scope.openCalendar = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $scope.isOpen = true;
+          };
+          $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+          };
+          $scope.ok = function () {
+            updatetenantapi.put($scope.message, (response) => {
+              $uibModalInstance.close(response);
+            }, (err) => {
+              if (err) {
+                $scope.set_use = true;
+              }
+            });
+          };
+        }]
+      }).result;
+    };
+  }])
   .service('addserve_Confirm', ['$uibModal', function ($uibModal) {
     this.open = function (data, id) {
       return $uibModal.open({
