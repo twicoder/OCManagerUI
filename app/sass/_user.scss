@@ -28,6 +28,7 @@
       height: 50px;
       line-height: 50px;
       text-align: center;
+      display: inline-block;
       cursor: pointer;
       &:hover {
         color: $font-color-white;
