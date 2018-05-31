@@ -645,10 +645,16 @@ angular.module('basic.services', ['ngResource', 'ui.bootstrap', 'ui.bootstrap.da
             $scope.delbsList = function (val) {
               delete $scope.changeList[val];
               $scope.bslength += 1;
+              let existedList = [];
+              angular.forEach($scope.changeList, function (bs, k) {
+                existedList.push(k);
+              });
               angular.forEach($scope.newbsobj, function (bs, k) {
-                angular.forEach(bs, function (bsquo) {
-                  bsquo.val = 0;
-                });
+                if (!existedList.includes(k)) {
+                  angular.forEach(bs, function (bsquo) {
+                    bsquo.val = 0;
+                  });
+                }
                 if (k === val) {
                   $scope.bsList[k] = bs;
                 }
