@@ -16,6 +16,11 @@ $smbg: #c256fc!default;
 .header {
   padding: 0!important;
   margin: 0!important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
   .navbar-oc {
     background: $navbar-background-color;
     height: 55px;
@@ -228,12 +233,6 @@ body {
 }
 
 /* Custom css*/
-.sidebar {
-  background-color: #F9FAFC;
-  border-top: 1px solid #E0E6ED;
-  border-right: 1px solid #E0E6ED;
-  padding: 20px;
-}
 
 .panel {
   margin-top: 10px;

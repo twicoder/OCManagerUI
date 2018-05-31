@@ -3,7 +3,9 @@
 
 .user-page {
   background: $background-color;
-  margin: 0;
+  margin: {
+    top: 50px;
+  }
   padding: {
     top: 30px;
     bottom: 20px;
@@ -174,7 +176,9 @@
 
 .role_page {
   background: $background-color;
-  margin: 0;
+  margin: {
+    top: 60px;
+  }
   padding: {
     top: 30px;
     bottom: 20px;
