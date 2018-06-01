@@ -403,6 +403,7 @@ angular.module('basic')
       function classify(bsis) {
         ziyuan(bsis);
         getTenantServe($scope.nodeIf);
+        $scope.fieldsHelper = {};
         if (bsis.length > 0) {
           $scope.sletr = [];
           let servicenames = [];
@@ -442,6 +443,7 @@ angular.module('basic')
                           if (!(_.isEmpty(bs.spec.plans[idx].metadata.customize))) {
                               angular.forEach(bs.spec.plans[idx].metadata.customize, function (ct, y) {
                                 planInfo[y] = ct.desc + " 单位: " + ((typeof(ct.unit)=== "undefined") ? "个" : ct.unit);
+                                $scope.fieldsHelper[y] = planInfo[y]
                               });
                           }
                         }
@@ -449,8 +451,6 @@ angular.module('basic')
                        });
                        item.ziyuan.push({key: j, value: quota, tool:bsmap[items.serviceName][j]});
                     });
-//                    item.ziyuan.push({key: j, value: quota});
-//                    item.ziyuan.push({key: j, value: quota,tool:$scope.bsmap[items.serviceName.toLowerCase()][j]});
                   }
                 });
               }
