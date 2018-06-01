@@ -443,7 +443,7 @@ angular.module('basic')
                           if (!(_.isEmpty(bs.spec.plans[idx].metadata.customize))) {
                               angular.forEach(bs.spec.plans[idx].metadata.customize, function (ct, y) {
                                 planInfo[y] = ct.desc + " 单位: " + ((typeof(ct.unit)=== "undefined") ? "个" : ct.unit);
-                                $scope.fieldsHelper[y] = planInfo[y]
+                                $scope.fieldsHelper[y] = planInfo[y];
                               });
                           }
                         }
@@ -695,6 +695,7 @@ angular.module('basic')
         bsLimit.open();
       };
       $scope.editBsLimit = function (idx) {
+        $scope.limitToggle(idx);
         $scope.bsLimit[idx].zt.isde = true;
       };
       $scope.saveBsLimit = function (idx, item) {
